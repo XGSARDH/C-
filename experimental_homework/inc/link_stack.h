@@ -23,6 +23,10 @@ typedef struct LinkStack
 
 Status initStackElemType(StackElemType *s);
 
+Status makeStackElemType(StackElemType *s, struct avlBiTNode *p, int tag);
+
+Status destroyStackElemType(StackElemType *s);
+
 Status initLStack(LinkStack *s);
 
 Status isEmptyLStack(LinkStack *s);

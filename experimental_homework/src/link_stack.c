@@ -10,6 +10,24 @@ Status initStackElemType(StackElemType *s){
 	(*s)->tag = 0;
 }
 
+Status makeStackElemType(StackElemType *s, struct avlBiTNode *p, int tag){
+	if (!(*s)) {
+		initStackElemType(s);
+	}
+	(*s)->avlBiTree = p;
+	(*s)->tag = tag;
+	return TRUE;
+}
+
+Status destroyStackElemType(StackElemType *s){
+	if (!(*s)) return TRUE;
+	if (destoryAVL(&((*s)->avlBiTree)) == FALSE) {
+		return FALSE;
+	}
+	free(*s);
+	return TRUE;
+}
+
 Status initLStack(LinkStack *s){
 	StackNode* head = NULL;
 	if (InitList_StackNode(&head) == FALSE)return FALSE;
@@ -40,6 +58,7 @@ Status clearLStack(LinkStack *s){
 	StackNode* move = s->top->next;
 	while (move->next != NULL) {
 		StackNode* curr = move->next;
+		destroyStackElemType(move->data);
 		free(move);
 		move = curr;
 	}
