@@ -2,8 +2,12 @@
 #define LINK_STACK_H
 
 #include "status_enum.h"
+// #include "avl_binary_tree.h"
 
-typedef int StackElemType;
+typedef struct StackElemTypeBasic{
+	struct avlBiTNode *avlBiTree;
+	int tag;
+}StackElemTypeBasic, *StackElemType;
 
 typedef struct StackNode
 {
@@ -16,6 +20,15 @@ typedef struct LinkStack
 	LinkStackPtr top;
 	int	count;
 }LinkStack;
+
+/**
+ *  @name        : Status initStackElemType(StackElemType *s);
+ *	@description : Initialize StackElemType
+ *	@param		 : StackElemType *s
+ *	@return		 : Status
+ *  @notice      : None
+ */
+Status initStackElemType(StackElemType *s);
 
 /**
  *  @name        : Status initLStack(LinkStack *s)

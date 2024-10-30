@@ -1,6 +1,14 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"link_stack.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "link_stack.h"
+#include "avl_binary_tree.h"
+
+Status initStackElemType(StackElemType *s){
+	if (*s) return TRUE;
+	*s = (StackElemType*)malloc(sizeof(StackElemTypeBasic));
+	initAVL(&((*s)->avlBiTree));
+	(*s)->tag = 0;
+}
 
 Status initLStack(LinkStack *s){
 	StackNode* head = NULL;
@@ -87,7 +95,7 @@ Status popLStack(LinkStack *s,StackElemType *data){
 
 void PrintStackElemType(StackElemType e)
 {
-	printf("%d", e);
+	visitAVL(e->avlBiTree);
 	return;
 }
 
@@ -105,8 +113,9 @@ Status ScanfStackElemType(StackElemType* e)
 
 Status MakeEqualData(StackElemType* origin, StackElemType* result)
 {
-	if (origin == NULL || result == NULL)return FALSE;
-	*origin = *result;
+	if (!(*origin) || !(*result)) return FALSE;
+	(*origin)->avlBiTree = (*result)->avlBiTree;
+	(*origin)->tag = (*result)->tag;
 	return TRUE;
 }
 
