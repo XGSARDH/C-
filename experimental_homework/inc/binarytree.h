@@ -1,11 +1,8 @@
 #ifndef BINTARYTREE_H
 #define BINTARYTREE_H
+#include "status_enum.h"
 
 typedef int BiTElemType;
-typedef enum Status {
-	FALSE = 0,
-	TRUE = 1
-} Status;
 
 typedef struct BiTNode {
 	BiTElemType data;

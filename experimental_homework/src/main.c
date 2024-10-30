@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "binarytree.h"
+#include "status_enum.h"
+#include "avl_binary_tree.h"
 
 int main()
 {
-	BiTree curr = NULL;
-	InitBiTree(&curr);
 	return 0;
 }
