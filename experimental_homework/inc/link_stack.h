@@ -1,31 +1,21 @@
-#ifndef LINK_STACK_H
-#define LINK_STACK_H
+#ifndef STACK_H_INCLUDED
+#define STACK_H_INCLUDED
 
 #include "status_enum.h"
-// #include "avl_binary_tree.h"
 
-typedef struct StackElemTypeBasic{
-	struct avlBiTNode *avlBiTree;
-	int tag;
-}StackElemTypeBasic, *StackElemType;
+typedef struct avlBiTNode *StackElemType;
 
-typedef struct StackNode
+typedef  struct StackNode
 {
 	StackElemType data;
 	struct StackNode *next;
 }StackNode, *LinkStackPtr;
 
-typedef struct LinkStack
+typedef  struct  LinkStack
 {
 	LinkStackPtr top;
 	int	count;
 }LinkStack;
-
-Status initStackElemType(StackElemType *s);
-
-Status makeStackElemType(StackElemType *s, struct avlBiTNode *p, int tag);
-
-Status destroyStackElemType(StackElemType *s);
 
 Status initLStack(LinkStack *s);
 
@@ -39,13 +29,11 @@ Status destroyLStack(LinkStack *s);
 
 Status LStackLength(LinkStack *s,int *length);
 
-Status pushLStack(LinkStack *s,StackElemType data);//ÈëÕ»
+Status pushLStack(LinkStack *s,StackElemType data);//��ջ
 
 Status popLStack(LinkStack *s,StackElemType *data);
 
 void PrintStackElemType(StackElemType e);
-
-Status ScanfStackElemType(StackElemType* e);
 
 Status MakeEqualData(StackElemType* origin, StackElemType* result);
 
@@ -53,4 +41,6 @@ Status IsMakeEqualData(StackElemType* origin, StackElemType* result);
 
 Status InitList_StackNode(StackNode** L);
 
-#endif // LINK_STACK_H
+Status InitStackElemType (StackElemType* e);
+
+#endif 

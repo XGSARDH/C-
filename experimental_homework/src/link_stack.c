@@ -3,31 +3,6 @@
 #include "link_stack.h"
 #include "avl_binary_tree.h"
 
-Status initStackElemType(StackElemType *s){
-	if (*s) return TRUE;
-	*s = (StackElemType*)malloc(sizeof(StackElemTypeBasic));
-	initAVL(&((*s)->avlBiTree));
-	(*s)->tag = 0;
-}
-
-Status makeStackElemType(StackElemType *s, struct avlBiTNode *p, int tag){
-	if (!(*s)) {
-		initStackElemType(s);
-	}
-	(*s)->avlBiTree = p;
-	(*s)->tag = tag;
-	return TRUE;
-}
-
-Status destroyStackElemType(StackElemType *s){
-	if (!(*s)) return TRUE;
-	if (destoryAVL(&((*s)->avlBiTree)) == FALSE) {
-		return FALSE;
-	}
-	free(*s);
-	return TRUE;
-}
-
 Status initLStack(LinkStack *s){
 	StackNode* head = NULL;
 	if (InitList_StackNode(&head) == FALSE)return FALSE;
@@ -58,7 +33,6 @@ Status clearLStack(LinkStack *s){
 	StackNode* move = s->top->next;
 	while (move->next != NULL) {
 		StackNode* curr = move->next;
-		destroyStackElemType(move->data);
 		free(move);
 		move = curr;
 	}
@@ -106,6 +80,7 @@ Status popLStack(LinkStack *s,StackElemType *data){
 		return FALSE;
 	}
 	StackNode* curr = s->top->next->next;
+	getTopLStack(s, data);
 	free(s->top->next);
 	s->top->next = curr;
 	(s->count)--;
@@ -114,35 +89,49 @@ Status popLStack(LinkStack *s,StackElemType *data){
 
 void PrintStackElemType(StackElemType e)
 {
-	visitAVL(e->avlBiTree);
+	// printf("%d", e);
+	printAVL(e);
 	return;
-}
-
-Status ScanfStackElemType(StackElemType* e)
-{
-	int input = 0;
-	if (e == NULL)return FALSE;
-	do {
-		printf("Plaese input a number:");
-		input = scanf("%d", e);
-		while (getchar() != '\n');
-	} while (input == 0);
-	return TRUE;
 }
 
 Status MakeEqualData(StackElemType* origin, StackElemType* result)
 {
-	if (!(*origin) || !(*result)) return FALSE;
-	(*origin)->avlBiTree = (*result)->avlBiTree;
-	(*origin)->tag = (*result)->tag;
+	if (origin == NULL || result == NULL) {
+		if (origin == result) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	if ((*origin) == NULL || (*result) == NULL) {
+		if ((*origin) == (*result)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	(*origin)->data = (*result)->data;
+	(*origin)->lchild = (*result)->lchild;
+	(*origin)->rchild = (*result)->rchild;
 	return TRUE;
 }
 
 Status IsMakeEqualData(StackElemType* origin, StackElemType* result)
 {
-	if (origin == NULL || result == NULL)return FALSE;
-	if (*origin == *result)return TRUE;
-	else return FALSE;
+	if (origin == NULL || result == NULL) {
+		if (origin == result) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	if ((*origin) == NULL || (*result) == NULL) {
+		if ((*origin) == (*result)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	if ((*origin)->data == (*result)->data && (*origin)->lchild == (*result)->lchild && (*origin)->rchild == (*result)->rchild) {
+		return TRUE;
+	}
+	return FALSE;
 }
 
 Status InitList_StackNode(StackNode** L) {
@@ -150,8 +139,10 @@ Status InitList_StackNode(StackNode** L) {
 
 	if (*L == NULL)return FALSE;
 
-	void* initData = NULL;
 	(*L)->next = NULL;
+	return InitStackElemType(&((*L)->data));
+}
 
-	return TRUE;
+Status InitStackElemType(StackElemType* e) {
+	return initAVL(e);
 }
