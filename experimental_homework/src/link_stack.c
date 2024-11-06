@@ -92,7 +92,7 @@ Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, Av
 }
 
 Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e) {
-    return initLStack_ElemTypePtr(e, 0, NULL);
+    return initLStack_ElemTypePtr(e, INITIAL_VALUE, NULL);
 }
 
 Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr *e) {
