@@ -13,7 +13,8 @@ typedef struct avlBiTNode {
 
 Status makeEqualavlBiTElemType(avlBiTElemType *purpose, avlBiTElemType *origin);
 int IsEqualBiTElemType(avlBiTElemType a, avlBiTElemType b);
-Status initAVL(avlBiTree *p);
+Status initAVL_default(avlBiTree *p);
+Status initAVL(avlBiTree *p, avlBiTElemType avlBiTElemType);
 Status destoryAVL(avlBiTree *p);
 Status rRotate(avlBiTree *p);
 Status lRotate(avlBiTree *p);
