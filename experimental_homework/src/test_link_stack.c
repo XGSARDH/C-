@@ -77,16 +77,17 @@ int test2() {
     LinkStack stack;
     initLStack(&stack);
 
-    LStack_ElemTypePtr LStack_ElemTypePtr1 = NULL, LStack_ElemTypePtr2 = NULL;
-
     // avlBiTree + tag 等价于 LStack_ElemTypePtr
-    avlBiTree avlPtr1 = NULL, avlPtr2 = NULL;
     LStack_ElemTypePtr curr = NULL;
 
+    LStack_ElemTypePtr LStack_ElemTypePtr1 = NULL;
+    avlBiTree avlPtr1 = NULL;
     initAVL(&avlPtr1, 1);
     initLStack_ElemTypePtr(&LStack_ElemTypePtr1, 0, &avlPtr1);
     pushLStack(&stack, LStack_ElemTypePtr1);
 
+    LStack_ElemTypePtr LStack_ElemTypePtr2 = NULL;
+    avlBiTree avlPtr2 = NULL;
     initAVL(&avlPtr2, 2);
     initLStack_ElemTypePtr(&LStack_ElemTypePtr2, 0, &avlPtr2);
     pushLStack(&stack, LStack_ElemTypePtr2);
