@@ -4,21 +4,21 @@
 #include "avl_binary_tree.h"
 #include "link_stack.h"
 
-void testAVL();
+void testAvl();
 void testStack();
 
 int main()
 {
-	testAVL();
+	testAvl();
 	// testStack();
 	return 0;
 }
 
-void testAVL() {
-	printf("Test avl;\n");
-	avlBiTree curr = NULL;
-	printf("初始化是否成功:%d\n", initAVL(&curr, 10));
-	printf("打印初始化节点的值:") && visitAVL(curr) && printf("\n");
-	printf("删除是否成功:%d\n", destoryAVL(&curr));
-	// InOrderTraverseAVL(curr, visitAVL);
+void testAvl() {
+	printf("Test Avl;\n");
+	AvlBiTree curr = NULL;
+	printf("初始化是否成功:%d\n", initAvl(&curr, 10));
+	printf("打印初始化节点的值:") && visitAvl(curr) && printf("\n");
+	printf("删除是否成功:%d\n", destoryAvl(&curr));
+	// InOrderTraverseAvl(curr, visitAvl);
 }

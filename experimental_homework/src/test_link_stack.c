@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "avl_binary_tree.h"
 #include "link_stack.h"
 
@@ -81,17 +82,21 @@ int test2() {
     LStack_ElemTypePtr curr = NULL;
 
     LStack_ElemTypePtr LStack_ElemTypePtr1 = NULL;
-    avlBiTree avlPtr1 = NULL;
-    initAVL(&avlPtr1, 1);
-    initLStack_ElemTypePtr(&LStack_ElemTypePtr1, 0, &avlPtr1);
+    AvlBiTree avlPtr1 = NULL;
+    initAvl(&avlPtr1, 1);
+    initLStack_ElemTypePtr(&LStack_ElemTypePtr1, LEFT, &avlPtr1);
     pushLStack(&stack, LStack_ElemTypePtr1);
 
     LStack_ElemTypePtr LStack_ElemTypePtr2 = NULL;
-    avlBiTree avlPtr2 = NULL;
-    initAVL(&avlPtr2, 2);
-    initLStack_ElemTypePtr(&LStack_ElemTypePtr2, 0, &avlPtr2);
+    AvlBiTree avlPtr2 = NULL;
+    initAvl(&avlPtr2, 2);
+    initLStack_ElemTypePtr(&LStack_ElemTypePtr2, RIGHT, &avlPtr2);
     pushLStack(&stack, LStack_ElemTypePtr2);
     
+    popLStack(&stack, &curr);
+    printLStack_ElemTypePtr(curr);
+    destroyLStack_ElemTypePtr(&curr);
+
     getTopLStack(&stack, &curr);
     printLStack_ElemTypePtr(curr);
 
@@ -99,6 +104,6 @@ int test2() {
     // 销毁栈时不会影响二叉树的原本结构
     destroyLStack(&stack);
     // printAVL(avlPtr1);
-    destoryAVL(&avlPtr1);
-    destoryAVL(&avlPtr2);
+    destoryAvl(&avlPtr1);
+    destoryAvl(&avlPtr2);
 }

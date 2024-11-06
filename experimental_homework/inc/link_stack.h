@@ -3,11 +3,18 @@
 
 #include "status_enum.h"
 
-typedef struct avlBiTNode avlBiTNode, *avlBiTree;
+typedef struct AvlBiTNode AvlBiTNode, *AvlBiTree;
+
+typedef enum LStack_ElemType_tag{
+	INITIAL_VALUE = 0,
+	LEFT = 1, 
+	RIGHT = 2,
+	UP = 3
+} LStack_ElemType_tag;
 
 typedef struct {
-	avlBiTree avlPtr;
-	int tag;
+	AvlBiTree avlPtr;
+	LStack_ElemType_tag tag;
 } LStack_ElemType, *LStack_ElemTypePtr;
 
 typedef  struct StackNode
@@ -21,7 +28,7 @@ typedef  struct  LinkStack
 {
 	StackNodePtr top;
 	int	count;
-}LinkStack;
+}LinkStack, LStack;
 
 /*
 与栈相关的基本操作
@@ -56,7 +63,7 @@ Status popLStack(LinkStack *s,LStack_ElemTypePtr *data);
 */
 
 // 创建一个LStack_ElemTypePtr, 放入LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag, avlBiTree *avlPtr);
+Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, AvlBiTree *avlPtr);
 
 // 创建一个LStack_ElemTypePtr, 放入默认的LStack_ElemTypePtr的组成元素
 Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e);

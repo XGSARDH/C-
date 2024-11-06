@@ -3,7 +3,7 @@
 #include "avl_binary_tree.h"
 #include "link_stack.h"
 
-Status makeEqualavl_ElemType(avl_ElemType *purpose, avl_ElemType *origin) {
+Status makeEqualAvl_ElemType(Avl_ElemType *purpose, Avl_ElemType *origin) {
     if (purpose && origin) {
         *purpose = *origin;
         return TRUE;
@@ -11,7 +11,7 @@ Status makeEqualavl_ElemType(avl_ElemType *purpose, avl_ElemType *origin) {
     return FALSE;
 }
 
-int IsEqualBiTElemType(avl_ElemType a, avl_ElemType b) {
+int isEqualBiTElemType(Avl_ElemType a, Avl_ElemType b) {
     if (a < b) {
         return -1;
     }
@@ -21,50 +21,87 @@ int IsEqualBiTElemType(avl_ElemType a, avl_ElemType b) {
     return 0;
 }
 
-Status initAVL_default(avlBiTree *p) {
-    initAVL(p, 0);
+Status initAvl_default(AvlBiTree *p) {
+    initAvl(p, 0);
 }
 
-Status initAVL(avlBiTree *p, avl_ElemType avl_ElemType) {
+Status initAvl(AvlBiTree *p, Avl_ElemType avl_ElemType) {
     if (*p) {
         return TRUE;
     }
-    *p = (avlBiTree)malloc(sizeof(avlBiTNode));
-    makeEqualavl_ElemType(&((*p)->data), &avl_ElemType);
+    *p = (AvlBiTree)malloc(sizeof(AvlBiTNode));
+    makeEqualAvl_ElemType(&((*p)->data), &avl_ElemType);
     (*p)->lchild = NULL;
     (*p)->rchild = NULL;
     (*p)->balance_factor = 0;
     return *p ? TRUE : FALSE;
 }
 
-Status destoryAVL(avlBiTree *p) {
+Status destoryAvl(AvlBiTree *p) {
     if (!p) {
         return TRUE;
     }
     if (*p) {
-        destoryAVL(&((*p)->lchild));
-        destoryAVL(&((*p)->rchild));
+        destoryAvl(&((*p)->lchild));
+        destoryAvl(&((*p)->rchild));
         free(*p);
         *p = NULL;
     }
     return TRUE;
 }
 
-Status rRotate(avlBiTree *p) {
+Status rRotate(AvlBiTree *p) {
 
 }
 
-Status lRotate(avlBiTree *p) {
+Status lRotate(AvlBiTree *p) {
 
 }
 
-Status insertAVL(avlBiTree *p, avl_ElemType e) {
+Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
+    if (!p || !*p) {
+        initAvl(p, e);
+        return (!p || !*p)? FALSE: TRUE;
+    }
+    // 定义move来确定要插入的位置
+    AvlBiTree *move = p;
+    // 初始化一个栈
+    LStack stack;
+    initLStack(&stack);
+    // 利用栈来记录查找经过的位置
+    while ((*move)) {
+        int isBigger = isEqualBiTElemType(e, (*move)->data);
+        // isBigger == 0, means equal. isBigger == 1, means right. isBigger == -1, means left.
+        // but when left, tag == 1; when right, tag == 2.
+        LStack_ElemTypePtr curr = NULL;
 
+        if (isBigger == 0) {
+            destroyLStack(&stack);
+            return TRUE;
+        }
+        else if(isBigger == 1) {
+            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            move = &((*move)->rchild);
+        }
+        else {
+            initLStack_ElemTypePtr(&curr, LEFT, move);
+            move = &((*move)->lchild);
+        }
+        pushLStack(&stack, curr);
+        destroyLStack_ElemTypePtr(&curr);
+    }
+    if (!initAvl(move, e)) {
+        destroyLStack(&stack);
+        return FALSE;
+    }
+    (*move)->data = e;
+    destroyLStack(&stack);
+    return TRUE;
 }
 
-Status deleteAVL(avlBiTree *p, avl_ElemType e);
+Status deleteAvl(AvlBiTree *p, Avl_ElemType e);
 
-Status visitAVL(avlBiTree p) {
+Status visitAvl(AvlBiTree p) {
     if(p) {
         printf("%d", p->data);
         return TRUE;
@@ -72,18 +109,15 @@ Status visitAVL(avlBiTree p) {
     return FALSE;
 }
 
-Status InOrderTraverseAVL(avlBiTree p, Status *visit(avlBiTree t)) {
+// Status InOrderTraverseAvl(AvlBiTree p, Status *visit(AvlBiTree t)) {
+Status inOrderTraverseAvl(AvlBiTree p) {
+    if (!p) return TRUE;
+    inOrderTraverseAvl(p->lchild);
+    visitAvl(p);
+    printf(" ");
+    inOrderTraverseAvl(p->rchild);
     return TRUE;
 }
 
-Status printAVL(avlBiTree p) {
-    if (!p) {
-        printf("avlBiTree == NULL");
-        return FALSE;
-    }
-    printf("avlBiTree != NULL\n");
-
-    printf("avlBiTree->data == %d; ", p->data);
-    printf("avlBiTree->balance_factor == %d", p->balance_factor);
-    return TRUE;
+Status printAvl(AvlBiTree p) {
 }

@@ -42,7 +42,7 @@ Status destroyLStack(LinkStack *s) {
     while (s->top) {
         p = s->top;
         s->top = s->top->next;
-        free(p->data);
+        if(!p->data) free(p->data);
         free(p);
     }
     s->count = 0;
@@ -79,7 +79,7 @@ Status popLStack(LinkStack *s, LStack_ElemTypePtr *data) {
 与栈基本数据元素相关的基本操作
 */
 
-Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag, avlBiTree *avlPtr) {
+Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, AvlBiTree *avlPtr) {
     if (!e) return FALSE;
     *e = (LStack_ElemTypePtr)malloc(sizeof(LStack_ElemType));
     if (!*e) return FALSE;
@@ -119,7 +119,13 @@ Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr r
 }
 
 Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin) {
-	printAVL(origin->avlPtr);
+    AvlBiTree p = origin->avlPtr;
+    if (!p) {
+        printf("AvlBiTree == NULL");
+        return FALSE;
+    }
+    printf("AvlBiTree->data == %d; ", p->data);
+    printf("AvlBiTree->balance_factor == %d", p->balance_factor);
     printf("\n");
 	printf("origin->tag == %d \n", origin->tag);
 	return TRUE;
