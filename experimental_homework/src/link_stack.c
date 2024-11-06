@@ -7,43 +7,38 @@
 与栈相关的基本操作
 */
 
-// 初始化一个栈
 Status initLStack(LinkStack *s) {
     if (!s) return FALSE;
-    s->top = (LinkStackPtr)malloc(sizeof(StackNode));
+    s->top = (StackNodePtr)malloc(sizeof(StackNode));
     if (!s->top) return FALSE;
     s->top->next = NULL;
     s->count = 0;
     return TRUE;
 }
 
-// 创建一个栈节点
-Status initLStackPtr(LinkStackPtr *p, LStack_ElemTypePtr e) {
+Status initLStackPtr(StackNodePtr *p, LStack_ElemTypePtr e) {
     if (!p || !e) return FALSE;
-    *p = (LinkStackPtr)malloc(sizeof(StackNode));
+    *p = (StackNodePtr)malloc(sizeof(StackNode));
     if (!*p) return FALSE;
     (*p)->data = e;
     (*p)->next = NULL;
     return TRUE;
 }
 
-// 判断栈是否为空
 Status isEmptyLStack(LinkStack *s) {
     if (!s) return FALSE;
     return s->count == 0 ? TRUE : FALSE;
 }
 
-// 取得栈顶元素
 Status getTopLStack(LinkStack *s, LStack_ElemTypePtr *e) {
     if (!s || !e || isEmptyLStack(s)) return FALSE;
     *e = s->top->data;
     return TRUE;
 }
 
-// 销毁栈
 Status destroyLStack(LinkStack *s) {
     if (!s) return FALSE;
-    LinkStackPtr p;
+    StackNodePtr p;
     while (s->top) {
         p = s->top;
         s->top = s->top->next;
@@ -54,17 +49,15 @@ Status destroyLStack(LinkStack *s) {
     return TRUE;
 }
 
-// 取得栈长度
 Status LStackLength(LinkStack *s, int *length) {
     if (!s || !length) return FALSE;
     *length = s->count;
     return TRUE;
 }
 
-// 入栈
 Status pushLStack(LinkStack *s, LStack_ElemTypePtr data) {
     if (!s || !data) return FALSE;
-    LinkStackPtr newNode;
+    StackNodePtr newNode;
     if (!initLStackPtr(&newNode, data)) return FALSE;
     newNode->next = s->top;
     s->top = newNode;
@@ -72,10 +65,9 @@ Status pushLStack(LinkStack *s, LStack_ElemTypePtr data) {
     return TRUE;
 }
 
-// 出栈
 Status popLStack(LinkStack *s, LStack_ElemTypePtr *data) {
     if (!s || !data || isEmptyLStack(s)) return FALSE;
-    LinkStackPtr temp = s->top;
+    StackNodePtr temp = s->top;
     *data = temp->data;
     s->top = temp->next;
     free(temp);
@@ -87,37 +79,48 @@ Status popLStack(LinkStack *s, LStack_ElemTypePtr *data) {
 与栈基本数据元素相关的基本操作
 */
 
-// 创建一个LStack_ElemTypePtr, 放入LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag) {
+Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag, avlBiTree *avlPtr) {
     if (!e) return FALSE;
     *e = (LStack_ElemTypePtr)malloc(sizeof(LStack_ElemType));
     if (!*e) return FALSE;
     (*e)->tag = tag;
+	if (avlPtr == NULL) {
+		(*e)->avlPtr = NULL;
+	}
+	else (*e)->avlPtr = *avlPtr;
     return TRUE;
 }
 
-// 创建一个LStack_ElemTypePtr, 放入默认的LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e, int tag) {
-    return initLStack_ElemTypePtr(e, tag);
+Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e) {
+    return initLStack_ElemTypePtr(e, 0, NULL);
 }
 
-// 摧毁LStack_ElemTypePtr
-Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr **e) {
+Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr *e) {
     if (!e || !*e) return FALSE;
     free(*e);
     *e = NULL;
     return TRUE;
 }
 
-// 使两个LStack_ElemTypePtr相等
 Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePtr *result) {
     if (!origin || !result || !*origin || !*result) return FALSE;
     (*result)->tag = (*origin)->tag;
+    (*result)->avlPtr = (*origin)->avlPtr;
     return TRUE;
 }
 
-// 判断两个LStack_ElemTypePtr是否相等
 Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr result) {
     if (!origin || !result) return FALSE;
-    return origin->tag == result->tag ? TRUE : FALSE;
+	Status status = TRUE;
+    status = origin->tag == result->tag ? TRUE : FALSE;
+	if (!status) return status;
+    status = origin->avlPtr == result->avlPtr ? TRUE : FALSE;
+	return status;
+}
+
+Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin) {
+	printAVL(origin->avlPtr);
+    printf("\n");
+	printf("origin->tag == %d \n", origin->tag);
+	return TRUE;
 }

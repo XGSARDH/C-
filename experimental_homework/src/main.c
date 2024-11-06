@@ -9,7 +9,7 @@ void testStack();
 
 int main()
 {
-	// testAVL();
+	testAVL();
 	// testStack();
 	return 0;
 }
@@ -17,23 +17,8 @@ int main()
 void testAVL() {
 	printf("Test avl;\n");
 	avlBiTree curr = NULL;
-	printf("%d\n", initAVL(&curr));
-	visitAVL(curr);
-	printf("\n");
-	printf("%d\n", destoryAVL(&curr));
-}
-
-void testStack() {
-	printf("Test avlstack;\n");
-	LinkStack stack;
-	initLStack(&stack);
-	StackElemType temp = NULL;
-	initStackElemType(&temp);
-	PrintStackElemType(temp);
-	printf("\n");
-	pushLStack(&stack, temp);
-	popLStack(&stack, &temp);
-	PrintStackElemType(temp);
-	printf("\n");
-	destroyLStack(&stack);
+	printf("初始化是否成功:%d\n", initAVL(&curr, 10));
+	printf("打印初始化节点的值:") && visitAVL(curr) && printf("\n");
+	printf("删除是否成功:%d\n", destoryAVL(&curr));
+	// InOrderTraverseAVL(curr, visitAVL);
 }

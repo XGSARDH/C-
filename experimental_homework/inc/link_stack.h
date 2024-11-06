@@ -3,10 +3,10 @@
 
 #include "status_enum.h"
 
-typedef struct avlBiTNode *avlBiTree;
+typedef struct avlBiTNode avlBiTNode, *avlBiTree;
 
 typedef struct {
-	avlBiTree avlBiTree;
+	avlBiTree avlPtr;
 	int tag;
 } LStack_ElemType, *LStack_ElemTypePtr;
 
@@ -14,12 +14,12 @@ typedef  struct StackNode
 {
 	LStack_ElemTypePtr data;
 	struct StackNode *next;
-}StackNode, *LinkStackPtr;
+}StackNode, *StackNodePtr;
 
 // 头插法(有头结点)
 typedef  struct  LinkStack
 {
-	LinkStackPtr top;
+	StackNodePtr top;
 	int	count;
 }LinkStack;
 
@@ -31,7 +31,7 @@ typedef  struct  LinkStack
 Status initLStack(LinkStack *s);
 
 // 创建一个栈节点
-Status initLStackPtr(LinkStackPtr *p, LStack_ElemTypePtr e);
+Status initLStackPtr(StackNodePtr *p, LStack_ElemTypePtr e);
 
 // 判断栈是否为空
 Status isEmptyLStack(LinkStack *s);
@@ -56,18 +56,21 @@ Status popLStack(LinkStack *s,LStack_ElemTypePtr *data);
 */
 
 // 创建一个LStack_ElemTypePtr, 放入LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag);
+Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag, avlBiTree *avlPtr);
 
 // 创建一个LStack_ElemTypePtr, 放入默认的LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e, int tag);
+Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e);
 
 // 摧毁LStack_ElemTypePtr
-Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr **e);
+Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr *e);
 
 // 使两个LStack_ElemTypePtr相等
 Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePtr *result);
 
 // 判断两个LStack_ElemTypePtr是否相等
 Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr result);
+
+// 打印tLStack_ElemTypePtr
+Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin);
 
 #endif // STACK_H_INCLUDED
