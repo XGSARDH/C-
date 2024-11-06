@@ -3,44 +3,71 @@
 
 #include "status_enum.h"
 
-typedef struct avlBiTNode *StackElemType;
+typedef struct avlBiTNode *avlBiTree;
+
+typedef struct {
+	avlBiTree avlBiTree;
+	int tag;
+} LStack_ElemType, *LStack_ElemTypePtr;
 
 typedef  struct StackNode
 {
-	StackElemType data;
+	LStack_ElemTypePtr data;
 	struct StackNode *next;
 }StackNode, *LinkStackPtr;
 
+// 头插法(有头结点)
 typedef  struct  LinkStack
 {
 	LinkStackPtr top;
 	int	count;
 }LinkStack;
 
+/*
+与栈相关的基本操作
+*/
+
+// 初始化一个栈
 Status initLStack(LinkStack *s);
 
+// 创建一个栈节点
+Status initLStackPtr(LinkStackPtr *p, LStack_ElemTypePtr e);
+
+// 判断栈是否为空
 Status isEmptyLStack(LinkStack *s);
 
-Status getTopLStack(LinkStack *s,StackElemType *e);
+// 取得栈顶元素
+Status getTopLStack(LinkStack *s,LStack_ElemTypePtr *e);
 
-Status clearLStack(LinkStack *s);
-
+// 销毁栈
 Status destroyLStack(LinkStack *s);
 
+// 取得栈长度
 Status LStackLength(LinkStack *s,int *length);
 
-Status pushLStack(LinkStack *s,StackElemType data);//��ջ
+// 入栈
+Status pushLStack(LinkStack *s,LStack_ElemTypePtr data);
 
-Status popLStack(LinkStack *s,StackElemType *data);
+// 出栈
+Status popLStack(LinkStack *s,LStack_ElemTypePtr *data);
 
-void PrintStackElemType(StackElemType e);
+/*
+与栈基本数据元素相关的基本操作
+*/
 
-Status MakeEqualData(StackElemType* origin, StackElemType* result);
+// 创建一个LStack_ElemTypePtr, 放入LStack_ElemTypePtr的组成元素
+Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, int tag);
 
-Status IsMakeEqualData(StackElemType* origin, StackElemType* result);
+// 创建一个LStack_ElemTypePtr, 放入默认的LStack_ElemTypePtr的组成元素
+Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e, int tag);
 
-Status InitList_StackNode(StackNode** L);
+// 摧毁LStack_ElemTypePtr
+Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr **e);
 
-Status InitStackElemType (StackElemType* e);
+// 使两个LStack_ElemTypePtr相等
+Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePtr *result);
 
-#endif 
+// 判断两个LStack_ElemTypePtr是否相等
+Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr result);
+
+#endif // STACK_H_INCLUDED
