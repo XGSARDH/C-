@@ -5,14 +5,15 @@
 
 int test1();
 AvlBiTree allBinaryTree();
+int testRotate();
 int testRRotate(AvlBiTree *p);
+int testLRotate(AvlBiTree *p);
 
 int main()
 {
     int main_output = 0;
-    main_output = test1();
-    // AvlBiTree root = allBinaryTree();
-    // main_output = testRRotate(&root);
+    // main_output = test1();
+    main_output = testRotate();
     return main_output;
 }
 
@@ -57,8 +58,25 @@ AvlBiTree allBinaryTree() {
     return root;
 }
 
+int testRotate() {
+    int output = 0;
+
+    AvlBiTree root = allBinaryTree();
+    printf("旋转前\n") && printAvl(root) && printf("\n");
+
+    output = testLRotate(&root);
+    // output = testRRotate(&root);
+
+    printf("旋转后\n") && printAvl(root) && printf("\n");
+
+    destoryAvl(&root);
+    return output;
+}
+
 int testRRotate(AvlBiTree *p) {
-    AvlBiTree root = *p;
-    printAvl(root);
-    destoryAvl(p);
+    rRotate(p);
+}
+
+int testLRotate(AvlBiTree *p) {
+    lRotate(p);
 }

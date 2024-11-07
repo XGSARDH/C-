@@ -62,11 +62,41 @@ Status destoryAvl(AvlBiTree *p) {
 }
 
 Status rRotate(AvlBiTree *p) {
-
+    if (!p) {
+        return FALSE;
+    }
+    if (!*p) {
+        return TRUE;
+    }
+    AvlBiTree root = *p;
+    AvlBiTree rootLchild = root->lchild;
+    if (!rootLchild) {
+        return FALSE;
+    }
+    AvlBiTree rootLchildRchild = rootLchild->rchild;
+    rootLchild->rchild = root;
+    root->lchild = rootLchildRchild;
+    *p = rootLchild;
+    return TRUE;
 }
 
 Status lRotate(AvlBiTree *p) {
-
+    if (!p) {
+        return FALSE;
+    }
+    if (!*p) {
+        return TRUE;
+    }
+    AvlBiTree root = *p;
+    AvlBiTree rootRchild = root->rchild;
+    if (!rootRchild) {
+        return FALSE;
+    }
+    AvlBiTree rootRchildLchild = rootRchild->lchild;
+    rootRchild->lchild = root;
+    root->rchild = rootRchildLchild;
+    *p = rootRchild;
+    return TRUE;
 }
 
 Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
