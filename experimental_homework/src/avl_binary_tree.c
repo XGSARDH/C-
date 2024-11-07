@@ -137,12 +137,41 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
         destroyLStack(&stack);
         return FALSE;
     }
-    (*move)->data = e;
+    // 可忽略下列该行
+    // (*move)->data = e;
+
+    // 应该在此处增加平衡因子调整相关代码
+
     destroyLStack(&stack);
     return TRUE;
 }
 
 Status deleteAvl(AvlBiTree *p, Avl_ElemType e);
+
+Status updateBalanceFactor_helper(AvlBiTree p, int *depth) {
+    if (!p) {
+        return TRUE;
+    }
+    int leftDepth = 0, rightDepth = 0;
+    updateBalanceFactor_helper(p->lchild, &leftDepth);
+    updateBalanceFactor_helper(p->rchild, &rightDepth);
+    p->balance_factor = leftDepth - rightDepth;
+    *depth = leftDepth > rightDepth? leftDepth + 1: rightDepth + 1;
+}
+
+Status updateBalanceFactor(AvlBiTree p) {
+    if (!p) {
+        return TRUE;
+    }
+    int depth = 0;
+    if (!updateBalanceFactor_helper(p, &depth)) {
+        return FALSE;
+    }
+    if (depth <= 0) {
+        return FALSE;
+    }
+    return TRUE;
+}
 
 Status visitAvl(AvlBiTree p) {
     if(p) {

@@ -35,6 +35,9 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e);
 // 对以p节点为根的Avl树删除值为e的Avl树节点
 Status deleteAvl(AvlBiTree *p, Avl_ElemType e);
 
+// 更新以p节点为根的Avl树的平衡因子的值
+Status updateBalanceFactor(AvlBiTree p);
+
 // 输出p节点的值
 Status visitAvl(AvlBiTree p);
 
