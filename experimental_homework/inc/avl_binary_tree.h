@@ -11,12 +11,14 @@ typedef struct AvlBiTNode {
     struct AvlBiTNode *lchild, *rchild;
 } AvlBiTNode, *AvlBiTree;
 
+// 创建一棵Avl空树
+Status initAvl(AvlBiTree *root);
 
 // 默认初始化一个Avl节点
-Status initAvl_default(AvlBiTree *p);
+Status initAvlBiTNode_default(AvlBiTree *p);
 
 // 初始化一个Avl节点
-Status initAvl(AvlBiTree *p, Avl_ElemType avl_ElemType);
+Status initAvlBiTNode(AvlBiTree *p, Avl_ElemType avl_ElemType);
 
 // 销毁一个Avl树
 Status destoryAvl(AvlBiTree *p);

@@ -3,6 +3,16 @@
 #include "avl_binary_tree.h"
 #include "link_stack.h"
 
+Status initAvl(AvlBiTree *root) {
+    if (!root) {
+        return FALSE;
+    }
+    if (!*root) {
+        destoryAvl(root);
+    }
+    *root = NULL;
+}
+
 Status makeEqualAvl_ElemType(Avl_ElemType *purpose, Avl_ElemType *origin) {
     if (purpose && origin) {
         *purpose = *origin;
@@ -12,20 +22,21 @@ Status makeEqualAvl_ElemType(Avl_ElemType *purpose, Avl_ElemType *origin) {
 }
 
 int isEqualBiTElemType(Avl_ElemType a, Avl_ElemType b) {
-    if (a < b) {
-        return -1;
-    }
-    else if (b < a) {
+    if (a > b) {
         return 1;
     }
-    return 0;
+    else if (a < b) {
+        return -1;
+    }
+    else return 0;
 }
 
-Status initAvl_default(AvlBiTree *p) {
-    initAvl(p, 0);
+Status initAvlBiTNode_default(AvlBiTree *p) {
+    initAvlBiTNode(p, 0);
 }
 
-Status initAvl(AvlBiTree *p, Avl_ElemType avl_ElemType) {
+// initAvl应该是指创建一颗空树, 而不是创建一个包含默认值的只有一个节点的树
+Status initAvlBiTNode(AvlBiTree *p, Avl_ElemType avl_ElemType) {
     if (*p) {
         return TRUE;
     }
@@ -59,9 +70,11 @@ Status lRotate(AvlBiTree *p) {
 }
 
 Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
-    if (!p || !*p) {
-        initAvl(p, e);
-        return (!p || !*p)? FALSE: TRUE;
+    if (!p) {
+        return FALSE;
+    }
+    if (!*p) {
+        return initAvlBiTNode(p, e);
     }
     // 定义move来确定要插入的位置
     AvlBiTree *move = p;
@@ -90,7 +103,7 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
         pushLStack(&stack, curr);
         destroyLStack_ElemTypePtr(&curr);
     }
-    if (!initAvl(move, e)) {
+    if (!initAvlBiTNode(move, e)) {
         destroyLStack(&stack);
         return FALSE;
     }
@@ -135,16 +148,16 @@ Status printAvl(AvlBiTree p) {
         else if (tag == RIGHT) {
             initLStack_ElemTypePtr(&curr, INITIAL_VALUE, &topLStack_ElemTypePtr->avlPtr);
             pushLStack(&stack, curr);
-            if (topLStack_ElemTypePtr->avlPtr->lchild) {
-                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->lchild);
+            if (topLStack_ElemTypePtr->avlPtr->rchild) {
+                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->rchild);
                 pushLStack(&stack, curr);
             }
         }
         else if (tag == LEFT) {
             initLStack_ElemTypePtr(&curr, UP, &topLStack_ElemTypePtr->avlPtr);
             pushLStack(&stack, curr);
-            if (topLStack_ElemTypePtr->avlPtr->rchild) {
-                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->rchild);
+            if (topLStack_ElemTypePtr->avlPtr->lchild) {
+                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->lchild);
                 pushLStack(&stack, curr);
             }
         }

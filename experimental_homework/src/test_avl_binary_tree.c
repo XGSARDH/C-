@@ -4,17 +4,21 @@
 #include "link_stack.h"
 
 int test1();
+AvlBiTree allBinaryTree();
+int testRRotate(AvlBiTree *p);
 
 int main()
 {
     int main_output = 0;
     main_output = test1();
-    return 0;
+    // AvlBiTree root = allBinaryTree();
+    // main_output = testRRotate(&root);
+    return main_output;
 }
 
 int test1() {
     AvlBiTree root = NULL;
-    if (!initAvl(&root, 1)) {
+    if (!initAvl(&root)) {
         printf("initAvl error\n");
         return 0;
     }
@@ -33,4 +37,28 @@ int test1() {
     printf("inOrderTraverseAvl:\n") && inOrderTraverseAvl(root) && printf("\n");
     printf("printAvl:\n") && printAvl(root) && printf("\n");
     return 0;
+}
+
+AvlBiTree allBinaryTree() {
+    AvlBiTree root = NULL;
+    if (!initAvl(&root)) {
+        printf("initAvl error\n");
+        return 0;
+    }
+    insertAvl(&root, 4);
+
+    insertAvl(&root, 2);
+    insertAvl(&root, 6);
+
+    insertAvl(&root, 1);
+    insertAvl(&root, 3);
+    insertAvl(&root, 5);
+    insertAvl(&root, 7);
+    return root;
+}
+
+int testRRotate(AvlBiTree *p) {
+    AvlBiTree root = *p;
+    printAvl(root);
+    destoryAvl(p);
 }

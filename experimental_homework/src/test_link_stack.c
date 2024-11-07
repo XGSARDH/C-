@@ -83,13 +83,13 @@ int test2() {
 
     LStack_ElemTypePtr lStack_ElemTypePtr1 = NULL;
     AvlBiTree avlPtr1 = NULL;
-    initAvl(&avlPtr1, 1);
+    initAvlBiTNode(&avlPtr1, 1);
     initLStack_ElemTypePtr(&lStack_ElemTypePtr1, LEFT, &avlPtr1);
     pushLStack(&stack, lStack_ElemTypePtr1);
 
     LStack_ElemTypePtr lStack_ElemTypePtr2 = NULL;
     AvlBiTree avlPtr2 = NULL;
-    initAvl(&avlPtr2, 2);
+    initAvlBiTNode(&avlPtr2, 2);
     initLStack_ElemTypePtr(&lStack_ElemTypePtr2, RIGHT, &avlPtr2);
     pushLStack(&stack, lStack_ElemTypePtr2);
     
