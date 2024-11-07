@@ -81,17 +81,17 @@ int test2() {
     // avlBiTree + tag 等价于 LStack_ElemTypePtr
     LStack_ElemTypePtr curr = NULL;
 
-    LStack_ElemTypePtr LStack_ElemTypePtr1 = NULL;
+    LStack_ElemTypePtr lStack_ElemTypePtr1 = NULL;
     AvlBiTree avlPtr1 = NULL;
     initAvl(&avlPtr1, 1);
-    initLStack_ElemTypePtr(&LStack_ElemTypePtr1, LEFT, &avlPtr1);
-    pushLStack(&stack, LStack_ElemTypePtr1);
+    initLStack_ElemTypePtr(&lStack_ElemTypePtr1, LEFT, &avlPtr1);
+    pushLStack(&stack, lStack_ElemTypePtr1);
 
-    LStack_ElemTypePtr LStack_ElemTypePtr2 = NULL;
+    LStack_ElemTypePtr lStack_ElemTypePtr2 = NULL;
     AvlBiTree avlPtr2 = NULL;
     initAvl(&avlPtr2, 2);
-    initLStack_ElemTypePtr(&LStack_ElemTypePtr2, RIGHT, &avlPtr2);
-    pushLStack(&stack, LStack_ElemTypePtr2);
+    initLStack_ElemTypePtr(&lStack_ElemTypePtr2, RIGHT, &avlPtr2);
+    pushLStack(&stack, lStack_ElemTypePtr2);
     
     popLStack(&stack, &curr);
     printLStack_ElemTypePtr(curr);

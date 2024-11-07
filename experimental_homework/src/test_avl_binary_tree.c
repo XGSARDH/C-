@@ -28,7 +28,9 @@ int test1() {
     insertAvl(&root, 5);
     insertAvl(&root, 6);
     insertAvl(&root, 7);
-    inOrderTraverseAvl(root);
-    printf("\n");
+    insertAvl(&root, 9);
+    insertAvl(&root, 8);
+    printf("inOrderTraverseAvl:\n") && inOrderTraverseAvl(root) && printf("\n");
+    printf("printAvl:\n") && printAvl(root) && printf("\n");
     return 0;
 }

@@ -5,7 +5,8 @@
 
 typedef struct AvlBiTNode AvlBiTNode, *AvlBiTree;
 
-typedef enum LStack_ElemType_tag{
+typedef enum LStack_ElemType_tag {
+	ERROR = -1,
 	INITIAL_VALUE = 0,
 	LEFT = 1, 
 	RIGHT = 2,

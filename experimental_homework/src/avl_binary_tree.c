@@ -120,4 +120,53 @@ Status inOrderTraverseAvl(AvlBiTree p) {
 }
 
 Status printAvl(AvlBiTree p) {
+    if (!p) return TRUE;
+    LinkStack stack;
+    initLStack(&stack);
+    LStack_ElemTypePtr topLStack_ElemTypePtr = NULL;
+    LStack_ElemType_tag tag = INITIAL_VALUE;
+    initLStack_ElemTypePtr(&topLStack_ElemTypePtr, RIGHT, &p);
+    pushLStack(&stack, topLStack_ElemTypePtr);
+    while (!isEmptyLStack(&stack)) {
+        popLStack(&stack, &topLStack_ElemTypePtr);
+        LStack_ElemTypePtr curr = NULL;
+        tag = topLStack_ElemTypePtr->tag;
+        if (tag == ERROR) return FALSE;
+        else if (tag == RIGHT) {
+            initLStack_ElemTypePtr(&curr, INITIAL_VALUE, &topLStack_ElemTypePtr->avlPtr);
+            pushLStack(&stack, curr);
+            if (topLStack_ElemTypePtr->avlPtr->lchild) {
+                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->lchild);
+                pushLStack(&stack, curr);
+            }
+        }
+        else if (tag == LEFT) {
+            initLStack_ElemTypePtr(&curr, UP, &topLStack_ElemTypePtr->avlPtr);
+            pushLStack(&stack, curr);
+            if (topLStack_ElemTypePtr->avlPtr->rchild) {
+                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->rchild);
+                pushLStack(&stack, curr);
+            }
+        }
+        else if (tag == INITIAL_VALUE) {
+            int length = 0;
+            LStackLength(&stack, &length);
+            for(int i = 0; i < length; i++) {
+                printf("  |  ");
+            }
+            visitAvl(topLStack_ElemTypePtr->avlPtr);
+            printf("\n");
+            initLStack_ElemTypePtr(&curr, LEFT, &topLStack_ElemTypePtr->avlPtr);
+            pushLStack(&stack, curr);
+        }
+        else if (tag == UP) {
+        }
+        else {
+            destroyLStack_ElemTypePtr(&topLStack_ElemTypePtr);
+            destroyLStack(&stack);
+            return FALSE;
+        }
+        destroyLStack_ElemTypePtr(&topLStack_ElemTypePtr);
+    }
+    destroyLStack(&stack);
 }
