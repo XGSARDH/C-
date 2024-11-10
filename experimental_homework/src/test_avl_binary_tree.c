@@ -40,8 +40,19 @@ int test1() {
     insertAvl(&root, 100);
     insertAvl(&root, 87);
     insertAvl(&root, 90);
-    printf("inOrderTraverseAvl:\n") && inOrderTraverseAvl(root) && printf("\n");
-    printf("printAvl:\n") && printAvl(root) && printf("\n");
+    // deleteAvl(&root, 11);
+    // deleteAvl(&root, 13);
+    // deleteAvl(&root, 90);
+    printf("beforeprintAvl:\n") && printAvl(root) && printf("\n");
+    deleteAvl(&root, 87);
+    // printf("inOrderTraverseAvl:\n") && inOrderTraverseAvl(root) && printf("\n");
+    printf("afterprintAvl:\n") && printAvl(root) && printf("\n");
+    deleteAvl(&root, -1);
+    deleteAvl(&root, 2);
+    deleteAvl(&root, 4);
+    deleteAvl(&root, 7);
+    deleteAvl(&root, 9);
+    printf("afterprintAvl:\n") && printAvl(root) && printf("\n");
     return 0;
 }
 

@@ -100,46 +100,6 @@ Status lRotate(AvlBiTree *p) {
     return TRUE;
 }
 
-Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
-    if (!p) {
-        return FALSE;
-    }
-    if (!*p) {
-        return initAvlBiTNode(p, e);
-    }
-    // 定义move来确定要插入的位置
-    AvlBiTree *move = p;
-    // 利用栈来记录查找经过的位置
-    while ((*move)) {
-        int isBigger = isEqualBiTElemType(e, (*move)->data);
-        // isBigger == 0, means equal. isBigger == 1, means right. isBigger == -1, means left.
-        // but when left, tag == 1; when right, tag == 2.
-        LStack_ElemTypePtr curr = NULL;
-
-        if (isBigger == 0) {
-            // destroyLStack(stack);
-            return TRUE;
-        }
-        else if(isBigger == 1) {
-            initLStack_ElemTypePtr(&curr, RIGHT, move);
-            move = &((*move)->rchild);
-        }
-        else {
-            initLStack_ElemTypePtr(&curr, LEFT, move);
-            move = &((*move)->lchild);
-        }
-        pushLStack(stack, curr);
-        // destroyLStack_ElemTypePtr(&curr);
-    }
-    if (!initAvlBiTNode(move, e)) {
-        destroyLStack(stack);
-        return FALSE;
-    }
-    // 可忽略下列该行
-    // (*move)->data = e;
-
-}
-
 Status rotate(AvlBiTree *p) {
     if (abs((*p)->balance_factor) < 2) return TRUE;
     if ((*p)->balance_factor == 2) {
@@ -174,9 +134,47 @@ Status rotate(AvlBiTree *p) {
     }
 }
 
-Status insertAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
+Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
+    if (!p) {
+        return FALSE;
+    }
+    if (!*p) {
+        return initAvlBiTNode(p, e);
+    }
+    // 定义move来确定要插入的位置
+    AvlBiTree *move = p;
+    // 利用栈来记录查找经过的位置
+    while ((*move)) {
+        int isBigger = isEqualBiTElemType(e, (*move)->data);
+        // isBigger == 0, means equal. isBigger == 1, means right. isBigger == -1, means left.
+        // but when left, tag == 1; when right, tag == 2.
+        LStack_ElemTypePtr curr = NULL;
+
+        if (isBigger == 0) {
+            // destroyLStack(stack);
+            return TRUE;
+        }
+        else if(isBigger == 1) {
+            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            move = &((*move)->rchild);
+        }
+        else {
+            initLStack_ElemTypePtr(&curr, LEFT, move);
+            move = &((*move)->lchild);
+        }
+        pushLStack(stack, curr);
+    }
+    if (!initAvlBiTNode(move, e)) {
+        destroyLStack(stack);
+        return FALSE;
+    }
+    // 可忽略下列该行
+    // (*move)->data = e;
+
+}
+
+Status balanceAvlByStack(AvlBiTree *p, LStack *stack) {
     LStack_ElemTypePtr move = NULL;
-    LStack_ElemType_tag lastTag = INITIAL_VALUE;
     while (!isEmptyLStack(stack)) {
         popLStack(stack, &move);
         if (!updateBalanceFactor(move->avlPtr)) return FALSE;
@@ -185,13 +183,15 @@ Status insertAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
             // return TRUE;
             break;
         }
+        destroyLStack_ElemTypePtr(&move);
     }
     if (move && abs(move->avlPtr->balance_factor) == 2) {
+        destroyLStack_ElemTypePtr(&move);
         if (isEmptyLStack(stack)) {
             return rotate(p);
         }
         else {
-            popLStack(stack, &move);
+            getTopLStack(stack, &move);
             if (move->tag == LEFT) {
                 return rotate(&move->avlPtr->lchild);
             }
@@ -209,12 +209,172 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
     initLStack(&stack);
     if (insertAvl_helper1(p, e, &stack) == FALSE) return FALSE;
     // 应该在此处增加平衡因子调整相关代码
-    if (insertAvl_helper2(p, e, &stack) == FALSE) return FALSE;
+    if (balanceAvlByStack(p, &stack) == FALSE) return FALSE;
     destroyLStack(&stack);
     return TRUE;
 }
 
-Status deleteAvl(AvlBiTree *p, Avl_ElemType e);
+
+Status deleteAvl_helper3(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
+    LStack_ElemTypePtr curr = NULL;
+    if (!getTopLStack(stack, &curr)) return FALSE;
+    LStack_ElemTypePtr root = curr;
+    if (curr->avlPtr->balance_factor >= 0) {
+        // left tree is higher, to make left max to be root
+        AvlBiTree move = curr->avlPtr->lchild;
+        // log the way
+        initLStack_ElemTypePtr(&curr, LEFT, &move);
+        pushLStack(stack, curr);
+        move = move->rchild;
+        while (move) {
+            initLStack_ElemTypePtr(&curr, RIGHT, &move);
+            pushLStack(stack, curr);
+            move = move->rchild;
+        }
+        // sure the position
+        popLStack(stack, &curr);
+        // change the root
+        makeEqualAvl_ElemType(&root->avlPtr->data, &curr->avlPtr->data);
+        // delete before
+        AvlBiTree deleteAvlLchild = curr->avlPtr->lchild;
+        // delete
+        destroyLStack_ElemTypePtr(&curr);
+        // delete after
+        getTopLStack(stack, &curr);
+        if (curr->avlPtr != root->avlPtr) curr->avlPtr->rchild = deleteAvlLchild;
+        else curr->avlPtr->lchild = deleteAvlLchild;
+        return balanceAvlByStack(p, stack);
+    }
+    else if (curr->avlPtr->balance_factor == -1) {
+        // right tree is higher, to make right min to be root
+        AvlBiTree move = curr->avlPtr->rchild;
+        // log the way
+        initLStack_ElemTypePtr(&curr, RIGHT, &move);
+        pushLStack(stack, curr);
+        move = move->lchild;
+        while (move) {
+            initLStack_ElemTypePtr(&curr, LEFT, &move);
+            pushLStack(stack, curr);
+            move = move->lchild;
+        }
+        // sure the position
+        popLStack(stack, &curr);
+        // change the root
+        makeEqualAvl_ElemType(&root->avlPtr->data, &curr->avlPtr->data);
+        // delete before
+        AvlBiTree deleteAvlRchild = curr->avlPtr->rchild;
+        // delete
+        destroyLStack_ElemTypePtr(&curr);
+        // delete after
+        getTopLStack(stack, &curr);
+        if (curr->avlPtr != root->avlPtr) curr->avlPtr->lchild = deleteAvlRchild;
+        else curr->avlPtr->rchild = deleteAvlRchild;
+        return balanceAvlByStack(p, stack);
+    }
+}
+
+Status deleteAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
+    if (!p || !*p) {
+        return FALSE;
+    }
+    // 校验是否是要删除的元素
+    LStack_ElemTypePtr move = NULL;
+    if (!getTopLStack(stack, &move)) return FALSE;
+    if (isEqualBiTElemType(move->avlPtr->data, e) != 0) return FALSE;
+    int flag = 0;
+    if (move->avlPtr->lchild) flag += 1;
+    if (move->avlPtr->rchild) flag += 2;
+
+    if (flag == 0) {
+        if (!popLStack(stack, &move)) return FALSE;
+        if (!destroyLStack_ElemTypePtr(&move)) return FALSE;
+        if (!popLStack(stack, &move)) return FALSE;
+        if (move->tag == LEFT) {
+            move->avlPtr->lchild = NULL;
+        }
+        else if (move->tag == RIGHT) {
+            move->avlPtr->rchild = NULL;
+        }
+        if (!destroyLStack_ElemTypePtr(&move)) return FALSE;
+    }
+    else if (flag == 1) {
+        if (!popLStack(stack, &move)) return FALSE;
+        AvlBiTree curr = move->avlPtr->lchild;
+        if (!destroyLStack_ElemTypePtr(&move)) return FALSE;
+        if (!getTopLStack(stack, &move)) return FALSE;
+        if (move->tag == LEFT) {
+            move->avlPtr->lchild = curr;
+        }
+        else if (move->tag == RIGHT) {
+            move->avlPtr->rchild = curr;
+        }
+    }
+    else if (flag == 2) {
+        if (!popLStack(stack, &move)) return FALSE;
+        AvlBiTree curr = move->avlPtr->rchild;
+        if (!destroyLStack_ElemTypePtr(&move)) return FALSE;
+        if (!getTopLStack(stack, &move)) return FALSE;
+        if (move->tag == LEFT) {
+            move->avlPtr->lchild = curr;
+        }
+        else if (move->tag == RIGHT) {
+            move->avlPtr->rchild = curr;
+        }
+    }
+    else if (flag == 3) {
+        return deleteAvl_helper3(p, e, stack);
+    }
+    else {
+        return FALSE;
+    }
+    return balanceAvlByStack(p, stack);
+}
+
+Status deleteAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
+    if (!p) {
+        return FALSE;
+    }
+    if (!*p) {
+        // OVERFLOW代表找不到
+        return OVERFLOW;
+    }
+    // 定义move来确定要删除的位置
+    AvlBiTree *move = p;
+    // 利用栈来记录查找经过的位置
+    while ((*move)) {
+        int isBigger = isEqualBiTElemType(e, (*move)->data);
+        // isBigger == 0, means equal. isBigger == 1, means right. isBigger == -1, means left.
+        // but when left, tag == 1; when right, tag == 2.
+        LStack_ElemTypePtr curr = NULL;
+        if (isBigger == 0) {
+            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            pushLStack(stack, curr);
+            return TRUE;
+        }
+        else if(isBigger == 1) {
+            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            move = &((*move)->rchild);
+        }
+        else {
+            initLStack_ElemTypePtr(&curr, LEFT, move);
+            move = &((*move)->lchild);
+        }
+        pushLStack(stack, curr);
+    }
+    return OVERFLOW;
+}
+
+Status deleteAvl(AvlBiTree *p, Avl_ElemType e) {
+    LStack stack;
+    Status status = TRUE;
+    initLStack(&stack);
+    status = deleteAvl_helper1(p, e, &stack);
+    if (status != TRUE) return status;
+    status = deleteAvl_helper2(p, e, &stack);
+    if (status != TRUE) return status;
+    destroyLStack(&stack);
+    return status;
+}
 
 Status updateBalanceFactor_helper(AvlBiTree p, int *depth) {
     if (!p) {
