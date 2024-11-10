@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "avl_binary_tree.h"
 #include "link_stack.h"
 
@@ -99,7 +100,7 @@ Status lRotate(AvlBiTree *p) {
     return TRUE;
 }
 
-Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
+Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
     if (!p) {
         return FALSE;
     }
@@ -108,9 +109,6 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
     }
     // 定义move来确定要插入的位置
     AvlBiTree *move = p;
-    // 初始化一个栈
-    LStack stack;
-    initLStack(&stack);
     // 利用栈来记录查找经过的位置
     while ((*move)) {
         int isBigger = isEqualBiTElemType(e, (*move)->data);
@@ -119,7 +117,7 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
         LStack_ElemTypePtr curr = NULL;
 
         if (isBigger == 0) {
-            destroyLStack(&stack);
+            // destroyLStack(stack);
             return TRUE;
         }
         else if(isBigger == 1) {
@@ -130,18 +128,88 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
             initLStack_ElemTypePtr(&curr, LEFT, move);
             move = &((*move)->lchild);
         }
-        pushLStack(&stack, curr);
-        destroyLStack_ElemTypePtr(&curr);
+        pushLStack(stack, curr);
+        // destroyLStack_ElemTypePtr(&curr);
     }
     if (!initAvlBiTNode(move, e)) {
-        destroyLStack(&stack);
+        destroyLStack(stack);
         return FALSE;
     }
     // 可忽略下列该行
     // (*move)->data = e;
 
-    // 应该在此处增加平衡因子调整相关代码
+}
 
+Status rotate(AvlBiTree *p) {
+    if (abs((*p)->balance_factor) < 2) return TRUE;
+    if ((*p)->balance_factor == 2) {
+        // if(!(*p)->rchild) {
+        //     return rRotate(p);
+        // }
+        if (abs((*p)->lchild->balance_factor) >= 2) {
+            return FALSE;
+        }
+        if ((*p)->lchild->balance_factor >= 0) {
+            return rRotate(p);
+        }
+        else {
+            if (!lRotate(&((*p)->lchild))) return FALSE;
+            return rRotate(p);
+        }
+    }
+    if ((*p)->balance_factor == -2) {
+        // if(!(*p)->lchild) {
+        //     return lRotate(p);
+        // }
+        if (abs((*p)->rchild->balance_factor) >= 2) {
+            return FALSE;
+        }
+        if ((*p)->rchild->balance_factor <= 0) {
+            return lRotate(p);
+        }
+        else {
+            if (!rRotate(&((*p)->rchild))) return FALSE;
+            return lRotate(p);
+        }
+    }
+}
+
+Status insertAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
+    LStack_ElemTypePtr move = NULL;
+    LStack_ElemType_tag lastTag = INITIAL_VALUE;
+    while (!isEmptyLStack(stack)) {
+        popLStack(stack, &move);
+        if (!updateBalanceFactor(move->avlPtr)) return FALSE;
+        if (abs(move->avlPtr->balance_factor) == 2) {
+            // if (!rotate(&(move->avlPtr))) return FALSE;
+            // return TRUE;
+            break;
+        }
+    }
+    if (move && abs(move->avlPtr->balance_factor) == 2) {
+        if (isEmptyLStack(stack)) {
+            return rotate(p);
+        }
+        else {
+            popLStack(stack, &move);
+            if (move->tag == LEFT) {
+                return rotate(&move->avlPtr->lchild);
+            }
+            if (move->tag == RIGHT) {
+                return rotate(&move->avlPtr->rchild);
+            }
+        }
+    }
+    return TRUE;
+}
+
+Status insertAvl(AvlBiTree *p, Avl_ElemType e) {
+    // 初始化一个栈
+    LStack stack;
+    initLStack(&stack);
+    if (insertAvl_helper1(p, e, &stack) == FALSE) return FALSE;
+    // 应该在此处增加平衡因子调整相关代码
+    if (insertAvl_helper2(p, e, &stack) == FALSE) return FALSE;
     destroyLStack(&stack);
     return TRUE;
 }
@@ -150,6 +218,7 @@ Status deleteAvl(AvlBiTree *p, Avl_ElemType e);
 
 Status updateBalanceFactor_helper(AvlBiTree p, int *depth) {
     if (!p) {
+        *depth = 0;
         return TRUE;
     }
     int leftDepth = 0, rightDepth = 0;
@@ -224,7 +293,7 @@ Status printAvl(AvlBiTree p) {
             int length = 0;
             LStackLength(&stack, &length);
             for(int i = 0; i < length; i++) {
-                printf("  |  ");
+                printf("       |");
             }
             visitAvl(topLStack_ElemTypePtr->avlPtr);
             printf("\n");
