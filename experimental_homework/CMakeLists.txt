@@ -6,8 +6,7 @@ include_directories(${PROJECT_SOURCE_DIR}/inc)
 # add lib purpose
 add_library(avl ${PROJECT_SOURCE_DIR}/src/link_stack.c ${PROJECT_SOURCE_DIR}/src/avl_binary_tree.c)
 
-set(HOME /home/sardh/code/c_homework/experimental_homework)
-set(EXECUTABLE_OUTPUT_PATH ${HOME}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(main  ${PROJECT_SOURCE_DIR}/src/main.c)
 target_link_libraries(main avl)
