@@ -1,7 +1,8 @@
 #ifndef STATUS_ENUM_H
 #define STATUS_ENUM_H
 
-typedef enum Status {
+typedef enum Status
+{
     FALSE = 0,
     TRUE = 1,
     OVERFLOW = 2

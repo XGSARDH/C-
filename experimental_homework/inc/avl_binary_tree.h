@@ -5,7 +5,8 @@
 
 typedef int Avl_ElemType;
 
-typedef struct AvlBiTNode {
+typedef struct AvlBiTNode
+{
     Avl_ElemType data;
     int balance_factor;
     struct AvlBiTNode *lchild, *rchild;

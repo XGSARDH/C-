@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "avl_binary_tree.h"
 #include "link_stack.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int test1();
 AvlBiTree allBinaryTree();
@@ -9,16 +9,19 @@ int testRotate();
 int testRRotate(AvlBiTree *p);
 int testLRotate(AvlBiTree *p);
 
-int main() {
+int main()
+{
     int main_output = 0;
     main_output = test1();
     // main_output = testRotate();
     return main_output;
 }
 
-int test1() {
+int test1()
+{
     AvlBiTree root = NULL;
-    if (!initAvl(&root)) {
+    if (!initAvl(&root))
+    {
         printf("initAvl error\n");
         return 0;
     }
@@ -55,9 +58,11 @@ int test1() {
     return 0;
 }
 
-AvlBiTree allBinaryTree() {
+AvlBiTree allBinaryTree()
+{
     AvlBiTree root = NULL;
-    if (!initAvl(&root)) {
+    if (!initAvl(&root))
+    {
         printf("initAvl error\n");
         return 0;
     }
@@ -73,7 +78,8 @@ AvlBiTree allBinaryTree() {
     return root;
 }
 
-int testRotate() {
+int testRotate()
+{
     int output = 0;
 
     AvlBiTree root = allBinaryTree();
@@ -94,10 +100,12 @@ int testRotate() {
     return output;
 }
 
-int testRRotate(AvlBiTree *p) {
+int testRRotate(AvlBiTree *p)
+{
     rRotate(p);
 }
 
-int testLRotate(AvlBiTree *p) {
+int testLRotate(AvlBiTree *p)
+{
     lRotate(p);
 }

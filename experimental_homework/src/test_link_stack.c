@@ -1,86 +1,103 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "avl_binary_tree.h"
 #include "link_stack.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int test1();
 int test2();
 
-int main() {
+int main()
+{
     int test_output = 0;
     // test_output = test1();
     test_output = test2();
     return test_output;
 }
 
-int test1() {
+int test1()
+{
     LinkStack myStack;
     LStack_ElemTypePtr elem1, elem2;
     int length;
 
     // 初始化栈
-    if (initLStack(&myStack) == TRUE) {
+    if (initLStack(&myStack) == TRUE)
+    {
         printf("栈初始化成功！\n");
     }
-    else {
+    else
+    {
         printf("栈初始化失败！\n");
         return -1;
     }
 
     // 创建元素并入栈
     initLStack_ElemTypePtr(&elem1, 10, NULL);
-    if (pushLStack(&myStack, elem1) == TRUE) {
+    if (pushLStack(&myStack, elem1) == TRUE)
+    {
         printf("元素 %d 入栈成功！\n", elem1->tag);
     }
-    else {
+    else
+    {
         printf("元素入栈失败！\n");
         return -1;
     }
 
     // 获取栈顶元素
-    if (getTopLStack(&myStack, &elem2) == TRUE) {
+    if (getTopLStack(&myStack, &elem2) == TRUE)
+    {
         printf("栈顶元素为：%d\n", elem2->tag);
     }
-    else {
+    else
+    {
         printf("获取栈顶元素失败！\n");
     }
 
     // 检查栈是否为空
-    if (isEmptyLStack(&myStack) == TRUE) {
+    if (isEmptyLStack(&myStack) == TRUE)
+    {
         printf("栈为空。\n");
     }
-    else {
+    else
+    {
         printf("栈不为空。\n");
     }
 
     // 获取栈长度
-    if (LStackLength(&myStack, &length) == TRUE) {
+    if (LStackLength(&myStack, &length) == TRUE)
+    {
         printf("栈的长度为：%d\n", length);
     }
-    else {
+    else
+    {
         printf("获取栈长度失败！\n");
     }
 
     // 出栈
-    if (popLStack(&myStack, &elem2) == TRUE) {
+    if (popLStack(&myStack, &elem2) == TRUE)
+    {
         printf("元素 %d 出栈成功！\n", elem2->tag);
         printLStack_ElemTypePtr(elem2);
         destroyLStack_ElemTypePtr(&elem2); // 摧毁弹出的元素
     }
-    else {
+    else
+    {
         printf("出栈失败！\n");
     }
 
     // 销毁栈
-    if (destroyLStack(&myStack) == TRUE) {
+    if (destroyLStack(&myStack) == TRUE)
+    {
         printf("栈销毁成功！\n");
     }
-    else {
+    else
+    {
         printf("栈销毁失败！\n");
     }
 }
 
-int test2() {
+int test2()
+{
     // 创建一个栈
     LinkStack stack;
     initLStack(&stack);

@@ -5,29 +5,33 @@
 
 typedef struct AvlBiTNode AvlBiTNode, *AvlBiTree;
 
-typedef enum LStack_ElemType_tag {
-	ERROR = -1,
-	INITIAL_VALUE = 0,
-	LEFT = 1,
-	RIGHT = 2,
-	UP = 3
+typedef enum LStack_ElemType_tag
+{
+    ERROR = -1,
+    INITIAL_VALUE = 0,
+    LEFT = 1,
+    RIGHT = 2,
+    UP = 3
 } LStack_ElemType_tag;
 
-typedef struct {
-	AvlBiTree avlPtr;
-	LStack_ElemType_tag tag;
+typedef struct
+{
+    AvlBiTree avlPtr;
+    LStack_ElemType_tag tag;
 } LStack_ElemType, *LStack_ElemTypePtr;
 
-typedef struct StackNode {
-	LStack_ElemTypePtr data;
-	struct StackNode *next;
-}StackNode, *StackNodePtr;
+typedef struct StackNode
+{
+    LStack_ElemTypePtr data;
+    struct StackNode *next;
+} StackNode, *StackNodePtr;
 
 // 头插法(有头结点)
-typedef struct LinkStack {
-	StackNodePtr top;
-	int	count;
-}LinkStack, LStack;
+typedef struct LinkStack
+{
+    StackNodePtr top;
+    int count;
+} LinkStack, LStack;
 
 /*
 与栈相关的基本操作

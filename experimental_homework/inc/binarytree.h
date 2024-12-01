@@ -4,9 +4,10 @@
 
 typedef int BiTElemType;
 
-typedef struct BiTNode {
-	BiTElemType data;
-	struct BiTNode *lchild, *rchild;
+typedef struct BiTNode
+{
+    BiTElemType data;
+    struct BiTNode *lchild, *rchild;
 } BiTNode, *BiTree;
 
 Status InitBiTree(BiTree *T);
