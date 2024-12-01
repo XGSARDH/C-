@@ -9,8 +9,7 @@ int testRotate();
 int testRRotate(AvlBiTree *p);
 int testLRotate(AvlBiTree *p);
 
-int main()
-{
+int main() {
     int main_output = 0;
     main_output = test1();
     // main_output = testRotate();

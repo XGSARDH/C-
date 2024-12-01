@@ -42,7 +42,7 @@ Status destroyLStack(LinkStack *s) {
     while (s->top) {
         p = s->top;
         s->top = s->top->next;
-        if(!p->data) free(p->data);
+        if (!p->data) free(p->data);
         free(p);
     }
     s->count = 0;
@@ -84,10 +84,10 @@ Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, Av
     *e = (LStack_ElemTypePtr)malloc(sizeof(LStack_ElemType));
     if (!*e) return FALSE;
     (*e)->tag = tag;
-	if (avlPtr == NULL) {
-		(*e)->avlPtr = NULL;
-	}
-	else (*e)->avlPtr = *avlPtr;
+    if (avlPtr == NULL) {
+        (*e)->avlPtr = NULL;
+    }
+    else (*e)->avlPtr = *avlPtr;
     return TRUE;
 }
 
@@ -111,11 +111,11 @@ Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePt
 
 Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr result) {
     if (!origin || !result) return FALSE;
-	Status status = TRUE;
+    Status status = TRUE;
     status = origin->tag == result->tag ? TRUE : FALSE;
-	if (!status) return status;
+    if (!status) return status;
     status = origin->avlPtr == result->avlPtr ? TRUE : FALSE;
-	return status;
+    return status;
 }
 
 Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin) {
@@ -127,6 +127,6 @@ Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin) {
     printf("AvlBiTree->data == %d; ", p->data);
     printf("AvlBiTree->balance_factor == %d", p->balance_factor);
     printf("\n");
-	printf("origin->tag == %d \n", origin->tag);
-	return TRUE;
+    printf("origin->tag == %d \n", origin->tag);
+    return TRUE;
 }

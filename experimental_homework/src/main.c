@@ -7,8 +7,7 @@
 void testAvl();
 void testStack();
 
-int main()
-{
+int main() {
 	testAvl();
 	// testStack();
 	return 0;

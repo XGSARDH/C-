@@ -154,7 +154,7 @@ Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
             // destroyLStack(stack);
             return TRUE;
         }
-        else if(isBigger == 1) {
+        else if (isBigger == 1) {
             initLStack_ElemTypePtr(&curr, RIGHT, move);
             move = &((*move)->rchild);
         }
@@ -351,7 +351,7 @@ Status deleteAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack) {
             pushLStack(stack, curr);
             return TRUE;
         }
-        else if(isBigger == 1) {
+        else if (isBigger == 1) {
             initLStack_ElemTypePtr(&curr, RIGHT, move);
             move = &((*move)->rchild);
         }
@@ -385,7 +385,7 @@ Status updateBalanceFactor_helper(AvlBiTree p, int *depth) {
     updateBalanceFactor_helper(p->lchild, &leftDepth);
     updateBalanceFactor_helper(p->rchild, &rightDepth);
     p->balance_factor = leftDepth - rightDepth;
-    *depth = leftDepth > rightDepth? leftDepth + 1: rightDepth + 1;
+    *depth = leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
 }
 
 Status updateBalanceFactor(AvlBiTree p) {
@@ -403,7 +403,7 @@ Status updateBalanceFactor(AvlBiTree p) {
 }
 
 Status visitAvl(AvlBiTree p) {
-    if(p) {
+    if (p) {
         printf("%d", p->data);
         return TRUE;
     }
@@ -452,7 +452,7 @@ Status printAvl(AvlBiTree p) {
         else if (tag == INITIAL_VALUE) {
             int length = 0;
             LStackLength(&stack, &length);
-            for(int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) {
                 printf("       |");
             }
             visitAvl(topLStack_ElemTypePtr->avlPtr);

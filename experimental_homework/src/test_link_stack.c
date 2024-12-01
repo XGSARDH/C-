@@ -17,11 +17,12 @@ int test1() {
     LinkStack myStack;
     LStack_ElemTypePtr elem1, elem2;
     int length;
-    
+
     // 初始化栈
     if (initLStack(&myStack) == TRUE) {
         printf("栈初始化成功！\n");
-    } else {
+    }
+    else {
         printf("栈初始化失败！\n");
         return -1;
     }
@@ -30,7 +31,8 @@ int test1() {
     initLStack_ElemTypePtr(&elem1, 10, NULL);
     if (pushLStack(&myStack, elem1) == TRUE) {
         printf("元素 %d 入栈成功！\n", elem1->tag);
-    } else {
+    }
+    else {
         printf("元素入栈失败！\n");
         return -1;
     }
@@ -38,21 +40,24 @@ int test1() {
     // 获取栈顶元素
     if (getTopLStack(&myStack, &elem2) == TRUE) {
         printf("栈顶元素为：%d\n", elem2->tag);
-    } else {
+    }
+    else {
         printf("获取栈顶元素失败！\n");
     }
 
     // 检查栈是否为空
     if (isEmptyLStack(&myStack) == TRUE) {
         printf("栈为空。\n");
-    } else {
+    }
+    else {
         printf("栈不为空。\n");
     }
 
     // 获取栈长度
     if (LStackLength(&myStack, &length) == TRUE) {
         printf("栈的长度为：%d\n", length);
-    } else {
+    }
+    else {
         printf("获取栈长度失败！\n");
     }
 
@@ -61,14 +66,16 @@ int test1() {
         printf("元素 %d 出栈成功！\n", elem2->tag);
         printLStack_ElemTypePtr(elem2);
         destroyLStack_ElemTypePtr(&elem2); // 摧毁弹出的元素
-    } else {
+    }
+    else {
         printf("出栈失败！\n");
     }
 
     // 销毁栈
     if (destroyLStack(&myStack) == TRUE) {
         printf("栈销毁成功！\n");
-    } else {
+    }
+    else {
         printf("栈销毁失败！\n");
     }
 }
@@ -92,7 +99,7 @@ int test2() {
     initAvlBiTNode(&avlPtr2, 2);
     initLStack_ElemTypePtr(&lStack_ElemTypePtr2, RIGHT, &avlPtr2);
     pushLStack(&stack, lStack_ElemTypePtr2);
-    
+
     popLStack(&stack, &curr);
     printLStack_ElemTypePtr(curr);
     destroyLStack_ElemTypePtr(&curr);

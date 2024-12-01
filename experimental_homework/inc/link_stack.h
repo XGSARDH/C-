@@ -8,7 +8,7 @@ typedef struct AvlBiTNode AvlBiTNode, *AvlBiTree;
 typedef enum LStack_ElemType_tag {
 	ERROR = -1,
 	INITIAL_VALUE = 0,
-	LEFT = 1, 
+	LEFT = 1,
 	RIGHT = 2,
 	UP = 3
 } LStack_ElemType_tag;
@@ -18,15 +18,13 @@ typedef struct {
 	LStack_ElemType_tag tag;
 } LStack_ElemType, *LStack_ElemTypePtr;
 
-typedef  struct StackNode
-{
+typedef struct StackNode {
 	LStack_ElemTypePtr data;
 	struct StackNode *next;
 }StackNode, *StackNodePtr;
 
 // 头插法(有头结点)
-typedef  struct  LinkStack
-{
+typedef struct LinkStack {
 	StackNodePtr top;
 	int	count;
 }LinkStack, LStack;
@@ -45,19 +43,19 @@ Status initLStackPtr(StackNodePtr *p, LStack_ElemTypePtr e);
 Status isEmptyLStack(LinkStack *s);
 
 // 取得栈顶元素
-Status getTopLStack(LinkStack *s,LStack_ElemTypePtr *e);
+Status getTopLStack(LinkStack *s, LStack_ElemTypePtr *e);
 
 // 销毁栈
 Status destroyLStack(LinkStack *s);
 
 // 取得栈长度
-Status LStackLength(LinkStack *s,int *length);
+Status LStackLength(LinkStack *s, int *length);
 
 // 入栈
-Status pushLStack(LinkStack *s,LStack_ElemTypePtr data);
+Status pushLStack(LinkStack *s, LStack_ElemTypePtr data);
 
 // 出栈
-Status popLStack(LinkStack *s,LStack_ElemTypePtr *data);
+Status popLStack(LinkStack *s, LStack_ElemTypePtr *data);
 
 /*
 与栈基本数据元素相关的基本操作
