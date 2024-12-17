@@ -1,21 +1,41 @@
+#include "avl_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "avl_tree.h"
-#include "status.h"
 
 /* ======================== AVL 树相关函数 ======================== */
 
 /* 初始化 AVL 树 */
-Status Avl_Init(AvlTree *root) { return 0; }
+Status Avl_Init(AvlTree *root) {
+    if (!root) {
+        return STATUS_FALSE;
+    }
+    *root = NULL;
+    return STATUS_TRUE;
+}
 
 /* 默认初始化 AVL 树节点 */
-Status AvlNode_InitDefault(AvlTree *node) { return 0; }
+Status AvlNode_InitDefault(AvlTree *node) { return STATUS_TRUE; }
 
 /* 初始化 AVL 树节点 */
-Status AvlNode_Init(AvlTree *node, AvlElementType element) { return 0; }
+Status AvlNode_Init(AvlTree *node, AvlElementType element) {
+    if(!node) {
+        return STATUS_FALSE;
+    }
+    if(!*node) {
+        *node = (AvlTree) malloc(sizeof(AvlNode));
+    }
+    AvlTree curr = *node;
+    AvlElement_Assign(&curr->data, &element);
+    curr->leftChild = NULL;
+    curr->rightChild = NULL;
+    curr->depth = 0;
+    return STATUS_TRUE;
+}
 
 /* 销毁 AVL 树 */
-Status Avl_Destroy(AvlTree *root) { return 0; }
+Status Avl_Destroy(AvlTree *root) {
+
+}
 
 /* 右旋操作 */
 Status Avl_RotateRight(AvlTree *root) { return 0; }
@@ -44,16 +64,44 @@ Status Avl_PrintTree(AvlTree root) { return 0; }
 /* ======================== AvlElementType 相关函数 ======================== */
 
 /* 元素赋值 */
-Status AvlElement_Assign(AvlElementType *destination, AvlElementType *source) { return 0; }
+Status AvlElement_Assign(AvlElementType *destination, const AvlElementType *source) {
+    if(!destination || !source) {
+        return STATUS_FALSE;
+    }
+    *destination = *source;
+    return STATUS_TRUE;
+}
 
 /* 比较两个元素是否相等 */
-AvlElementCompareResult AvlElement_IsEqual(AvlElementType a, AvlElementType b) { return 0; }
+AvlElementCompareResult AvlElement_IsEqual(AvlElementType a, AvlElementType b) {
+    if(a > b) {
+        return AVLELEMENT_GREATER;
+    }
+    else if(a == b) {
+        return AVLELEMENT_EQUAL;
+    }
+    else {
+        return AVLELEMENT_LESS;
+    }
+}
 
 /* 初始化元素 */
-Status AvlElement_Init(AvlElementType *element, AvlElementType value) { return 0; }
+Status AvlElement_Init(AvlElementType *element, AvlElementType value) {
+    if(!element) {
+        return STATUS_FALSE;
+    }
+    *element = value;
+    return STATUS_TRUE;
+}
 
 /* 打印元素 */
-Status AvlElement_Print(AvlElementType element) { return 0; }
+Status AvlElement_Print(AvlElementType element) {
+    printf("%d", element);
+    return STATUS_TRUE;
+}
 
 /* 释放元素内存（如果适用） */
-Status AvlElement_Destroy(AvlElementType *element) { return 0; }
+Status AvlElement_Destroy(AvlElementType *element) { return STATUS_TRUE; }
+
+/* 判断元素是否为空指针 */
+Status AvlElement_IsNull(AvlElementType *element) { return STATUS_TRUE; }
