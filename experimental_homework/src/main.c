@@ -1,11 +1,8 @@
 #include "avl_binary_tree.h"
 #include "link_stack.h"
-#include "status_enum.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 void testAvl();
-void testStack();
 
 int main()
 {

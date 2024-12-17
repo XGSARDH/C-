@@ -1,5 +1,5 @@
 #ifndef AVL_BINARY_TREE_H
-#define AVL_BINATY_TREE_H
+#define AVL_BINARY_TREE_H
 
 #include "status_enum.h"
 
@@ -55,4 +55,4 @@ Status makeEqualAvl_ElemType(Avl_ElemType *purpose, Avl_ElemType *origin);
 // 是否两个Avl_ElemType相等
 int isEqualBiTElemType(Avl_ElemType a, Avl_ElemType b);
 
-#endif // AVL_BINATY_TREE_H
+#endif // AVL_BINARY_TREE_H

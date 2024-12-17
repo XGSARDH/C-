@@ -1,7 +1,6 @@
 #include "avl_binary_tree.h"
 #include "link_stack.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 int test1();
 int test2();
