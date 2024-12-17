@@ -10,6 +10,7 @@ typedef struct AvlBiTNode
     Avl_ElemType data;
     int balance_factor;
     struct AvlBiTNode *lchild, *rchild;
+    int depth;
 } AvlBiTNode, *AvlBiTree;
 
 // 创建一棵Avl空树
