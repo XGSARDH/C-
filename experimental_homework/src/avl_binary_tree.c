@@ -187,7 +187,7 @@ Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         int isBigger = isEqualBiTElemType(e, (*move)->data);
         // isBigger == 0, means equal. isBigger == 1, means right. isBigger == -1, means left.
         // but when left, tag == 1; when right, tag == 2.
-        LStack_ElemTypePtr curr = NULL;
+        LStackElemTypePtr curr = NULL;
 
         if (isBigger == 0)
         {
@@ -196,12 +196,12 @@ Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         }
         else if (isBigger == 1)
         {
-            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            initLStackElemTypePtr(&curr, RIGHT, move);
             move = &((*move)->rchild);
         }
         else
         {
-            initLStack_ElemTypePtr(&curr, LEFT, move);
+            initLStackElemTypePtr(&curr, LEFT, move);
             move = &((*move)->lchild);
         }
         pushLStack(stack, curr);
@@ -217,7 +217,7 @@ Status insertAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack)
 
 Status balanceAvlByStack(AvlBiTree *p, LStack *stack)
 {
-    LStack_ElemTypePtr move = NULL;
+    LStackElemTypePtr move = NULL;
     while (!isEmptyLStack(stack))
     {
         popLStack(stack, &move);
@@ -229,11 +229,11 @@ Status balanceAvlByStack(AvlBiTree *p, LStack *stack)
             // return TRUE;
             break;
         }
-        destroyLStack_ElemTypePtr(&move);
+        destroyLStackElemTypePtr(&move);
     }
     if (move && abs(move->avlPtr->balance_factor) == 2)
     {
-        destroyLStack_ElemTypePtr(&move);
+        destroyLStackElemTypePtr(&move);
         if (isEmptyLStack(stack))
         {
             return rotate(p);
@@ -270,21 +270,21 @@ Status insertAvl(AvlBiTree *p, Avl_ElemType e)
 
 Status deleteAvl_helper3(AvlBiTree *p, Avl_ElemType e, LStack *stack)
 {
-    LStack_ElemTypePtr curr = NULL;
+    LStackElemTypePtr curr = NULL;
     if (!getTopLStack(stack, &curr))
         return FALSE;
-    LStack_ElemTypePtr root = curr;
+    LStackElemTypePtr root = curr;
     if (curr->avlPtr->balance_factor >= 0)
     {
         // left tree is higher, to make left max to be root
         AvlBiTree move = curr->avlPtr->lchild;
         // log the way
-        initLStack_ElemTypePtr(&curr, LEFT, &move);
+        initLStackElemTypePtr(&curr, LEFT, &move);
         pushLStack(stack, curr);
         move = move->rchild;
         while (move)
         {
-            initLStack_ElemTypePtr(&curr, RIGHT, &move);
+            initLStackElemTypePtr(&curr, RIGHT, &move);
             pushLStack(stack, curr);
             move = move->rchild;
         }
@@ -295,7 +295,7 @@ Status deleteAvl_helper3(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         // delete before
         AvlBiTree deleteAvlLchild = curr->avlPtr->lchild;
         // delete
-        destroyLStack_ElemTypePtr(&curr);
+        destroyLStackElemTypePtr(&curr);
         // delete after
         getTopLStack(stack, &curr);
         if (curr->avlPtr != root->avlPtr)
@@ -309,12 +309,12 @@ Status deleteAvl_helper3(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         // right tree is higher, to make right min to be root
         AvlBiTree move = curr->avlPtr->rchild;
         // log the way
-        initLStack_ElemTypePtr(&curr, RIGHT, &move);
+        initLStackElemTypePtr(&curr, RIGHT, &move);
         pushLStack(stack, curr);
         move = move->lchild;
         while (move)
         {
-            initLStack_ElemTypePtr(&curr, LEFT, &move);
+            initLStackElemTypePtr(&curr, LEFT, &move);
             pushLStack(stack, curr);
             move = move->lchild;
         }
@@ -325,7 +325,7 @@ Status deleteAvl_helper3(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         // delete before
         AvlBiTree deleteAvlRchild = curr->avlPtr->rchild;
         // delete
-        destroyLStack_ElemTypePtr(&curr);
+        destroyLStackElemTypePtr(&curr);
         // delete after
         getTopLStack(stack, &curr);
         if (curr->avlPtr != root->avlPtr)
@@ -343,7 +343,7 @@ Status deleteAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         return FALSE;
     }
     // 校验是否是要删除的元素
-    LStack_ElemTypePtr move = NULL;
+    LStackElemTypePtr move = NULL;
     if (!getTopLStack(stack, &move))
         return FALSE;
     if (isEqualBiTElemType(move->avlPtr->data, e) != 0)
@@ -358,7 +358,7 @@ Status deleteAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack)
     {
         if (!popLStack(stack, &move))
             return FALSE;
-        if (!destroyLStack_ElemTypePtr(&move))
+        if (!destroyLStackElemTypePtr(&move))
             return FALSE;
         if (!popLStack(stack, &move))
             return FALSE;
@@ -370,7 +370,7 @@ Status deleteAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         {
             move->avlPtr->rchild = NULL;
         }
-        if (!destroyLStack_ElemTypePtr(&move))
+        if (!destroyLStackElemTypePtr(&move))
             return FALSE;
     }
     else if (flag == 1)
@@ -378,7 +378,7 @@ Status deleteAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         if (!popLStack(stack, &move))
             return FALSE;
         AvlBiTree curr = move->avlPtr->lchild;
-        if (!destroyLStack_ElemTypePtr(&move))
+        if (!destroyLStackElemTypePtr(&move))
             return FALSE;
         if (!getTopLStack(stack, &move))
             return FALSE;
@@ -396,7 +396,7 @@ Status deleteAvl_helper2(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         if (!popLStack(stack, &move))
             return FALSE;
         AvlBiTree curr = move->avlPtr->rchild;
-        if (!destroyLStack_ElemTypePtr(&move))
+        if (!destroyLStackElemTypePtr(&move))
             return FALSE;
         if (!getTopLStack(stack, &move))
             return FALSE;
@@ -439,21 +439,21 @@ Status deleteAvl_helper1(AvlBiTree *p, Avl_ElemType e, LStack *stack)
         int isBigger = isEqualBiTElemType(e, (*move)->data);
         // isBigger == 0, means equal. isBigger == 1, means right. isBigger == -1, means left.
         // but when left, tag == 1; when right, tag == 2.
-        LStack_ElemTypePtr curr = NULL;
+        LStackElemTypePtr curr = NULL;
         if (isBigger == 0)
         {
-            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            initLStackElemTypePtr(&curr, RIGHT, move);
             pushLStack(stack, curr);
             return TRUE;
         }
         else if (isBigger == 1)
         {
-            initLStack_ElemTypePtr(&curr, RIGHT, move);
+            initLStackElemTypePtr(&curr, RIGHT, move);
             move = &((*move)->rchild);
         }
         else
         {
-            initLStack_ElemTypePtr(&curr, LEFT, move);
+            initLStackElemTypePtr(&curr, LEFT, move);
             move = &((*move)->lchild);
         }
         pushLStack(stack, curr);
@@ -536,34 +536,34 @@ Status printAvl(AvlBiTree p)
         return TRUE;
     LinkStack stack;
     initLStack(&stack);
-    LStack_ElemTypePtr topLStack_ElemTypePtr = NULL;
-    LStack_ElemType_tag tag = INITIAL_VALUE;
-    initLStack_ElemTypePtr(&topLStack_ElemTypePtr, RIGHT, &p);
-    pushLStack(&stack, topLStack_ElemTypePtr);
+    LStackElemTypePtr topLStackElemTypePtr = NULL;
+    LStackElemType_tag tag = INITIAL_VALUE;
+    initLStackElemTypePtr(&topLStackElemTypePtr, RIGHT, &p);
+    pushLStack(&stack, topLStackElemTypePtr);
     while (!isEmptyLStack(&stack))
     {
-        popLStack(&stack, &topLStack_ElemTypePtr);
-        LStack_ElemTypePtr curr = NULL;
-        tag = topLStack_ElemTypePtr->tag;
+        popLStack(&stack, &topLStackElemTypePtr);
+        LStackElemTypePtr curr = NULL;
+        tag = topLStackElemTypePtr->tag;
         if (tag == ERROR)
             return FALSE;
         else if (tag == RIGHT)
         {
-            initLStack_ElemTypePtr(&curr, INITIAL_VALUE, &topLStack_ElemTypePtr->avlPtr);
+            initLStackElemTypePtr(&curr, INITIAL_VALUE, &topLStackElemTypePtr->avlPtr);
             pushLStack(&stack, curr);
-            if (topLStack_ElemTypePtr->avlPtr->rchild)
+            if (topLStackElemTypePtr->avlPtr->rchild)
             {
-                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->rchild);
+                initLStackElemTypePtr(&curr, RIGHT, &topLStackElemTypePtr->avlPtr->rchild);
                 pushLStack(&stack, curr);
             }
         }
         else if (tag == LEFT)
         {
-            initLStack_ElemTypePtr(&curr, UP, &topLStack_ElemTypePtr->avlPtr);
+            initLStackElemTypePtr(&curr, UP, &topLStackElemTypePtr->avlPtr);
             pushLStack(&stack, curr);
-            if (topLStack_ElemTypePtr->avlPtr->lchild)
+            if (topLStackElemTypePtr->avlPtr->lchild)
             {
-                initLStack_ElemTypePtr(&curr, RIGHT, &topLStack_ElemTypePtr->avlPtr->lchild);
+                initLStackElemTypePtr(&curr, RIGHT, &topLStackElemTypePtr->avlPtr->lchild);
                 pushLStack(&stack, curr);
             }
         }
@@ -575,9 +575,9 @@ Status printAvl(AvlBiTree p)
             {
                 printf("       |");
             }
-            visitAvl(topLStack_ElemTypePtr->avlPtr);
+            visitAvl(topLStackElemTypePtr->avlPtr);
             printf("\n");
-            initLStack_ElemTypePtr(&curr, LEFT, &topLStack_ElemTypePtr->avlPtr);
+            initLStackElemTypePtr(&curr, LEFT, &topLStackElemTypePtr->avlPtr);
             pushLStack(&stack, curr);
         }
         else if (tag == UP)
@@ -585,11 +585,11 @@ Status printAvl(AvlBiTree p)
         }
         else
         {
-            destroyLStack_ElemTypePtr(&topLStack_ElemTypePtr);
+            destroyLStackElemTypePtr(&topLStackElemTypePtr);
             destroyLStack(&stack);
             return FALSE;
         }
-        destroyLStack_ElemTypePtr(&topLStack_ElemTypePtr);
+        destroyLStackElemTypePtr(&topLStackElemTypePtr);
     }
     destroyLStack(&stack);
 }

@@ -16,7 +16,7 @@ int main()
 int test1()
 {
     LinkStack myStack;
-    LStack_ElemTypePtr elem1, elem2;
+    LStackElemTypePtr elem1, elem2;
     int length;
 
     // 初始化栈
@@ -31,7 +31,7 @@ int test1()
     }
 
     // 创建元素并入栈
-    initLStack_ElemTypePtr(&elem1, 10, NULL);
+    initLStackElemTypePtr(&elem1, 10, NULL);
     if (pushLStack(&myStack, elem1) == TRUE)
     {
         printf("Element %d successfully pushed onto the stack！\n", elem1->tag);
@@ -76,9 +76,9 @@ int test1()
     if (popLStack(&myStack, &elem2) == TRUE)
     {
         printf("Element %d successfully pushed out!\n", elem2->tag);
-        printLStack_ElemTypePtr(elem2);
+        printLStackElemTypePtr(elem2);
         // 摧毁弹出的元素
-        destroyLStack_ElemTypePtr(&elem2);
+        destroyLStackElemTypePtr(&elem2);
     }
     else
     {
@@ -102,27 +102,27 @@ int test2()
     LinkStack stack;
     initLStack(&stack);
 
-    // avlBiTree + tag 等价于 LStack_ElemTypePtr
-    LStack_ElemTypePtr curr = NULL;
+    // avlBiTree + tag 等价于 LStackElemTypePtr
+    LStackElemTypePtr curr = NULL;
 
-    LStack_ElemTypePtr lStack_ElemTypePtr1 = NULL;
+    LStackElemTypePtr LStackElemTypePtr1 = NULL;
     AvlBiTree avlPtr1 = NULL;
     initAvlBiTNode(&avlPtr1, 1);
-    initLStack_ElemTypePtr(&lStack_ElemTypePtr1, LEFT, &avlPtr1);
-    pushLStack(&stack, lStack_ElemTypePtr1);
+    initLStackElemTypePtr(&LStackElemTypePtr1, LEFT, &avlPtr1);
+    pushLStack(&stack, LStackElemTypePtr1);
 
-    LStack_ElemTypePtr lStack_ElemTypePtr2 = NULL;
+    LStackElemTypePtr LStackElemTypePtr2 = NULL;
     AvlBiTree avlPtr2 = NULL;
     initAvlBiTNode(&avlPtr2, 2);
-    initLStack_ElemTypePtr(&lStack_ElemTypePtr2, RIGHT, &avlPtr2);
-    pushLStack(&stack, lStack_ElemTypePtr2);
+    initLStackElemTypePtr(&LStackElemTypePtr2, RIGHT, &avlPtr2);
+    pushLStack(&stack, LStackElemTypePtr2);
 
     popLStack(&stack, &curr);
-    printLStack_ElemTypePtr(curr);
-    destroyLStack_ElemTypePtr(&curr);
+    printLStackElemTypePtr(curr);
+    destroyLStackElemTypePtr(&curr);
 
     getTopLStack(&stack, &curr);
-    printLStack_ElemTypePtr(curr);
+    printLStackElemTypePtr(curr);
 
     // 销毁栈和二叉树
     // 销毁栈时不会影响二叉树的原本结构

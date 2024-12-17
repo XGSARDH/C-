@@ -5,24 +5,24 @@
 
 typedef struct AvlBiTNode AvlBiTNode, *AvlBiTree;
 
-typedef enum LStack_ElemType_tag
+typedef enum LStackElemType_tag
 {
     ERROR = -1,
     INITIAL_VALUE = 0,
     LEFT = 1,
     RIGHT = 2,
     UP = 3
-} LStack_ElemType_tag;
+} LStackElemType_tag;
 
 typedef struct
 {
     AvlBiTree avlPtr;
-    LStack_ElemType_tag tag;
-} LStack_ElemType, *LStack_ElemTypePtr;
+    LStackElemType_tag tag;
+} LStackElemType, *LStackElemTypePtr;
 
 typedef struct StackNode
 {
-    LStack_ElemTypePtr data;
+    LStackElemTypePtr data;
     struct StackNode *next;
 } StackNode, *StackNodePtr;
 
@@ -41,13 +41,13 @@ typedef struct LinkStack
 Status initLStack(LinkStack *s);
 
 // 创建一个栈节点
-Status initLStackPtr(StackNodePtr *p, LStack_ElemTypePtr e);
+Status initLStackPtr(StackNodePtr *p, LStackElemTypePtr e);
 
 // 判断栈是否为空
 Status isEmptyLStack(LinkStack *s);
 
 // 取得栈顶元素
-Status getTopLStack(LinkStack *s, LStack_ElemTypePtr *e);
+Status getTopLStack(LinkStack *s, LStackElemTypePtr *e);
 
 // 销毁栈
 Status destroyLStack(LinkStack *s);
@@ -56,31 +56,31 @@ Status destroyLStack(LinkStack *s);
 Status LStackLength(LinkStack *s, int *length);
 
 // 入栈
-Status pushLStack(LinkStack *s, LStack_ElemTypePtr data);
+Status pushLStack(LinkStack *s, LStackElemTypePtr data);
 
 // 出栈
-Status popLStack(LinkStack *s, LStack_ElemTypePtr *data);
+Status popLStack(LinkStack *s, LStackElemTypePtr *data);
 
 /*
 与栈基本数据元素相关的基本操作
 */
 
-// 创建一个LStack_ElemTypePtr, 放入LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, AvlBiTree *avlPtr);
+// 创建一个LStackElemTypePtr, 放入LStackElemTypePtr的组成元素
+Status initLStackElemTypePtr(LStackElemTypePtr *e, LStackElemType_tag tag, AvlBiTree *avlPtr);
 
-// 创建一个LStack_ElemTypePtr, 放入默认的LStack_ElemTypePtr的组成元素
-Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e);
+// 创建一个LStackElemTypePtr, 放入默认的LStackElemTypePtr的组成元素
+Status initLStackElemTypePtr_default(LStackElemTypePtr *e);
 
-// 摧毁LStack_ElemTypePtr
-Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr *e);
+// 摧毁LStackElemTypePtr
+Status destroyLStackElemTypePtr(LStackElemTypePtr *e);
 
-// 使两个LStack_ElemTypePtr相等
-Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePtr *result);
+// 使两个LStackElemTypePtr相等
+Status makeEqualLStackElemTypePtr(LStackElemTypePtr *origin, LStackElemTypePtr *result);
 
-// 判断两个LStack_ElemTypePtr是否相等
-Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr result);
+// 判断两个LStackElemTypePtr是否相等
+Status isEqualLStackElemTypePtr(LStackElemTypePtr origin, LStackElemTypePtr result);
 
-// 打印tLStack_ElemTypePtr
-Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin);
+// 打印tLStackElemTypePtr
+Status printLStackElemTypePtr(LStackElemTypePtr origin);
 
 #endif // STACK_H_INCLUDED

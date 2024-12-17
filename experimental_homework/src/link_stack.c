@@ -19,7 +19,7 @@ Status initLStack(LinkStack *s)
     return TRUE;
 }
 
-Status initLStackPtr(StackNodePtr *p, LStack_ElemTypePtr e)
+Status initLStackPtr(StackNodePtr *p, LStackElemTypePtr e)
 {
     if (!p || !e)
         return FALSE;
@@ -38,7 +38,7 @@ Status isEmptyLStack(LinkStack *s)
     return s->count == 0 ? TRUE : FALSE;
 }
 
-Status getTopLStack(LinkStack *s, LStack_ElemTypePtr *e)
+Status getTopLStack(LinkStack *s, LStackElemTypePtr *e)
 {
     if (!s || !e || isEmptyLStack(s))
         return FALSE;
@@ -71,7 +71,7 @@ Status LStackLength(LinkStack *s, int *length)
     return TRUE;
 }
 
-Status pushLStack(LinkStack *s, LStack_ElemTypePtr data)
+Status pushLStack(LinkStack *s, LStackElemTypePtr data)
 {
     if (!s || !data)
         return FALSE;
@@ -84,7 +84,7 @@ Status pushLStack(LinkStack *s, LStack_ElemTypePtr data)
     return TRUE;
 }
 
-Status popLStack(LinkStack *s, LStack_ElemTypePtr *data)
+Status popLStack(LinkStack *s, LStackElemTypePtr *data)
 {
     if (!s || !data || isEmptyLStack(s))
         return FALSE;
@@ -100,11 +100,11 @@ Status popLStack(LinkStack *s, LStack_ElemTypePtr *data)
 与栈基本数据元素相关的基本操作
 */
 
-Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, AvlBiTree *avlPtr)
+Status initLStackElemTypePtr(LStackElemTypePtr *e, LStackElemType_tag tag, AvlBiTree *avlPtr)
 {
     if (!e)
         return FALSE;
-    *e = (LStack_ElemTypePtr)malloc(sizeof(LStack_ElemType));
+    *e = (LStackElemTypePtr)malloc(sizeof(LStackElemType));
     if (!*e)
         return FALSE;
     (*e)->tag = tag;
@@ -117,12 +117,12 @@ Status initLStack_ElemTypePtr(LStack_ElemTypePtr *e, LStack_ElemType_tag tag, Av
     return TRUE;
 }
 
-Status initLStack_ElemTypePtr_default(LStack_ElemTypePtr *e)
+Status initLStackElemTypePtr_default(LStackElemTypePtr *e)
 {
-    return initLStack_ElemTypePtr(e, INITIAL_VALUE, NULL);
+    return initLStackElemTypePtr(e, INITIAL_VALUE, NULL);
 }
 
-Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr *e)
+Status destroyLStackElemTypePtr(LStackElemTypePtr *e)
 {
     if (!e || !*e)
         return FALSE;
@@ -131,7 +131,7 @@ Status destroyLStack_ElemTypePtr(LStack_ElemTypePtr *e)
     return TRUE;
 }
 
-Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePtr *result)
+Status makeEqualLStackElemTypePtr(LStackElemTypePtr *origin, LStackElemTypePtr *result)
 {
     if (!origin || !result || !*origin || !*result)
         return FALSE;
@@ -140,7 +140,7 @@ Status makeEqualLStack_ElemTypePtr(LStack_ElemTypePtr *origin, LStack_ElemTypePt
     return TRUE;
 }
 
-Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr result)
+Status isEqualLStackElemTypePtr(LStackElemTypePtr origin, LStackElemTypePtr result)
 {
     if (!origin || !result)
         return FALSE;
@@ -152,7 +152,7 @@ Status isEqualLStack_ElemTypePtr(LStack_ElemTypePtr origin, LStack_ElemTypePtr r
     return status;
 }
 
-Status printLStack_ElemTypePtr(LStack_ElemTypePtr origin)
+Status printLStackElemTypePtr(LStackElemTypePtr origin)
 {
     AvlBiTree p = origin->avlPtr;
     if (!p)
