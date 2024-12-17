@@ -22,6 +22,8 @@ typedef enum AvlElementCompareResult {
     AVLELEMENT_GREATER = 1
 } AvlElementCompareResult;
 
+/* ======================== AVL 树相关函数 ======================== */
+
 /* 初始化 AVL 树 */
 Status Avl_Init(AvlTree *root);
 
@@ -58,10 +60,21 @@ Status Avl_InOrderTraverse(AvlTree root);
 /* 图形化打印 AVL 树 */
 Status Avl_PrintTree(AvlTree root);
 
+/* ======================== AvlElementType 相关函数 ======================== */
+
 /* 元素赋值 */
 Status AvlElement_Assign(AvlElementType *destination, AvlElementType *source);
 
 /* 比较两个元素是否相等 */
 AvlElementCompareResult AvlElement_IsEqual(AvlElementType a, AvlElementType b);
+
+/* 初始化元素 */
+Status AvlElement_Init(AvlElementType *element, AvlElementType value);
+
+/* 打印元素 */
+Status AvlElement_Print(AvlElementType element);
+
+/* 释放元素内存（如果适用） */
+Status AvlElement_Destroy(AvlElementType *element);
 
 #endif // AVL_TREE_H
