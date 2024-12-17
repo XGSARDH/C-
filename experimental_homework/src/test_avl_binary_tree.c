@@ -83,19 +83,19 @@ int testRotate()
     int output = 0;
 
     AvlBiTree root = allBinaryTree();
-    printf("起始状态\n") && printAvl(root) && printf("\n");
+    printf("起始state\n") && printAvl(root) && printf("\n");
     insertAvl(&root, 8);
     insertAvl(&root, 9);
     // updateBalanceFactor(root);
     // output = testLRotate(&root);
-    // printf("1状态\n") && printAvl(root) && printf("\n");
+    // printf("1state\n") && printAvl(root) && printf("\n");
     // updateBalanceFactor(root);
     // output = testRRotate(&root);
-    // printf("2状态\n") && printAvl(root) && printf("\n");
+    // printf("2state\n") && printAvl(root) && printf("\n");
     // updateBalanceFactor(root);
 
-    // printf("终止状态\n") && printAvl(root) && printf("\n");
-    printf("结束状态\n") && printAvl(root) && printf("\n");
+    // printf("end state\n") && printAvl(root) && printf("\n");
+    printf("End State\n") && printAvl(root) && printf("\n");
     destoryAvl(&root);
     return output;
 }

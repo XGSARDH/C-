@@ -18,8 +18,8 @@ void testAvl()
 {
     printf("Test Avl;\n");
     AvlBiTree curr = NULL;
-    printf("初始化是否成功:%d\n", initAvlBiTNode(&curr, 10));
-    printf("打印初始化节点的值:") && visitAvl(curr) && printf("\n");
-    printf("删除是否成功:%d\n", destoryAvl(&curr));
+    printf("Is initialization successful:%d\n", initAvlBiTNode(&curr, 10));
+    printf("Print the value of the initialization node:") && visitAvl(curr) && printf("\n");
+    printf("Was the deletion successful:%d\n", destoryAvl(&curr));
     // InOrderTraverseAvl(curr, visitAvl);
 }
