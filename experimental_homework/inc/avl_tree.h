@@ -11,7 +11,6 @@ typedef struct AvlNode {
     AvlElementType data;
     int balanceFactor;
     struct AvlNode *leftChild, *rightChild;
-    int depth;
 } AvlNode, *AvlTree;
 
 typedef enum AvlElementCompareResult {

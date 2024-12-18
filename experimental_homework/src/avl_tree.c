@@ -6,60 +6,239 @@
 
 /* 初始化 AVL 树 */
 Status Avl_Init(AvlTree *root) {
-    if (!root) {
-        return STATUS_FALSE;
-    }
+    if (!root) return STATUS_FALSE;
     *root = NULL;
     return STATUS_TRUE;
 }
 
 /* 默认初始化 AVL 树节点 */
-Status AvlNode_InitDefault(AvlTree *node) { return STATUS_TRUE; }
+Status AvlNode_InitDefault(AvlTree *node) {
+    if (!node) return STATUS_FALSE;
+    *node = (AvlNode *)malloc(sizeof(AvlNode));
+    if (!(*node)) return STATUS_OVERFLOW;
+    (*node)->data = 0;
+    (*node)->balanceFactor = 0;
+    (*node)->leftChild = NULL;
+    (*node)->rightChild = NULL;
+    return STATUS_TRUE;
+}
 
 /* 初始化 AVL 树节点 */
 Status AvlNode_Init(AvlTree *node, AvlElementType element) {
-    if(!node) {
-        return STATUS_FALSE;
-    }
-    if(!*node) {
-        *node = (AvlTree) malloc(sizeof(AvlNode));
-    }
-    AvlTree curr = *node;
-    AvlElement_Assign(&curr->data, &element);
-    curr->leftChild = NULL;
-    curr->rightChild = NULL;
-    curr->depth = 0;
+    if (!node) return STATUS_FALSE;
+    *node = (AvlNode *)malloc(sizeof(AvlNode));
+    if (!(*node)) return STATUS_OVERFLOW;
+    (*node)->data = element;
+    (*node)->balanceFactor = 0;
+    (*node)->leftChild = NULL;
+    (*node)->rightChild = NULL;
     return STATUS_TRUE;
 }
 
 /* 销毁 AVL 树 */
 Status Avl_Destroy(AvlTree *root) {
-
+    if (!root || !(*root)) return STATUS_FALSE;
+    Avl_Destroy(&((*root)->leftChild));
+    Avl_Destroy(&((*root)->rightChild));
+    free(*root);
+    *root = NULL;
+    return STATUS_TRUE;
 }
 
 /* 右旋操作 */
-Status Avl_RotateRight(AvlTree *root) { return 0; }
+Status Avl_RotateRight(AvlTree *root) {
+    if (!root || !(*root)) return STATUS_FALSE;
+    AvlTree leftChild = (*root)->leftChild;
+    if (!leftChild) return STATUS_FALSE;
+    (*root)->leftChild = leftChild->rightChild;
+    leftChild->rightChild = *root;
+    *root = leftChild;
+    return STATUS_TRUE;
+}
 
 /* 左旋操作 */
-Status Avl_RotateLeft(AvlTree *root) { return 0; }
+Status Avl_RotateLeft(AvlTree *root) {
+    if (!root || !(*root)) return STATUS_FALSE;
+    AvlTree rightChild = (*root)->rightChild;
+    if (!rightChild) return STATUS_FALSE;
+    (*root)->rightChild = rightChild->leftChild;
+    rightChild->leftChild = *root;
+    *root = rightChild;
+    return STATUS_TRUE;
+}
+
+// 计算树的高度
+int Avl_GetHeight(AvlTree tree) {
+    if (tree == NULL) {
+        return 0; // 空树高度为0
+    }
+    int leftHeight = Avl_GetHeight(tree->leftChild);
+    int rightHeight = Avl_GetHeight(tree->rightChild);
+    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+}
+
+// 更新平衡因子（递归更新整棵树）
+Status Avl_UpdateBalanceFactor(AvlTree root) {
+    if (root == NULL) {
+        return STATUS_TRUE;
+    }
+    // 更新左右子树的平衡因子
+    Avl_UpdateBalanceFactor(root->leftChild);
+    Avl_UpdateBalanceFactor(root->rightChild);
+
+    // 计算当前节点的平衡因子
+    int leftHeight = Avl_GetHeight(root->leftChild);
+    int rightHeight = Avl_GetHeight(root->rightChild);
+    root->balanceFactor = leftHeight - rightHeight;
+    return STATUS_TRUE;
+}
 
 /* 插入节点 */
-Status Avl_Insert(AvlTree *root, AvlElementType element) { return 0; }
+Status Avl_Insert(AvlTree *root, AvlElementType element) {
+    if (!root) return STATUS_FALSE;
+    if (!(*root)) {
+        return AvlNode_Init(root, element);
+    }
+    if (element < (*root)->data) {
+        if (!Avl_Insert(&((*root)->leftChild), element)) return STATUS_FALSE;
+    } else if (element > (*root)->data) {
+        if (!Avl_Insert(&((*root)->rightChild), element)) return STATUS_FALSE;
+    } else {
+        return STATUS_FALSE; // 不允许插入重复值
+    }
+
+    Avl_UpdateBalanceFactor(*root);
+
+    // 旋转保持平衡
+    if ((*root)->balanceFactor > 1) {
+        if (element > (*root)->leftChild->data) {
+            Avl_RotateLeft(&((*root)->leftChild));
+            Avl_RotateRight(root);
+        } else {
+            Avl_RotateRight(root);
+        }
+    } else if ((*root)->balanceFactor < -1) {
+        if (element < (*root)->rightChild->data) {
+            Avl_RotateRight(&((*root)->rightChild));
+            Avl_RotateLeft(root);
+        } else {
+            Avl_RotateLeft(root);
+        }
+    }
+
+    return STATUS_TRUE;
+}
 
 /* 删除节点 */
-Status Avl_Delete(AvlTree *root, AvlElementType element) { return 0; }
+Status Avl_Delete(AvlTree *root, AvlElementType element) {
+    if (!root || !(*root)) return STATUS_FALSE;
 
-/* 更新平衡因子 */
-Status Avl_UpdateBalanceFactor(AvlTree root) { return 0; }
+    // 递归找到目标节点并删除
+    if (element < (*root)->data) {
+        if (!Avl_Delete(&((*root)->leftChild), element)) return STATUS_FALSE;
+    } else if (element > (*root)->data) {
+        if (!Avl_Delete(&((*root)->rightChild), element)) return STATUS_FALSE;
+    } else {
+        // 找到要删除的节点
+        AvlTree temp = *root;
+
+        // 节点有 0 个或 1 个子节点
+        if (!(*root)->leftChild) {
+            *root = (*root)->rightChild;
+        } else if (!(*root)->rightChild) {
+            *root = (*root)->leftChild;
+        } else {
+            // 节点有两个子节点，找到右子树的最小值（后继）
+            AvlTree successor = (*root)->rightChild;
+            while (successor->leftChild) {
+                successor = successor->leftChild;
+            }
+            // 用后继节点的值替换当前节点的值
+            (*root)->data = successor->data;
+            // 删除后继节点
+            Avl_Delete(&((*root)->rightChild), successor->data);
+            temp = NULL; // 避免误释放
+        }
+
+        if (temp) free(temp); // 释放删除的节点
+    }
+
+    // 如果树为空，则返回
+    if (!(*root)) return STATUS_TRUE;
+
+    // 更新当前节点的平衡因子
+    Avl_UpdateBalanceFactor(*root);
+
+    // 平衡调整
+    if ((*root)->balanceFactor > 1) { // 左子树过高
+        if ((*root)->leftChild->balanceFactor >= 0) {
+            Avl_RotateRight(root); // LL 型
+        } else {
+            Avl_RotateLeft(&((*root)->leftChild)); // LR 型
+            Avl_RotateRight(root);
+        }
+    } else if ((*root)->balanceFactor < -1) { // 右子树过高
+        if ((*root)->rightChild->balanceFactor <= 0) {
+            Avl_RotateLeft(root); // RR 型
+        } else {
+            Avl_RotateRight(&((*root)->rightChild)); // RL 型
+            Avl_RotateLeft(root);
+        }
+    }
+
+    return STATUS_TRUE;
+}
 
 /* 访问节点值 */
-Status Avl_VisitNode(AvlTree node) { return 0; }
+Status Avl_VisitNode(AvlTree node) {
+    if(!node) {
+        return STATUS_FALSE;
+    }
+    printf("%d (BF: %d)\n", node->data, node->balanceFactor);
+    return STATUS_TRUE;
+}
 
 /* 中序遍历 */
-Status Avl_InOrderTraverse(AvlTree root) { return 0; }
+Status Avl_InOrderTraverse(AvlTree root) {
+    if (!root) return STATUS_TRUE;
+    Avl_InOrderTraverse(root->leftChild);
+    printf("%d ", root->data);
+    Avl_InOrderTraverse(root->rightChild);
+    return STATUS_TRUE;
+}
 
-/* 图形化打印 AVL 树 */
-Status Avl_PrintTree(AvlTree root) { return 0; }
+
+/**
+ * 打印 AVL 树的递归辅助函数
+ * @param root 当前节点指针
+ * @param depth 当前节点的深度（用于计算缩进）
+ */
+void printAvlRecursive(AvlTree root, int depth) {
+    if (!root) return;
+
+    // 打印右子树
+    printAvlRecursive(root->rightChild, depth + 1);
+
+    // 打印当前节点
+    for (int i = 0; i < depth; i++) {
+        printf("       |"); // 每层缩进
+    }
+    Avl_VisitNode(root);
+
+    // 打印左子树
+    printAvlRecursive(root->leftChild, depth + 1);
+}
+
+/**
+ * 打印 AVL 树
+ * @param root 树的根节点
+ * @return Status 成功返回 STATUS_TRUE
+ */
+Status Avl_PrintTree(AvlTree root) {
+    if (!root) return STATUS_TRUE; // 空树直接返回
+    printAvlRecursive(root, 0);   // 从根节点开始递归打印
+    return STATUS_TRUE;
+}
 
 /* ======================== AvlElementType 相关函数 ======================== */
 
