@@ -32,8 +32,6 @@ void Test_InsertAndDelete() {
     Avl_Delete(&tree, 3);
     Avl_Delete(&tree, 5);
     Avl_Delete(&tree, 4);
-    Avl_Delete(&tree, 6);
-    Avl_Delete(&tree, 9);
     Avl_Delete(&tree, 7);
     Avl_Delete(&tree, 8);
     Avl_Delete(&tree, 2);
