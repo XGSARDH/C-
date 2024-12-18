@@ -24,7 +24,7 @@ void Test_InsertAndDelete() {
 
     printf("Avl_InOrderTraverse: \n");
     Avl_InOrderTraverse(tree);
-    printf("\n");
+    printf("\n\n");
 
     Avl_PrintTree(tree);
 
@@ -37,7 +37,7 @@ void Test_InsertAndDelete() {
     Avl_Delete(&tree, 2);
     printf("after delete , Avl_InOrderTraverse: \n");
     Avl_InOrderTraverse(tree);
-    printf("\n");
+    printf("\n\n");
     Avl_PrintTree(tree);
 
     Avl_Destroy(&tree);

@@ -16,7 +16,7 @@ Status AvlNode_InitDefault(AvlTree *node) {
     if (!node) return STATUS_FALSE;
     *node = (AvlNode *)malloc(sizeof(AvlNode));
     if (!(*node)) return STATUS_OVERFLOW;
-    (*node)->data = 0;
+    AvlElement_Init(&(*node)->data, 0);
     (*node)->balanceFactor = 0;
     (*node)->leftChild = NULL;
     (*node)->rightChild = NULL;
@@ -28,7 +28,7 @@ Status AvlNode_Init(AvlTree *node, AvlElementType element) {
     if (!node) return STATUS_FALSE;
     *node = (AvlNode *)malloc(sizeof(AvlNode));
     if (!(*node)) return STATUS_OVERFLOW;
-    (*node)->data = element;
+    AvlElement_Init(&(*node)->data, element);
     (*node)->balanceFactor = 0;
     (*node)->leftChild = NULL;
     (*node)->rightChild = NULL;
@@ -99,26 +99,26 @@ Status Avl_Insert(AvlTree *root, AvlElementType element) {
     if (!(*root)) {
         return AvlNode_Init(root, element);
     }
-    if (element < (*root)->data) {
+    if (AvlElement_IsEqual(element, (*root)->data) == AVLELEMENT_LESS) {
         if (!Avl_Insert(&((*root)->leftChild), element)) return STATUS_FALSE;
-    } else if (element > (*root)->data) {
+    } else if (AvlElement_IsEqual(element, (*root)->data) == AVLELEMENT_GREATER) {
         if (!Avl_Insert(&((*root)->rightChild), element)) return STATUS_FALSE;
     } else {
         return STATUS_FALSE; // 不允许插入重复值
     }
 
     Avl_UpdateBalanceFactor(*root);
-
+    ;
     // 旋转保持平衡
     if ((*root)->balanceFactor > 1) {
-        if (element > (*root)->leftChild->data) {
+        if (AvlElement_IsEqual(element, (*root)->leftChild->data) == AVLELEMENT_GREATER) {
             Avl_RotateLeft(&((*root)->leftChild));
             Avl_RotateRight(root);
         } else {
             Avl_RotateRight(root);
         }
     } else if ((*root)->balanceFactor < -1) {
-        if (element < (*root)->rightChild->data) {
+        if (AvlElement_IsEqual(element, (*root)->rightChild->data) == AVLELEMENT_LESS) {
             Avl_RotateRight(&((*root)->rightChild));
             Avl_RotateLeft(root);
         } else {
@@ -133,10 +133,11 @@ Status Avl_Insert(AvlTree *root, AvlElementType element) {
 Status Avl_Delete(AvlTree *root, AvlElementType element) {
     if (!root || !(*root)) return STATUS_FALSE;
 
+
     // 递归找到目标节点并删除
-    if (element < (*root)->data) {
+    if (AvlElement_IsEqual(element, (*root)->data) == AVLELEMENT_LESS) {
         if (!Avl_Delete(&((*root)->leftChild), element)) return STATUS_FALSE;
-    } else if (element > (*root)->data) {
+    } else if (AvlElement_IsEqual(element, (*root)->data) == AVLELEMENT_GREATER) {
         if (!Avl_Delete(&((*root)->rightChild), element)) return STATUS_FALSE;
     } else {
         // 找到要删除的节点
@@ -194,7 +195,8 @@ Status Avl_VisitNode(AvlTree node) {
     if(!node) {
         return STATUS_FALSE;
     }
-    printf("%d (BF: %d)\n", node->data, node->balanceFactor);
+    AvlElement_Print(node->data);
+    printf("(BF: %d)", node->balanceFactor);
     return STATUS_TRUE;
 }
 
@@ -202,11 +204,11 @@ Status Avl_VisitNode(AvlTree node) {
 Status Avl_InOrderTraverse(AvlTree root) {
     if (!root) return STATUS_TRUE;
     Avl_InOrderTraverse(root->leftChild);
-    printf("%d ", root->data);
+    AvlElement_Print(root->data);
+    printf(" ");
     Avl_InOrderTraverse(root->rightChild);
     return STATUS_TRUE;
 }
-
 
 /**
  * 打印 AVL 树的递归辅助函数
@@ -224,6 +226,7 @@ void printAvlRecursive(AvlTree root, int depth) {
         printf("       |"); // 每层缩进
     }
     Avl_VisitNode(root);
+    printf("\n");
 
     // 打印左子树
     printAvlRecursive(root->leftChild, depth + 1);
