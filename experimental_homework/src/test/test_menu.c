@@ -16,9 +16,9 @@ void test_menu1() {
     char *description3 = "选项3: 测试功能3";
 
     // 创建菜单选项
-    MenuOption_create(&options[0], 1, &description1, test_handler);
-    MenuOption_create(&options[1], 2, &description2, test_handler);
-    MenuOption_create(&options[2], 3, &description3, test_handler);
+    MenuOption_create(&options[0], 1, description1, test_handler);
+    MenuOption_create(&options[1], 2, description2, test_handler);
+    MenuOption_create(&options[2], 3, description3, test_handler);
 
     // 创建菜单
     Menu menu;
@@ -34,8 +34,8 @@ void test_menu1() {
     char *new_description1 = "新选项1: 功能A";
     char *new_description2 = "新选项2: 功能B";
     MenuOption new_options[2];
-    MenuOption_create(&new_options[0], 1, &new_description1, test_handler);
-    MenuOption_create(&new_options[1], 2, &new_description2, test_handler);
+    MenuOption_create(&new_options[0], 1, new_description1, test_handler);
+    MenuOption_create(&new_options[1], 2, new_description2, test_handler);
     Menu_UpdateOption(&menu, new_options, 2);
     Menu_Display(&menu);
 
