@@ -40,5 +40,30 @@ void Test_InsertAndDelete() {
     printf("\n\n");
     Avl_PrintTree(tree);
 
+    Status status;
+    status = STATUS_TRUE;
+    status = Avl_Search(&tree, 1);
+    if (status == STATUS_TRUE) {
+        printf("find 1\n");
+    }
+    else if (status == STATUS_OVERFLOW) {
+        printf("not find 1\n");
+    }
+    else {
+        printf("ERROR\n");
+    }
+
+    status = STATUS_TRUE;
+    status = Avl_Search(&tree, 6);
+    if (status == STATUS_TRUE) {
+        printf("find 1\n");
+    }
+    else if (status == STATUS_OVERFLOW) {
+        printf("not find 1\n");
+    }
+    else {
+        printf("ERROR\n");
+    }
+
     Avl_Destroy(&tree);
 }

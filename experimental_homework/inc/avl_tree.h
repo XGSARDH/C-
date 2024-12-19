@@ -47,6 +47,9 @@ Status Avl_Insert(AvlTree *root, AvlElementType element);
 /* 删除节点 */
 Status Avl_Delete(AvlTree *root, AvlElementType element);
 
+/* 查找节点 */
+Status Avl_Search(AvlTree *root, AvlElementType element);
+
 /* 更新平衡因子 */
 Status Avl_UpdateBalanceFactor(AvlTree root);
 

@@ -192,6 +192,22 @@ Status Avl_Delete(AvlTree *root, AvlElementType element) {
     return STATUS_TRUE;
 }
 
+/* 查找节点 */
+Status Avl_Search(AvlTree *root, AvlElementType element) {
+    if (!root || !(*root)) return STATUS_FALSE;
+    AvlTree avl_tree = *root;
+    if (AvlElement_IsEqual(avl_tree->data, element) == AVLELEMENT_EQUAL) {
+        return STATUS_TRUE;
+    }
+    if (Avl_Search(&avl_tree->leftChild, element) == STATUS_TRUE) {
+        return STATUS_TRUE;
+    }
+    if (Avl_Search(&avl_tree->rightChild, element) == STATUS_TRUE) {
+        return STATUS_TRUE;
+    }
+    return STATUS_OVERFLOW;
+}
+
 /* 访问节点值 */
 Status Avl_VisitNode(AvlTree node) {
     if(!node) {
