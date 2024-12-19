@@ -13,11 +13,11 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 add_executable(main ${PROJECT_SOURCE_DIR}/src/main.c)
 target_link_libraries(main avl menu linked_list)
 
-add_executable(test_avl_tree ${PROJECT_SOURCE_DIR}/src/test/test_avl_tree.c)
+add_executable(test_avl_tree ${PROJECT_SOURCE_DIR}/test/test_avl_tree.c)
 target_link_libraries(test_avl_tree avl)
 
-add_executable(test_menu ${PROJECT_SOURCE_DIR}/src/test/test_menu.c)
+add_executable(test_menu ${PROJECT_SOURCE_DIR}/test/test_menu.c)
 target_link_libraries(test_menu menu)
 
-add_executable(test_linked_list ${PROJECT_SOURCE_DIR}/src/test/test_int_linked_list.c)
+add_executable(test_linked_list ${PROJECT_SOURCE_DIR}/test/test_int_linked_list.c)
 target_link_libraries(test_linked_list linked_list)
