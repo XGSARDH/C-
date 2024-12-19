@@ -1,27 +1,40 @@
-//
-// Created by sardh on 2024/12/17.
-//
-
 #ifndef MENU_H
 #define MENU_H
 
-#include "status_enum.h"
+#include "status.h"
 
-typedef struct MenuType {
-    // init the position is 0.
-    int nowMenuPosition;
-    // choose == 0, mean not choose, the next step is to choose
-    int choose;
-} MenuType;
+typedef struct MenuOption {
+    int key;
+    char *description;
+    Status (*handler)();
+} MenuOption;
 
-Status createMenuType(MenuType *origin, int nowMenuPosition, int choose);
+typedef struct Menu {
+    char *title;
+    MenuOption *option;
+    int option_count;
+    int display_count;
+} Menu;
 
-Status changeMenuType(MenuType *origin, int nowMenuPosition, int choose);
+// 更新menu菜单中的选项和项数
+Status Menu_UpdateOption(Menu *menu, MenuOption *option, int option_count);
 
-Status processMenuSelection(MenuType input);
+// 创建menu菜单
+Status Menu_Create(Menu *menu, char **title, MenuOption *option, int option_count, int display_count);
 
-Status resetMenuType(MenuType *origin);
+// 菜单赋值
+Status Menu_UpdateByMenu(Menu *menu_changed, Menu *menu_purpose);
 
-Status displayMenu(MenuType input);
+// 打印菜单
+Status Menu_Display(Menu *menu);
 
-#endif //MENU_H
+// 更新菜单要显示的选项数
+Status Menu_UpdateDisplayCount(Menu *menu, int display_count);
+
+// 处理菜单输入
+Status Menu_HandlerInput(Menu menu,char *input_option);
+
+// 创建菜单选项
+Status MenuOption_create(MenuOption *menuOption, int key, char **description, Status (*handler)(void *context));
+
+#endif // MENU_H
