@@ -41,6 +41,9 @@ int main() {
         if(main_status == STATUS_OVERFLOW) {
             printf("您的输入不合法, 请输入指定选项的数字\n");
         }
+        printf("按回车以继续\n");
+        getchar();
+        ClearScreen();
     }
     printf("程序发生错误, 即将终止");
     getchar();

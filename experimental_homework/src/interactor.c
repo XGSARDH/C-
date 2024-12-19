@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <string.h>
 
-void clearScreen() {
+void ClearScreen() {
 #ifdef _WIN32
     system("cls"); // Windows 平台
 #else
@@ -100,7 +100,7 @@ Status top_menu_handler2(void *context) {
 Status top_menu_handler3(void *context) {
     printf("暂时不设计");
     getchar();
-    clearScreen();
+    ClearScreen();
     return STATUS_TRUE;
 }
 
@@ -122,6 +122,7 @@ Status control_tree_menu_handler1(void *context) {
         return STATUS_FALSE;
     }
     int insert_value = 0;
+    printf("输入要添加的数字: ");
     if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE) {
         printf("输入不是纯数字\n");
         return STATUS_OVERFLOW;
@@ -137,15 +138,41 @@ Status control_tree_menu_handler1(void *context) {
         avl_tree = purpose;
     }
     Avl_Insert(&avl_tree, insert_value);
-    if (get_avl_tree_origin == NULL) {
-        ListElementType curr = (ListElementType*)avl_tree;
-        List_Change(handler_context->avl_list, *handler_context->now_avl, &curr);
-    }
+    ListElementType curr = (ListElementType*)avl_tree;
+    List_Change(handler_context->avl_list, *handler_context->now_avl, &curr);
     return STATUS_TRUE;
 }
 
 Status control_tree_menu_handler2(void *context) {
-
+    HandlerContext *handler_context = (HandlerContext*)context;
+    ListElementType get_avl_tree_origin;
+    if (STATUS_FALSE == List_Get(handler_context->avl_list, *handler_context->now_avl, &get_avl_tree_origin)) {
+        control_tree_menu_handler0(context);
+        *handler_context->now_avl = -1;
+        return STATUS_FALSE;
+    }
+    int insert_value = 0;
+    printf("输入要删除的数字: ");
+    if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE) {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    if (abs(insert_value) > 65533) {
+        printf("输入数字绝对值过大\n");
+        return STATUS_OVERFLOW;
+    }
+    AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
+    if (get_avl_tree_origin == NULL) {
+        printf("该树现在为空树, 无法执行该操作.\n");
+        return STATUS_OVERFLOW;
+    }
+    Status delete_status = Avl_Delete(&avl_tree, insert_value);
+    if (delete_status == STATUS_FALSE) {
+        printf("该树不存在该值, 无法执行该操作.\n");
+        return STATUS_OVERFLOW;
+    }
+    ListElementType curr = (ListElementType*)avl_tree;
+    List_Change(handler_context->avl_list, *handler_context->now_avl, &curr);
     return STATUS_TRUE;
 }
 
@@ -162,8 +189,12 @@ Status control_tree_menu_handler4(void *context) {
         *handler_context->now_avl = -1;
         return STATUS_FALSE;
     }
-    AvlTree avl_tree = ((AvlTree)get_avl_tree_origin);
-    Avl_PrintTree(avl_tree);
+    AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
+    if (get_avl_tree_origin == NULL) {
+        printf("该树现在为空树.\n");
+        return STATUS_OVERFLOW;
+    }
+    Status delete_status = Avl_PrintTree(avl_tree);
     return STATUS_TRUE;
 }
 

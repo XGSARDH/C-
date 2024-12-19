@@ -24,7 +24,8 @@ typedef struct HandlerContext {
     int *now_avl;
 } HandlerContext;
 
-
+// 清屏
+void ClearScreen();
 // 初始化顶级菜单
 Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option);
 // 初始化控制单棵树菜单
