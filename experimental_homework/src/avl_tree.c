@@ -95,7 +95,9 @@ Status Avl_UpdateBalanceFactor(AvlTree root) {
 
 /* 插入节点 */
 Status Avl_Insert(AvlTree *root, AvlElementType element) {
-    if (!root) return STATUS_FALSE;
+    if (!root) {
+        return STATUS_FALSE;
+    }
     if (!(*root)) {
         return AvlNode_Init(root, element);
     }

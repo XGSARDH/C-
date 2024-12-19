@@ -28,6 +28,11 @@ int main() {
     printf("删除后链表内容: ");
     List_Print(&list, PrintInt);
 
+    ListElementType get_purpose;
+    List_Get(&list, 0, &get_purpose);
+    List_Print(&list, PrintInt);
+    PrintInt(get_purpose);
+
     List_Destroy(&list);
     printf("链表销毁完成。\n");
 

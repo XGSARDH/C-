@@ -42,6 +42,9 @@ Status List_RemoveAt(LinkedList* list, int index, ListElementType* element);
 /* 获取链表指定位置的元素 */
 Status List_Get(LinkedList* list, int index, ListElementType* element);
 
+/* 替代链表指定位置的元素 */
+Status List_Change(LinkedList* list, int index, ListElementType* element);
+
 /* 获取链表大小 */
 int List_Size(LinkedList* list);
 

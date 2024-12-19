@@ -83,7 +83,7 @@ Status is_number(const char *str) {
 }
 
 // 处理菜单输入
-Status Menu_HandlerInput(Menu menu,char *input_option, void *context) {
+Status Menu_HandlerInput(Menu menu, char *input_option, void *context) {
     // 检查输入是否为空
     if (input_option == NULL || strlen(input_option) == 0) {
         return STATUS_OVERFLOW; // 输入为空，返回失败

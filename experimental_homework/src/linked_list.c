@@ -116,10 +116,20 @@ Status List_Get(LinkedList* list, int index, ListElementType* element) {
         current = current->next;
     }
 
-    if (element != NULL) {
-        *element = current->data;
-    }
+    // if (element != NULL) {
+    //     *element = current->data;
+    // }
+    *element = current->data;
+    return STATUS_TRUE;
+}
 
+Status List_Change(LinkedList* list, int index, ListElementType* element) {
+    if (list == NULL || index < 0 || index >= list->size) return STATUS_FALSE;
+    ListNode* current = list->head;
+    for (int i = 0; i < index; i++) {
+        current = current->next;
+    }
+    current->data = *element;
     return STATUS_TRUE;
 }
 
