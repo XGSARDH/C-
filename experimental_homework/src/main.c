@@ -1,137 +1,201 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "avl_tree.h"
 #include "menu.h"
 #include "linked_list.h"
 
-#define top_menu_count 4
-#define control_tree_menu_count 7
-#define more_menu_count 3
+#define TOP_MENU_COUNT 4
+#define TREE_MENU_COUNT 3
+#define CONTROL_TREE_MENU_COUNT 7
+#define MORE_MENU_COUNT 3
+#define MAX_INPUT 100
 
-Menu top_menu, tree_menu, control_tree_menu, more_menu, now_menu;
-MenuOption
-        *top_menu_option = NULL,
-        *tree_menu_option = NULL,
-        *control_tree_menu_option = NULL,
-        *more_menu_option = NULL;
-LinkedList avl_list;
-int now_avl = 0;
+// å®šä¹‰æºå¸¦ä¿¡æ¯ç»“æ„ä½“
+typedef struct HandlerContext {
+    Menu *now_menu;
+    Menu *top_menu;
+    Menu *tree_menu;
+    Menu *control_tree_menu;
+    Menu *more_menu;
+    LinkedList *avl_list;
+    int *now_avl;
+} HandlerContext;
 
-Status Menu_AllInit();
-Status List_AllInit();
+// åˆå§‹åŒ–é¡¶çº§èœå•
+Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option);
+// åˆå§‹åŒ–æ§åˆ¶å•æ£µæ ‘èœå•
+Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option);
+// åˆå§‹åŒ–é€‰æ‹©äºŒå‰æ ‘èœå•
+Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option);
+// æµ‹è¯•èœå•æ˜¾ç¤º
+void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu);
+// åˆå§‹åŒ–ç»‘å®šcontext
+Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu, LinkedList *avl_list, int *now_avl);
 
 int main() {
-    List_AllInit();
-    Menu_AllInit();
-    now_menu = control_tree_menu;
-    Menu_Display(&now_menu);
+    // å®šä¹‰å˜é‡
+    Menu top_menu, tree_menu, control_tree_menu, more_menu;
+    MenuOption top_menu_option[TOP_MENU_COUNT];
+    MenuOption tree_menu_option[TREE_MENU_COUNT];
+    MenuOption control_tree_menu_option[CONTROL_TREE_MENU_COUNT];
+    // MenuOption more_menu_option[MORE_MENU_COUNT];
+    LinkedList avl_list;
+    int now_avl_position = 0;
+    Menu now_menu;
+    HandlerContext context;
+
+    // åˆå§‹åŒ–å˜é‡
+    List_Init(&avl_list);
+    Top_Menu_Init(&top_menu, top_menu_option);
+    Tree_Menu_Init(&tree_menu, tree_menu_option);
+    Control_Tree_Menu_Init(&control_tree_menu, control_tree_menu_option);
+    HandlerContext_Init(&context, &now_menu, &top_menu, &tree_menu, &control_tree_menu, &more_menu, &avl_list, &now_avl_position);
+    now_menu = top_menu;
+
+    // å¼€å§‹ç¨‹åº
+    Status main_status = STATUS_TRUE;
+    char input_choose[MAX_INPUT] = {};
+    while(main_status != STATUS_FALSE) {
+        Menu_Display(context.now_menu);
+        printf("\nè¯·è¾“å…¥é€‰æ‹©: ");
+        if (fgets(input_choose, sizeof(input_choose), stdin) != NULL) {
+            // å»æ‰æ¢è¡Œç¬¦
+            input_choose[strcspn(input_choose, "\n")] = '\0';
+        }
+        main_status = Menu_HandlerInput(*context.now_menu, input_choose, &context);
+        if(main_status == STATUS_OVERFLOW) {
+            printf("æ‚¨çš„è¾“å…¥ä¸åˆæ³•, è¯·è¾“å…¥æŒ‡å®šé€‰é¡¹çš„æ•°å­—\n");
+        }
+    }
     return 0;
 }
 
-Status List_AllInit() {
-    List_Init(&avl_list);
+Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu, LinkedList *avl_list, int *now_avl) {
+    if(!handler_context || !top_menu || !avl_list || !now_avl || !tree_menu || !control_tree_menu || !more_menu) {
+        return STATUS_FALSE;
+    }
+    handler_context->top_menu = top_menu;
+    handler_context->now_menu = now_menu;
+    handler_context->tree_menu = tree_menu;
+    handler_context->control_tree_menu = control_tree_menu;
+    handler_context->more_menu = more_menu;
+    handler_context->avl_list = avl_list;
+    handler_context->now_avl = now_avl;
     return STATUS_TRUE;
 }
 
-Status top_menu_handler0() {
+void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu) {
+    Menu_Display(top_menu);
+    Menu_Display(tree_menu);
+    Menu_Display(control_tree_menu);
+}
+
+Status top_menu_handler0(void *context) {
     exit(0);
-    return STATUS_TRUE;
 }
 
-Status top_menu_handler1() {
+Status top_menu_handler1(void *context) {
+    HandlerContext *handlerContext = (HandlerContext*)context;
     AvlTree new_avl = NULL;
     Avl_Init(&new_avl);
-    Status output_status = List_Append(&avl_list, &new_avl);
+    Status output_status = List_Append(handlerContext->avl_list, &new_avl);
     if(output_status == STATUS_TRUE) {
-        printf("´´½¨³É¹¦\n");
+        printf("åˆ›å»ºæˆåŠŸ\n");
         return output_status;
     }
     else {
-        printf("´´½¨Ê§°Ü\n");
+        printf("åˆ›å»ºå¤±è´¥\n");
         return output_status;
     }
 }
 
-Status top_menu_handler2() {
+Status top_menu_handler2(void *context) {
+    HandlerContext *handlerContext = (HandlerContext*)context;
+    handlerContext->now_menu = handlerContext->tree_menu;
     return STATUS_TRUE;
 }
 
-Status top_menu_handler3() {
-
-    return STATUS_TRUE;
-}
-
-Status control_tree_menu_handler0() {
-
-    return STATUS_TRUE;
-}
-
-Status control_tree_menu_handler1() {
+Status top_menu_handler3(void *context) {
 
     return STATUS_TRUE;
 }
 
-Status control_tree_menu_handler2() {
+Status control_tree_menu_handler0(void *now_menu) {
+//    *((Menu*)now_menu) = top_menu;
+//    return STATUS_TRUE;
+}
+
+Status control_tree_menu_handler1(void *context) {
 
     return STATUS_TRUE;
 }
 
-Status control_tree_menu_handler3() {
+Status control_tree_menu_handler2(void *context) {
 
     return STATUS_TRUE;
 }
 
-Status control_tree_menu_handler4() {
+Status control_tree_menu_handler3(void *context) {
 
     return STATUS_TRUE;
 }
 
-Status control_tree_menu_handler5() {
+Status control_tree_menu_handler4(void *context) {
 
     return STATUS_TRUE;
 }
 
-Status control_tree_menu_handler6() {
+Status control_tree_menu_handler5(void *context) {
 
     return STATUS_TRUE;
 }
 
-Status Menu_AllInit() {
-    top_menu_option = (MenuOption*) malloc(sizeof(MenuOption) * top_menu_count);
-    control_tree_menu_option = (MenuOption*) malloc(sizeof(MenuOption) * control_tree_menu_count);
-    more_menu_option = (MenuOption*) malloc(sizeof(MenuOption) * more_menu_count);
-
-    // ¶¥¼¶²Ëµ¥³õÊ¼»¯
-    char *top_menu_title = "¶¥¼¶²Ëµ¥Õ¹Ê¾";
-    char *top_menu_option_description[top_menu_count];
-    top_menu_option_description[0] = "ÍË³ö³ÌĞò";
-    MenuOption_create(&top_menu_option[0], 0, &top_menu_option_description[0], top_menu_handler0);
-    top_menu_option_description[1] = "´´½¨Ò»¿ÃĞÂÆ½ºâ¶ş²æÊ÷";
-    MenuOption_create(&top_menu_option[1], 1, &top_menu_option_description[1], top_menu_handler1);
-    top_menu_option_description[2] = "Ñ¡Ôñ¶ş²æÊ÷½øĞĞµ÷Õû";
-    MenuOption_create(&top_menu_option[2], 2, &top_menu_option_description[2], top_menu_handler2);
-    top_menu_option_description[3] = "¸ü¶à¹¦ÄÜ";
-    MenuOption_create(&top_menu_option[3], 3, &top_menu_option_description[3], top_menu_handler3);
-    Menu_Create(&top_menu, &top_menu_title, top_menu_option, top_menu_count, top_menu_count);
-
-    // ¹ÜÀíµ¥¿ÃÊ÷²Ëµ¥³õÊ¼»¯
-    char *control_tree_menu_title = "µ¥¿ÃÆ½ºâ¶ş²æÊ÷µ÷Õû²Ëµ¥";
-    char *control_tree_menu_option_description[control_tree_menu_count];
-    control_tree_menu_option_description[0] = "·µ»Ø¶¥¼¶Ä¿Â¼";
-    MenuOption_create(&control_tree_menu_option[0], 0, &control_tree_menu_option_description[0], control_tree_menu_handler0);
-    control_tree_menu_option_description[1] = "²åÈëÊıÖµ";
-    MenuOption_create(&control_tree_menu_option[1], 1, &control_tree_menu_option_description[1], control_tree_menu_handler1);
-    control_tree_menu_option_description[2] = "É¾³ıÊıÖµ";
-    MenuOption_create(&control_tree_menu_option[2], 2, &control_tree_menu_option_description[2], control_tree_menu_handler2);
-    control_tree_menu_option_description[3] = "²éÕÒÊıÖµ";
-    MenuOption_create(&control_tree_menu_option[3], 3, &control_tree_menu_option_description[3], control_tree_menu_handler3);
-    control_tree_menu_option_description[4] = "´òÓ¡¶ş²æÊ÷";
-    MenuOption_create(&control_tree_menu_option[4], 4, &control_tree_menu_option_description[4], control_tree_menu_handler4);
-    control_tree_menu_option_description[5] = "ÖĞĞò±éÀú";
-    MenuOption_create(&control_tree_menu_option[5], 5, &control_tree_menu_option_description[5], control_tree_menu_handler5);
-    control_tree_menu_option_description[6] = "ÒÔÄ³ÖµÎª½çÏŞ²ğ·Ö¶ş²æÊ÷";
-    MenuOption_create(&control_tree_menu_option[6], 6, &control_tree_menu_option_description[6], control_tree_menu_handler6);
-    Menu_Create(&control_tree_menu, &control_tree_menu_title, control_tree_menu_option, control_tree_menu_count, control_tree_menu_count);
+Status control_tree_menu_handler6(void *context) {
 
     return STATUS_TRUE;
 }
+
+Status tree_menu_handler0(void *context) {
+
+    return STATUS_TRUE;
+}
+
+Status tree_menu_handler1(void *context) {
+
+    return STATUS_TRUE;
+}
+
+Status tree_menu_handler2(void *context) {
+
+    return STATUS_TRUE;
+}
+
+Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option) {
+    MenuOption_create(&top_menu_option[0], 0, "é€€å‡ºç¨‹åº", top_menu_handler0);
+    MenuOption_create(&top_menu_option[1], 1, "åˆ›å»ºä¸€æ£µæ–°å¹³è¡¡äºŒå‰æ ‘", top_menu_handler1);
+    MenuOption_create(&top_menu_option[2], 2, "é€‰æ‹©äºŒå‰æ ‘è¿›è¡Œè°ƒæ•´", top_menu_handler2);
+    MenuOption_create(&top_menu_option[3], 3, "æ›´å¤šåŠŸèƒ½", top_menu_handler3);
+    char *top_menu_title = "é¡¶çº§èœå•å±•ç¤º";
+    Menu_Create(top_menu, &top_menu_title, top_menu_option, TOP_MENU_COUNT, TOP_MENU_COUNT);
+}
+
+Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option) {
+    MenuOption_create(&control_tree_menu_option[0], 0, "è¿”å›é¡¶çº§ç›®å½•", control_tree_menu_handler0);
+    MenuOption_create(&control_tree_menu_option[1], 1, "æ’å…¥æ•°å€¼", control_tree_menu_handler1);
+    MenuOption_create(&control_tree_menu_option[2], 2, "åˆ é™¤æ•°å€¼", control_tree_menu_handler2);
+    MenuOption_create(&control_tree_menu_option[3], 3, "æŸ¥æ‰¾æ•°å€¼", control_tree_menu_handler3);
+    MenuOption_create(&control_tree_menu_option[4], 4, "æ‰“å°äºŒå‰æ ‘", control_tree_menu_handler4);
+    MenuOption_create(&control_tree_menu_option[5], 5, "ä¸­åºéå†", control_tree_menu_handler5);
+    MenuOption_create(&control_tree_menu_option[6], 6, "ä»¥æŸå€¼ä¸ºç•Œé™æ‹†åˆ†äºŒå‰æ ‘", control_tree_menu_handler6);
+    char *control_tree_menu_title = "å•æ£µå¹³è¡¡äºŒå‰æ ‘è°ƒæ•´èœå•";
+    Menu_Create(control_tree_menu, &control_tree_menu_title, control_tree_menu_option, CONTROL_TREE_MENU_COUNT, CONTROL_TREE_MENU_COUNT);
+}
+
+Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option) {
+    MenuOption_create(&tree_menu_option[0], 0, "è¿”å›é¡¶çº§ç›®å½•", tree_menu_handler0);
+    MenuOption_create(&tree_menu_option[1], 1, "æŸ¥çœ‹å½“å‰äºŒå‰æ ‘æ•°é‡", tree_menu_handler1);
+    MenuOption_create(&tree_menu_option[2], 2, "è·³è½¬åˆ°æŒ‡å®šåºå·å¹³è¡¡äºŒå‰æ ‘è°ƒæ•´èœå•", tree_menu_handler2);
+    char *tree_menu_title = "é€‰æ‹©äºŒå‰æ ‘è¿›è¡Œè°ƒæ•´èœå•";
+    Menu_Create(tree_menu, &tree_menu_title, tree_menu_option, TREE_MENU_COUNT, TREE_MENU_COUNT);
+};

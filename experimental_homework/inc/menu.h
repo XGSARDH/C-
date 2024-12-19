@@ -6,7 +6,7 @@
 typedef struct MenuOption {
     int key;
     char *description;
-    Status (*handler)();
+    Status (*handler)(void *context);
 } MenuOption;
 
 typedef struct Menu {
@@ -32,9 +32,9 @@ Status Menu_Display(Menu *menu);
 Status Menu_UpdateDisplayCount(Menu *menu, int display_count);
 
 // 处理菜单输入
-Status Menu_HandlerInput(Menu menu,char *input_option);
+Status Menu_HandlerInput(Menu menu,char *input_option, void *context);
 
 // 创建菜单选项
-Status MenuOption_create(MenuOption *menuOption, int key, char **description, Status (*handler)(void *context));
+Status MenuOption_create(MenuOption *menuOption, int key, char *description, Status (*handler)(void *context));
 
 #endif // MENU_H

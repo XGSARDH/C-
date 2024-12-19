@@ -58,12 +58,12 @@ Status Menu_UpdateDisplayCount(Menu *menu, int display_count) {
 }
 
 // 创建菜单选项
-Status MenuOption_create(MenuOption *menuOption, int key, char **description, Status (*handler)()) {
+Status MenuOption_create(MenuOption *menuOption, int key, char *description, Status (*handler)()) {
     if(!menuOption) {
         return STATUS_FALSE;
     }
     menuOption->key = key;
-    menuOption->description = *description;
+    menuOption->description = description;
     menuOption->handler = handler;
     return STATUS_TRUE;
 }
@@ -83,14 +83,14 @@ Status is_number(const char *str) {
 }
 
 // 处理菜单输入
-Status Menu_HandlerInput(Menu menu,char *input_option) {
+Status Menu_HandlerInput(Menu menu,char *input_option, void *context) {
     // 检查输入是否为空
     if (input_option == NULL || strlen(input_option) == 0) {
-        return STATUS_FALSE; // 输入为空，返回失败
+        return STATUS_OVERFLOW; // 输入为空，返回失败
     }
     // 检查输入是否为纯数字
     if (is_number(input_option) == STATUS_FALSE) {
-        return STATUS_FALSE; // 输入中有非数字字符
+        return STATUS_OVERFLOW; // 输入中有非数字字符
     }
     if (strlen(input_option) > 5) {
         return STATUS_OVERFLOW; // 输入超过范围
@@ -98,7 +98,7 @@ Status Menu_HandlerInput(Menu menu,char *input_option) {
     // 将输入字符串转换为数字
     int option = strtol(input_option, NULL, 10);
     if (option < 0 || option >= menu.option_count) {
-        return STATUS_FALSE; // 输入不合法
+        return STATUS_OVERFLOW; // 输入不合法
     }
-    return menu.option[option].handler();
+    return menu.option[option].handler(context);
 }
