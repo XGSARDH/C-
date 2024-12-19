@@ -4,17 +4,20 @@ project(experimental_homework VERSION 1.0)
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 # aux_source_directory(${PROJECT_SOURCE_DIR}/src SRC_LIST)
 # add lib purpose
-add_library(avl ${PROJECT_SOURCE_DIR}/src/avl_tree.c ${PROJECT_SOURCE_DIR}/src/stack.c)
-add_library(avl_stack ${PROJECT_SOURCE_DIR}/src/avl_tree.c ${PROJECT_SOURCE_DIR}/src/stack.c ${PROJECT_SOURCE_DIR}/src/avl_stack.c)
+add_library(avl ${PROJECT_SOURCE_DIR}/src/avl_tree.c)
 add_library(menu ${PROJECT_SOURCE_DIR}/src/menu.c)
+add_library(linked_list ${PROJECT_SOURCE_DIR}/src/linked_list.c)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(main  ${PROJECT_SOURCE_DIR}/src/main.c)
 target_link_libraries(main avl)
 
-add_executable(test_avl_tree ${PROJECT_SOURCE_DIR}/src/test_avl_tree.c)
+add_executable(test_avl_tree ${PROJECT_SOURCE_DIR}/src/test/test_avl_tree.c)
 target_link_libraries(test_avl_tree avl)
 
-add_executable(test_menu  ${PROJECT_SOURCE_DIR}/src/test_menu.c)
+add_executable(test_menu ${PROJECT_SOURCE_DIR}/src/test/test_menu.c)
 target_link_libraries(test_menu menu)
+
+add_executable(test_linked_list ${PROJECT_SOURCE_DIR}/src/test/test_int_linked_list.c)
+target_link_libraries(test_linked_list linked_list)
