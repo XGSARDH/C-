@@ -241,6 +241,7 @@ Status control_tree_menu_handler5(void *context) {
         return STATUS_OVERFLOW;
     }
     Status status = Avl_InOrderTraverse(avl_tree);
+    printf("\n");
     return STATUS_TRUE;
 }
 
