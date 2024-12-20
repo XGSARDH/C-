@@ -65,6 +65,12 @@ Status Avl_PrintTree(AvlTree root);
 /* 分割AVL树 */
 Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, AvlTree *bigger_tree);
 
+/* 复制AVL树 */
+Status Avl_Copy(AvlTree *origin_tree, AvlTree *purpose_tree);
+
+/* 合并AVL树 */
+Status Avl_Merge(AvlTree *origin_tree1, AvlTree *origin_tree2, AvlTree *purpose_tree);
+
 /* ======================== AvlElementType 相关函数 ======================== */
 
 /* 元素赋值 */

@@ -3,10 +3,14 @@
 
 void Test_InsertAndDelete();
 void Test_Split();
+void Test_Copy();
+void Test_Merge();
 
 int main() {
     // Test_InsertAndDelete();
-    Test_Split();
+    // Test_Split();
+    // Test_Copy();
+    Test_Merge();
     return 0;
 }
 
@@ -88,4 +92,45 @@ void Test_Split() {
     Avl_PrintTree(small_tree);
     printf("\nbig_tree\n");
     Avl_PrintTree(big_tree);
+}
+
+void Test_Copy() {
+    AvlTree tree = NULL;
+    AvlTree purpose_tree = NULL;
+    Avl_Init(&tree);
+
+    for (int i = 0; i <=  10; i++) {
+        Avl_Insert(&tree, i);
+    }
+
+    Avl_Copy(&tree, &purpose_tree);
+
+    printf("\ntree\n");
+    Avl_PrintTree(tree);
+    printf("\npurpose_tree\n");
+    Avl_PrintTree(purpose_tree);
+}
+
+void Test_Merge() {
+    AvlTree tree1 = NULL;
+    AvlTree tree2 = NULL;
+    AvlTree purpose_tree = NULL;
+    Avl_Init(&tree1);
+    Avl_Init(&tree2);
+
+    for (int i = 0; i <  10; i++) {
+        Avl_Insert(&tree1, i);
+    }
+    for (int i = 10; i <  20; i++) {
+        Avl_Insert(&tree2, i);
+    }
+
+    Avl_Merge(&tree1, &tree2, &purpose_tree);
+
+    printf("\n tree1: \n");
+    Avl_PrintTree(tree1);
+    printf("\n tree2: \n");
+    Avl_PrintTree(tree2);
+    printf("\n purpose_tree: \n");
+    Avl_PrintTree(purpose_tree);
 }

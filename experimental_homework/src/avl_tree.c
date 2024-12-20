@@ -279,6 +279,29 @@ Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, A
     return output_status;
 }
 
+/* 复制AVL树 */
+Status Avl_Copy(AvlTree *origin_tree, AvlTree *purpose_tree) {
+    if (!origin_tree || !*origin_tree) return STATUS_TRUE;
+    Avl_Copy(&(*origin_tree)->leftChild, purpose_tree);
+    Avl_Insert(purpose_tree, (*origin_tree)->data);
+    Avl_Copy(&(*origin_tree)->rightChild, purpose_tree);
+    return STATUS_TRUE;
+}
+
+Status Avl_MergeHelper(AvlTree *origin_tree, AvlTree *purpose_tree) {
+    if (!origin_tree || !*origin_tree) return STATUS_TRUE;
+    Avl_MergeHelper(&(*origin_tree)->leftChild, purpose_tree);
+    Avl_Insert(purpose_tree, (*origin_tree)->data);
+    Avl_MergeHelper(&(*origin_tree)->rightChild, purpose_tree);
+    return STATUS_TRUE;
+}
+
+/* 合并AVL树 */
+Status Avl_Merge(AvlTree *origin_tree1, AvlTree *origin_tree2, AvlTree *purpose_tree) {
+    Avl_Copy(origin_tree1, purpose_tree);
+    return Avl_MergeHelper(origin_tree2, purpose_tree);
+}
+
 /* ======================== AvlElementType 相关函数 ======================== */
 
 /* 元素赋值 */
