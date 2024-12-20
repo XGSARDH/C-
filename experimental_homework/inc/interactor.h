@@ -16,7 +16,7 @@
 #endif // CONTROL_TREE_MENU_COUNT
 
 #ifndef MORE_MENU_COUNT
-#define MORE_MENU_COUNT 3
+#define MORE_MENU_COUNT 4
 #endif // MORE_MENU_COUNT
 
 #ifndef MAX_INPUT
@@ -46,10 +46,11 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option);
 Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option);
 // 初始化选择二叉树菜单
 Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option);
+// 更多功能菜单展示
+Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option);
 // 测试菜单显示
 void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu);
 // 初始化绑定context
 Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu, LinkedList *avl_list, int *now_avl);
-
 
 #endif

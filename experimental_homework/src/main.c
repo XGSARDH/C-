@@ -10,7 +10,7 @@
 #define TOP_MENU_COUNT 4
 #define TREE_MENU_COUNT 3
 #define CONTROL_TREE_MENU_COUNT 7
-#define MORE_MENU_COUNT 3
+#define MORE_MENU_COUNT 4
 #define MAX_INPUT 100
 
 int main() {
@@ -30,6 +30,7 @@ int main() {
     Top_Menu_Init(&top_menu, top_menu_option);
     Tree_Menu_Init(&tree_menu, tree_menu_option);
     Control_Tree_Menu_Init(&control_tree_menu, control_tree_menu_option);
+    More_Menu_Init(&more_menu, more_menu_option);
     HandlerContext_Init(&context, &now_menu, &top_menu, &tree_menu, &control_tree_menu, &more_menu, &avl_list, &now_avl_position);
     now_menu = top_menu;
 

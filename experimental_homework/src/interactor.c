@@ -98,9 +98,11 @@ Status top_menu_handler2(void *context) {
 }
 
 Status top_menu_handler3(void *context) {
-    printf("暂时不设计");
-    getchar();
-    ClearScreen();
+    if(!context) {
+        return STATUS_FALSE;
+    }
+    HandlerContext *handler_context = (HandlerContext*)context;
+    handler_context->now_menu = handler_context->more_menu;
     return STATUS_TRUE;
 }
 
@@ -315,7 +317,6 @@ Status tree_menu_handler2(void *context) {
     HandlerContext *handler_context = (HandlerContext*)context;
     printf("当前共有二叉树数量为 %d \n", List_Size(handler_context->avl_list));
     return STATUS_TRUE;
-    return STATUS_TRUE;
 }
 
 Status more_menu_handler0(void *context) {
@@ -325,14 +326,82 @@ Status more_menu_handler0(void *context) {
 }
 
 Status more_menu_handler1(void *context) {
-    return STATUS_TRUE;
+    HandlerContext *handler_context = (HandlerContext*)context;
+    printf("输入您要查看的二叉树对应的序号: ");
+    int number = -1;
+    if (Helper_CharInputAndOutputInt(&number) != STATUS_TRUE) {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    if (number < 1 || number > List_Size(handler_context->avl_list)) {
+        printf("输出超出范围");
+        return STATUS_OVERFLOW; // 输入不合法
+    }
+    *handler_context->now_avl = number - 1;
+    return control_tree_menu_handler4(context);
 }
 
 Status more_menu_handler2(void *context) {
-    return STATUS_TRUE;
+    HandlerContext *handler_context = (HandlerContext*)context;
+    printf("输入您要合并的第1棵二叉树对应的序号: ");
+    int number1 = -1;
+    if (Helper_CharInputAndOutputInt(&number1) != STATUS_TRUE) {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    if (number1 < 1 || number1 > List_Size(handler_context->avl_list)) {
+        printf("输出超出范围");
+        return STATUS_OVERFLOW; // 输入不合法
+    }
+    printf("输入您要合并的第2棵二叉树对应的序号: ");
+    int number2 = -1;
+    if (Helper_CharInputAndOutputInt(&number2) != STATUS_TRUE) {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    if (number2 < 1 || number2 > List_Size(handler_context->avl_list)) {
+        printf("输出超出范围");
+        return STATUS_OVERFLOW; // 输入不合法
+    }
+    ListElementType get_avl_tree_origin_1;
+    if (STATUS_FALSE == List_Get(handler_context->avl_list, number1 - 1, &get_avl_tree_origin_1)) {
+        control_tree_menu_handler0(context);
+        return STATUS_FALSE;
+    }
+    ListElementType get_avl_tree_origin_2;
+    if (STATUS_FALSE == List_Get(handler_context->avl_list, number2 - 1, &get_avl_tree_origin_2)) {
+        control_tree_menu_handler0(context);
+        return STATUS_FALSE;
+    }
+    AvlTree avl_tree_1 = (AvlTree)get_avl_tree_origin_1;
+    AvlTree avl_tree_2 = (AvlTree)get_avl_tree_origin_2;
+    AvlTree purpose_tree = NULL;
+
+    Status output_status = Avl_Merge(&avl_tree_1, &avl_tree_2, &purpose_tree);
+    if (output_status == STATUS_TRUE) {
+        printf("合并成功\n");
+    }
+    else {
+        printf("合并失败\n");
+    }
+
+    printf("\n参与合并的第1棵树: \n");
+    Avl_PrintTree(avl_tree_1);
+    printf("\n参与合并的第2棵树: \n");
+    Avl_PrintTree(avl_tree_2);
+    printf("\n合并结果: \n");
+    Avl_PrintTree(purpose_tree);
+
+    ListElementType curr = NULL;
+    curr = (ListElementType*)purpose_tree;
+    List_Append(handler_context->avl_list, curr);
+
+    return output_status;
 }
 
 Status more_menu_handler3(void *context) {
+    HandlerContext *handler_context = (HandlerContext*)context;
+    printf("当前共有二叉树数量为 %d \n", List_Size(handler_context->avl_list));
     return STATUS_TRUE;
 }
 
@@ -370,6 +439,6 @@ Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option) {
     MenuOption_create(&more_menu_option[1], 1, "打印指定编号的二叉树", more_menu_handler1);
     MenuOption_create(&more_menu_option[2], 2, "合并指定两个编号的二叉树", more_menu_handler2);
     MenuOption_create(&more_menu_option[3], 3, "查看当前二叉树的数量", more_menu_handler3);
-    char *tree_menu_title = "更多功能菜单";
-    Menu_Create(more_menu, &tree_menu_title, more_menu_option, MORE_MENU_COUNT, MORE_MENU_COUNT);
+    char *more_menu_title = "更多功能菜单";
+    Menu_Create(more_menu, &more_menu_title, more_menu_option, MORE_MENU_COUNT, MORE_MENU_COUNT);
 };
