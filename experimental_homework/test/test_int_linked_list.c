@@ -1,12 +1,14 @@
-#include <stdio.h>
 #include "linked_list.h"
+#include <stdio.h>
 
 // 打印整型数据的回调函数
-void PrintInt(ListElementType element) {
-    printf("%d -> ", *(int*)element);
+void PrintInt(ListElementType element)
+{
+    printf("%d -> ", *(int *)element);
 }
 
-int main() {
+int main()
+{
     LinkedList list;
     List_Init(&list);
 
@@ -21,8 +23,8 @@ int main() {
 
     printf("链表大小: %d\n", List_Size(&list));
 
-    int* removedElement;
-    List_RemoveAt(&list, 1, (ListElementType*)&removedElement);
+    int *removedElement;
+    List_RemoveAt(&list, 1, (ListElementType *)&removedElement);
     printf("删除元素: %d\n", *removedElement);
 
     printf("删除后链表内容: ");

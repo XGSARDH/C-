@@ -1,14 +1,16 @@
-#include <stdio.h>
 #include "menu.h"
 #include "status.h"
+#include <stdio.h>
 
 // 测试用的菜单处理函数
-Status test_handler() {
+Status test_handler()
+{
     printf("测试选项被成功调用！\n");
     return STATUS_TRUE;
 }
 
-void test_menu1() {
+void test_menu1()
+{
     // 初始化菜单选项
     MenuOption options[3];
     char *description1 = "选项1: 测试功能1";
@@ -42,40 +44,53 @@ void test_menu1() {
     // 测试处理输入
     printf("----- 测试菜单输入处理 -----\n");
     char input1[] = "1";
-    char input2[] = "3"; // 超出范围的选项
+    char input2[] = "3";   // 超出范围的选项
     char input3[] = "abc"; // 非法输入
-    char input4[] = ""; // 空输入
+    char input4[] = "";    // 空输入
 
     printf("输入: %s\n", input1);
-    if (Menu_HandlerInput(menu, input1, NULL) == STATUS_TRUE) {
+    if (Menu_HandlerInput(menu, input1, NULL) == STATUS_TRUE)
+    {
         printf("选项1处理成功！\n");
-    } else {
+    }
+    else
+    {
         printf("选项1处理失败！\n");
     }
 
     printf("输入: %s\n", input2);
-    if (Menu_HandlerInput(menu, input2, NULL) == STATUS_TRUE) {
+    if (Menu_HandlerInput(menu, input2, NULL) == STATUS_TRUE)
+    {
         printf("选项3处理成功！\n");
-    } else {
+    }
+    else
+    {
         printf("选项3处理失败！\n");
     }
 
     printf("输入: %s\n", input3);
-    if (Menu_HandlerInput(menu, input3, NULL) == STATUS_TRUE) {
+    if (Menu_HandlerInput(menu, input3, NULL) == STATUS_TRUE)
+    {
         printf("非法输入处理成功！\n");
-    } else {
+    }
+    else
+    {
         printf("非法输入处理失败！\n");
     }
 
     printf("输入: %s\n", input4);
-    if (Menu_HandlerInput(menu, input4, NULL) == STATUS_TRUE) {
+    if (Menu_HandlerInput(menu, input4, NULL) == STATUS_TRUE)
+    {
         printf("空输入处理成功！\n");
-    } else {
+    }
+    else
+    {
         printf("空输入处理失败！\n");
     }
 }
 
-int main() {
+int main()
+{
     test_menu1();
     return 0;
 }

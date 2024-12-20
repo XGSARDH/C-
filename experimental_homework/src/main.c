@@ -1,11 +1,11 @@
+#include "avl_tree.h"
+#include "interactor.h"
+#include "linked_list.h"
+#include "menu.h"
+#include "status.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "status.h"
-#include "avl_tree.h"
-#include "linked_list.h"
-#include "menu.h"
-#include "interactor.h"
 
 #define TOP_MENU_COUNT 4
 #define TREE_MENU_COUNT 3
@@ -13,7 +13,8 @@
 #define MORE_MENU_COUNT 4
 #define MAX_INPUT 100
 
-int main() {
+int main()
+{
     // 定义变量
     Menu top_menu, tree_menu, control_tree_menu, more_menu;
     MenuOption top_menu_option[TOP_MENU_COUNT];
@@ -31,16 +32,19 @@ int main() {
     Tree_Menu_Init(&tree_menu, tree_menu_option);
     Control_Tree_Menu_Init(&control_tree_menu, control_tree_menu_option);
     More_Menu_Init(&more_menu, more_menu_option);
-    HandlerContext_Init(&context, &now_menu, &top_menu, &tree_menu, &control_tree_menu, &more_menu, &avl_list, &now_avl_position);
+    HandlerContext_Init(&context, &now_menu, &top_menu, &tree_menu, &control_tree_menu, &more_menu, &avl_list,
+                        &now_avl_position);
     now_menu = top_menu;
 
     // 开始程序
     Status main_status = STATUS_TRUE;
     char input_choose[MAX_INPUT] = {};
-    while(main_status != STATUS_FALSE) {
+    while (main_status != STATUS_FALSE)
+    {
         Menu_Display(context.now_menu);
         printf("\n请输入选择: ");
-        if (fgets(input_choose, sizeof(input_choose), stdin) != NULL) {
+        if (fgets(input_choose, sizeof(input_choose), stdin) != NULL)
+        {
             // 去掉换行符
             input_choose[strcspn(input_choose, "\n")] = '\0';
         }

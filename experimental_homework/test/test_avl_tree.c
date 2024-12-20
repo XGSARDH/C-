@@ -6,7 +6,8 @@ void Test_Split();
 void Test_Copy();
 void Test_Merge();
 
-int main() {
+int main()
+{
     // Test_InsertAndDelete();
     // Test_Split();
     // Test_Copy();
@@ -14,7 +15,8 @@ int main() {
     return 0;
 }
 
-void Test_InsertAndDelete() {
+void Test_InsertAndDelete()
+{
     AvlTree tree;
     Avl_Init(&tree);
 
@@ -49,38 +51,46 @@ void Test_InsertAndDelete() {
     Status status;
     status = STATUS_TRUE;
     status = Avl_Search(&tree, 1);
-    if (status == STATUS_TRUE) {
+    if (status == STATUS_TRUE)
+    {
         printf("find 1\n");
     }
-    else if (status == STATUS_OVERFLOW) {
+    else if (status == STATUS_OVERFLOW)
+    {
         printf("not find 1\n");
     }
-    else {
+    else
+    {
         printf("ERROR\n");
     }
 
     status = STATUS_TRUE;
     status = Avl_Search(&tree, 6);
-    if (status == STATUS_TRUE) {
+    if (status == STATUS_TRUE)
+    {
         printf("find 1\n");
     }
-    else if (status == STATUS_OVERFLOW) {
+    else if (status == STATUS_OVERFLOW)
+    {
         printf("not find 1\n");
     }
-    else {
+    else
+    {
         printf("ERROR\n");
     }
 
     Avl_Destroy(&tree);
 }
 
-void Test_Split() {
+void Test_Split()
+{
     AvlTree tree = NULL;
     AvlTree small_tree = NULL;
     AvlTree big_tree = NULL;
     Avl_Init(&tree);
 
-    for (int i = 0; i <=  20; i++) {
+    for (int i = 0; i <= 20; i++)
+    {
         Avl_Insert(&tree, i);
     }
 
@@ -94,12 +104,14 @@ void Test_Split() {
     Avl_PrintTree(big_tree);
 }
 
-void Test_Copy() {
+void Test_Copy()
+{
     AvlTree tree = NULL;
     AvlTree purpose_tree = NULL;
     Avl_Init(&tree);
 
-    for (int i = 0; i <=  10; i++) {
+    for (int i = 0; i <= 10; i++)
+    {
         Avl_Insert(&tree, i);
     }
 
@@ -111,17 +123,20 @@ void Test_Copy() {
     Avl_PrintTree(purpose_tree);
 }
 
-void Test_Merge() {
+void Test_Merge()
+{
     AvlTree tree1 = NULL;
     AvlTree tree2 = NULL;
     AvlTree purpose_tree = NULL;
     Avl_Init(&tree1);
     Avl_Init(&tree2);
 
-    for (int i = 0; i <  10; i++) {
+    for (int i = 0; i < 10; i++)
+    {
         Avl_Insert(&tree1, i);
     }
-    for (int i = 10; i <  20; i++) {
+    for (int i = 10; i < 20; i++)
+    {
         Avl_Insert(&tree2, i);
     }
 

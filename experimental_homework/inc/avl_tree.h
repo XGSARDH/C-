@@ -6,13 +6,15 @@
 typedef int AvlElementType;
 
 // AVL 树节点定义
-typedef struct AvlNode {
+typedef struct AvlNode
+{
     AvlElementType data;
     int balanceFactor;
     struct AvlNode *leftChild, *rightChild;
 } AvlNode, *AvlTree;
 
-typedef enum AvlElementCompareResult {
+typedef enum AvlElementCompareResult
+{
     // 表示左侧元素小于右侧元素
     AVLELEMENT_LESS = -1,
     // 表示两个元素相等

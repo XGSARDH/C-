@@ -28,7 +28,8 @@ typedef struct LinkedList LinkedList;
 typedef struct MenuOption MenuOption;
 
 // 定义携带信息结构体
-typedef struct HandlerContext {
+typedef struct HandlerContext
+{
     Menu *now_menu;
     Menu *top_menu;
     Menu *tree_menu;
@@ -51,6 +52,7 @@ Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option);
 // 测试菜单显示
 void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu);
 // 初始化绑定context
-Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu, LinkedList *avl_list, int *now_avl);
+Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu *top_menu, Menu *tree_menu,
+                           Menu *control_tree_menu, Menu *more_menu, LinkedList *avl_list, int *now_avl);
 
 #endif
