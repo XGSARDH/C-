@@ -261,6 +261,24 @@ Status Avl_PrintTree(AvlTree root) {
     return STATUS_TRUE;
 }
 
+/* 分割AVL树 */
+Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, AvlTree *bigger_tree) {
+    if(!root || !*root) {
+        // 原目标是空树
+        return STATUS_OVERFLOW;
+    }
+    if (AvlElement_IsEqual((*root)->data, element) == AVLELEMENT_LESS) {
+        Avl_Insert(smaller_tree, (*root)->data);
+    }
+    if (AvlElement_IsEqual((*root)->data, element) == AVLELEMENT_GREATER) {
+        Avl_Insert(bigger_tree, (*root)->data);
+    }
+    Status output_status = STATUS_TRUE;
+    output_status = Avl_Split(&(*root)->leftChild, element, smaller_tree, bigger_tree);
+    output_status = Avl_Split(&(*root)->rightChild, element, smaller_tree, bigger_tree);
+    return output_status;
+}
+
 /* ======================== AvlElementType 相关函数 ======================== */
 
 /* 元素赋值 */

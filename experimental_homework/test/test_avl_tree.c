@@ -2,9 +2,11 @@
 #include <stdio.h>
 
 void Test_InsertAndDelete();
+void Test_Split();
 
 int main() {
-    Test_InsertAndDelete();
+    // Test_InsertAndDelete();
+    Test_Split();
     return 0;
 }
 
@@ -66,4 +68,24 @@ void Test_InsertAndDelete() {
     }
 
     Avl_Destroy(&tree);
+}
+
+void Test_Split() {
+    AvlTree tree = NULL;
+    AvlTree small_tree = NULL;
+    AvlTree big_tree = NULL;
+    Avl_Init(&tree);
+
+    for (int i = 0; i <=  20; i++) {
+        Avl_Insert(&tree, i);
+    }
+
+    Avl_Split(&tree, 10, &small_tree, &big_tree);
+
+    printf("\norigin_tree\n");
+    Avl_PrintTree(tree);
+    printf("\nsmall_tree\n");
+    Avl_PrintTree(small_tree);
+    printf("\nbig_tree\n");
+    Avl_PrintTree(big_tree);
 }

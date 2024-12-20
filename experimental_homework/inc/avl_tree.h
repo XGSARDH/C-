@@ -62,6 +62,9 @@ Status Avl_InOrderTraverse(AvlTree root);
 /* 图形化打印 AVL 树 */
 Status Avl_PrintTree(AvlTree root);
 
+/* 分割AVL树 */
+Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, AvlTree *bigger_tree);
+
 /* ======================== AvlElementType 相关函数 ======================== */
 
 /* 元素赋值 */
