@@ -482,6 +482,7 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
     MenuOption_create(&top_menu_option[3], 3, "更多功能", top_menu_handler3);
     char *top_menu_title = "顶级菜单展示";
     Menu_Create(top_menu, &top_menu_title, top_menu_option, TOP_MENU_COUNT, TOP_MENU_COUNT);
+    return STATUS_TRUE;
 }
 
 Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option)
@@ -496,6 +497,7 @@ Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_
     char *control_tree_menu_title = "单棵平衡二叉树调整菜单";
     Menu_Create(control_tree_menu, &control_tree_menu_title, control_tree_menu_option, CONTROL_TREE_MENU_COUNT,
                 CONTROL_TREE_MENU_COUNT);
+    return STATUS_TRUE;
 }
 
 Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option)
@@ -505,6 +507,7 @@ Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option)
     MenuOption_create(&tree_menu_option[2], 2, "查看当前二叉树数量", tree_menu_handler2);
     char *tree_menu_title = "选择二叉树进行调整菜单";
     Menu_Create(tree_menu, &tree_menu_title, tree_menu_option, TREE_MENU_COUNT, TREE_MENU_COUNT);
+    return STATUS_TRUE;
 };
 
 Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option)
@@ -515,4 +518,5 @@ Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option)
     MenuOption_create(&more_menu_option[3], 3, "查看当前二叉树的数量", more_menu_handler3);
     char *more_menu_title = "更多功能菜单";
     Menu_Create(more_menu, &more_menu_title, more_menu_option, MORE_MENU_COUNT, MORE_MENU_COUNT);
+    return STATUS_TRUE;
 };
