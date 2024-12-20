@@ -132,7 +132,7 @@ Status control_tree_menu_handler0(void *context)
         return STATUS_FALSE;
     }
     HandlerContext *handler_context = (HandlerContext *)context;
-    handler_context->now_menu = handler_context->top_menu;
+    handler_context->now_menu = handler_context->tree_menu;
     return STATUS_TRUE;
 }
 
@@ -487,7 +487,7 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
 
 Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option)
 {
-    MenuOption_create(&control_tree_menu_option[0], 0, "返回顶级目录", control_tree_menu_handler0);
+    MenuOption_create(&control_tree_menu_option[0], 0, "返回选择二叉树菜单", control_tree_menu_handler0);
     MenuOption_create(&control_tree_menu_option[1], 1, "插入数值", control_tree_menu_handler1);
     MenuOption_create(&control_tree_menu_option[2], 2, "删除数值", control_tree_menu_handler2);
     MenuOption_create(&control_tree_menu_option[3], 3, "查找数值", control_tree_menu_handler3);
