@@ -3,11 +3,25 @@
 
 #include "status.h"
 
+#ifndef TOP_MENU_COUNT
 #define TOP_MENU_COUNT 4
+#endif // TOP_MENU_COUNT
+
+#ifndef TREE_MENU_COUNT
 #define TREE_MENU_COUNT 3
+#endif // TREE_MENU_COUNT
+
+#ifndef CONTROL_TREE_MENU_COUNT
 #define CONTROL_TREE_MENU_COUNT 7
+#endif // CONTROL_TREE_MENU_COUNT
+
+#ifndef MORE_MENU_COUNT
 #define MORE_MENU_COUNT 3
+#endif // MORE_MENU_COUNT
+
+#ifndef MAX_INPUT
 #define MAX_INPUT 100
+#endif // MAX_INPUT
 
 typedef struct Menu Menu;
 typedef struct LinkedList LinkedList;

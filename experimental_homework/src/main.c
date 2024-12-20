@@ -7,13 +7,19 @@
 #include "menu.h"
 #include "interactor.h"
 
+#define TOP_MENU_COUNT 4
+#define TREE_MENU_COUNT 3
+#define CONTROL_TREE_MENU_COUNT 7
+#define MORE_MENU_COUNT 3
+#define MAX_INPUT 100
+
 int main() {
     // 定义变量
     Menu top_menu, tree_menu, control_tree_menu, more_menu;
     MenuOption top_menu_option[TOP_MENU_COUNT];
     MenuOption tree_menu_option[TREE_MENU_COUNT];
     MenuOption control_tree_menu_option[CONTROL_TREE_MENU_COUNT];
-    // MenuOption more_menu_option[MORE_MENU_COUNT];
+    MenuOption more_menu_option[MORE_MENU_COUNT];
     LinkedList avl_list;
     int now_avl_position = -1;
     Menu now_menu;

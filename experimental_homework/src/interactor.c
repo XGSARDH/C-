@@ -246,6 +246,44 @@ Status control_tree_menu_handler5(void *context) {
 }
 
 Status control_tree_menu_handler6(void *context) {
+    HandlerContext *handler_context = (HandlerContext*)context;
+    ListElementType get_avl_tree_origin;
+    if (STATUS_FALSE == List_Get(handler_context->avl_list, *handler_context->now_avl, &get_avl_tree_origin)) {
+        control_tree_menu_handler0(context);
+        *handler_context->now_avl = -1;
+        return STATUS_FALSE;
+    }
+    int insert_value = 0;
+    printf("输入要作为分割两个平衡二叉树的数字: ");
+    if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE) {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    if (abs(insert_value) > 65533) {
+        printf("输入数字绝对值过大\n");
+        return STATUS_OVERFLOW;
+    }
+    AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
+    if (get_avl_tree_origin == NULL) {
+        AvlTree purpose = NULL;
+        Avl_Init(&purpose);
+        avl_tree = purpose;
+    }
+    AvlTree spilt_tree1 = NULL;
+    AvlTree spilt_tree2 = NULL;
+    Avl_Split(&avl_tree, insert_value, &spilt_tree1, &spilt_tree2);
+    // ListElementType curr = (ListElementType*)avl_tree;
+    printf("分割成功\n");
+    printf("分割的第1棵树:\n");
+    Avl_PrintTree(spilt_tree1);
+    printf("分割的第2棵树:\n");
+    Avl_PrintTree(spilt_tree2);
+    
+    ListElementType curr = NULL;
+    curr = (ListElementType*)spilt_tree1;
+    List_Append(handler_context->avl_list, curr);
+    curr = (ListElementType*)spilt_tree2;
+    List_Append(handler_context->avl_list, curr);
 
     return STATUS_TRUE;
 }
@@ -280,6 +318,24 @@ Status tree_menu_handler2(void *context) {
     return STATUS_TRUE;
 }
 
+Status more_menu_handler0(void *context) {
+    HandlerContext *handler_context = (HandlerContext*)context;
+    handler_context->now_menu = handler_context->top_menu;
+    return STATUS_TRUE;
+}
+
+Status more_menu_handler1(void *context) {
+    return STATUS_TRUE;
+}
+
+Status more_menu_handler2(void *context) {
+    return STATUS_TRUE;
+}
+
+Status more_menu_handler3(void *context) {
+    return STATUS_TRUE;
+}
+
 Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option) {
     MenuOption_create(&top_menu_option[0], 0, "退出程序", top_menu_handler0);
     MenuOption_create(&top_menu_option[1], 1, "创建一棵新平衡二叉树", top_menu_handler1);
@@ -307,4 +363,13 @@ Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option) {
     MenuOption_create(&tree_menu_option[2], 2, "查看当前二叉树数量", tree_menu_handler2);
     char *tree_menu_title = "选择二叉树进行调整菜单";
     Menu_Create(tree_menu, &tree_menu_title, tree_menu_option, TREE_MENU_COUNT, TREE_MENU_COUNT);
+};
+
+Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option) {
+    MenuOption_create(&more_menu_option[0], 0, "返回顶级目录", more_menu_handler0);
+    MenuOption_create(&more_menu_option[1], 1, "打印指定编号的二叉树", more_menu_handler1);
+    MenuOption_create(&more_menu_option[2], 2, "合并指定两个编号的二叉树", more_menu_handler2);
+    MenuOption_create(&more_menu_option[3], 3, "查看当前二叉树的数量", more_menu_handler3);
+    char *tree_menu_title = "更多功能菜单";
+    Menu_Create(more_menu, &tree_menu_title, more_menu_option, MORE_MENU_COUNT, MORE_MENU_COUNT);
 };
