@@ -82,11 +82,13 @@ void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, 
     Menu_Display(control_tree_menu);
 }
 
+/* 顶级菜单 - 退出程序 */
 Status top_menu_handler0(void *context)
 {
     exit(0);
 }
 
+/* 顶级菜单 - 创建一棵新平衡二叉树 */
 Status top_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -107,6 +109,7 @@ Status top_menu_handler1(void *context)
     }
 }
 
+/* 顶级菜单 - 对二叉树进行调整 */
 Status top_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -114,6 +117,7 @@ Status top_menu_handler2(void *context)
     return STATUS_TRUE;
 }
 
+/* 顶级菜单 - 更多功能 */
 Status top_menu_handler3(void *context)
 {
     if (!context)
@@ -125,6 +129,7 @@ Status top_menu_handler3(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 返回选择二叉树菜单 */
 Status control_tree_menu_handler0(void *context)
 {
     if (!context)
@@ -136,6 +141,7 @@ Status control_tree_menu_handler0(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 插入数值 */
 Status control_tree_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -171,6 +177,7 @@ Status control_tree_menu_handler1(void *context)
     return STATUS_TRUE;
 }
 
+/*控制二叉树菜单 - 删除数值  */
 Status control_tree_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -210,6 +217,7 @@ Status control_tree_menu_handler2(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 查找数值 */
 Status control_tree_menu_handler3(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -251,6 +259,7 @@ Status control_tree_menu_handler3(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 打印二叉树 */
 Status control_tree_menu_handler4(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -271,6 +280,7 @@ Status control_tree_menu_handler4(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 中序遍历 */
 Status control_tree_menu_handler5(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -292,6 +302,7 @@ Status control_tree_menu_handler5(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 以某值为界限拆分二叉树 */
 Status control_tree_menu_handler6(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -340,6 +351,7 @@ Status control_tree_menu_handler6(void *context)
     return STATUS_TRUE;
 }
 
+/* 选择二叉树菜单 - 返回顶级目录 */
 Status tree_menu_handler0(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -347,6 +359,7 @@ Status tree_menu_handler0(void *context)
     return STATUS_TRUE;
 }
 
+/* 选择二叉树菜单 - 跳转到指定序号平衡二叉树调整菜单 */
 Status tree_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -367,6 +380,7 @@ Status tree_menu_handler1(void *context)
     return STATUS_TRUE;
 }
 
+/* 选择二叉树菜单 - 查看当前二叉树数量 */
 Status tree_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -374,6 +388,7 @@ Status tree_menu_handler2(void *context)
     return STATUS_TRUE;
 }
 
+/* 更多功能菜单 - 返回顶级目录 */
 Status more_menu_handler0(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -381,6 +396,7 @@ Status more_menu_handler0(void *context)
     return STATUS_TRUE;
 }
 
+/* 更多功能菜单 - 打印指定编号的二叉树 */
 Status more_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -400,6 +416,7 @@ Status more_menu_handler1(void *context)
     return control_tree_menu_handler4(context);
 }
 
+/* 更多功能菜单 - 合并指定两个编号的二叉树 */
 Status more_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -467,6 +484,7 @@ Status more_menu_handler2(void *context)
     return output_status;
 }
 
+/* 更多功能菜单 - 查看当前二叉树的数量 */
 Status more_menu_handler3(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -474,6 +492,7 @@ Status more_menu_handler3(void *context)
     return STATUS_TRUE;
 }
 
+/* 顶部菜单及选项初始化 */
 Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
 {
     MenuOption_create(&top_menu_option[0], 0, "退出程序", top_menu_handler0);
@@ -485,6 +504,7 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单及选项初始化 */
 Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option)
 {
     MenuOption_create(&control_tree_menu_option[0], 0, "返回选择二叉树菜单", control_tree_menu_handler0);
@@ -500,6 +520,7 @@ Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_
     return STATUS_TRUE;
 }
 
+/* 选择二叉树菜单及选项初始化 */
 Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option)
 {
     MenuOption_create(&tree_menu_option[0], 0, "返回顶级目录", tree_menu_handler0);
@@ -510,6 +531,7 @@ Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option)
     return STATUS_TRUE;
 };
 
+/* 更多功能菜单及选项初始化 */
 Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option)
 {
     MenuOption_create(&more_menu_option[0], 0, "返回顶级目录", more_menu_handler0);
