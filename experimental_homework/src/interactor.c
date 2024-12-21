@@ -129,6 +129,51 @@ Status top_menu_handler3(void *context)
     return STATUS_TRUE;
 }
 
+/* 顶级菜单 - 自动生成一棵包含所有从起始值到结束值（包括边界值）的平衡二叉树 */
+Status top_menu_handler4(void *context)
+{
+    HandlerContext *handler_context = (HandlerContext *)context;
+    printf("输入起始值: ");
+    int number1 = -1;
+    if (Helper_CharInputAndOutputInt(&number1) != STATUS_TRUE)
+    {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    printf("输入结束值: ");
+    int number2 = -1;
+    if (Helper_CharInputAndOutputInt(&number2) != STATUS_TRUE)
+    {
+        printf("输入不是纯数字\n");
+        return STATUS_OVERFLOW;
+    }
+    if(number1 > number2) {
+        printf("起始值应大于等于结束值");
+        return STATUS_OVERFLOW; // 输入不合法
+    }
+    AvlTree avl_tree = NULL;
+    Avl_Init(&avl_tree);
+    Status output_status = STATUS_TRUE;
+    for(int insert_number = number1; insert_number <= number2; insert_number++) {
+        output_status = Avl_Insert(&avl_tree, insert_number);
+    }
+    if (output_status == STATUS_TRUE)
+    {
+        printf("生成成功\n");
+    }
+    else
+    {
+        printf("生成失败\n");
+    }
+    printf("\n生成结果: \n");
+    Avl_PrintTree(avl_tree);
+
+    ListElementType curr = NULL;
+    curr = (ListElementType *)avl_tree;
+    List_Append(handler_context->avl_list, curr);
+    return output_status;
+}
+
 /* 控制二叉树菜单 - 返回选择二叉树菜单 */
 Status control_tree_menu_handler0(void *context)
 {
@@ -499,6 +544,7 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
     MenuOption_create(&top_menu_option[1], 1, "创建一棵新平衡二叉树", top_menu_handler1);
     MenuOption_create(&top_menu_option[2], 2, "选择二叉树进行调整", top_menu_handler2);
     MenuOption_create(&top_menu_option[3], 3, "更多功能", top_menu_handler3);
+    MenuOption_create(&top_menu_option[4], 4, "自动生成一棵包含所有从起始值到结束值（包括边界值）的平衡二叉树", top_menu_handler4);
     char *top_menu_title = "顶级菜单展示";
     Menu_Create(top_menu, &top_menu_title, top_menu_option, TOP_MENU_COUNT, TOP_MENU_COUNT);
     return STATUS_TRUE;

@@ -4,7 +4,7 @@
 #include "status.h"
 
 #ifndef TOP_MENU_COUNT
-#define TOP_MENU_COUNT 4
+#define TOP_MENU_COUNT 5
 #endif // TOP_MENU_COUNT
 
 #ifndef TREE_MENU_COUNT
