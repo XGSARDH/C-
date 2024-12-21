@@ -68,7 +68,7 @@ Status Menu_UpdateDisplayCount(Menu *menu, int display_count)
 }
 
 // 创建菜单选项
-Status MenuOption_create(MenuOption *menuOption, int key, char *description, Status (*handler)())
+Status MenuOption_create(MenuOption *menuOption, int key, char *description, Status (*handler)(void *context))
 {
     if (!menuOption)
     {

@@ -372,6 +372,7 @@ Status Avl_Copy(AvlTree *origin_tree, AvlTree *purpose_tree)
     return STATUS_TRUE;
 }
 
+/* 合并AVL树辅助函数 */
 Status Avl_MergeHelper(AvlTree *origin_tree, AvlTree *purpose_tree)
 {
     if (!origin_tree || !*origin_tree)
