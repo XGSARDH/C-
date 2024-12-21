@@ -80,7 +80,8 @@ Status top_menu_handler0(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
 
-    while (List_Size(handler_context->avl_list) > 0) {
+    while (List_Size(handler_context->avl_list) > 0)
+    {
         ListElementType get_avl_tree_origin;
         if (STATUS_FALSE == List_RemoveAt(handler_context->avl_list, 0, &get_avl_tree_origin))
         {
@@ -152,14 +153,16 @@ Status top_menu_handler4(void *context)
         printf("输入不是纯数字\n");
         return STATUS_OVERFLOW;
     }
-    if(number1 > number2) {
+    if (number1 > number2)
+    {
         printf("起始值应大于等于结束值");
         return STATUS_OVERFLOW; // 输入不合法
     }
     AvlTree avl_tree = NULL;
     Avl_Init(&avl_tree);
     Status output_status = STATUS_TRUE;
-    for(int insert_number = number1; insert_number <= number2; insert_number++) {
+    for (int insert_number = number1; insert_number <= number2; insert_number++)
+    {
         output_status = Avl_Insert(&avl_tree, insert_number);
     }
     if (output_status == STATUS_TRUE)
@@ -402,7 +405,8 @@ Status control_tree_menu_handler6(void *context)
 }
 
 /* 控制二叉树菜单 - 删除该树 */
-Status control_tree_menu_handler7(void *context) {
+Status control_tree_menu_handler7(void *context)
+{
     HandlerContext *handler_context = (HandlerContext *)context;
     ListElementType get_avl_tree_origin;
     handler_context->now_menu = handler_context->tree_menu;
@@ -569,7 +573,8 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
     MenuOption_create(&top_menu_option[1], 1, "创建一棵新平衡二叉树", top_menu_handler1);
     MenuOption_create(&top_menu_option[2], 2, "选择二叉树进行调整", top_menu_handler2);
     MenuOption_create(&top_menu_option[3], 3, "更多功能", top_menu_handler3);
-    MenuOption_create(&top_menu_option[4], 4, "自动生成一棵包含所有从起始值到结束值（包括边界值）的平衡二叉树", top_menu_handler4);
+    MenuOption_create(&top_menu_option[4], 4, "自动生成一棵包含所有从起始值到结束值（包括边界值）的平衡二叉树",
+                      top_menu_handler4);
     char *top_menu_title = "顶级菜单";
     Menu_Create(top_menu, &top_menu_title, top_menu_option, TOP_MENU_COUNT, TOP_MENU_COUNT);
     return STATUS_TRUE;
