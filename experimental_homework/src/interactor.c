@@ -50,7 +50,7 @@ Status Helper_CharInputAndOutputInt(int *output)
     }
     if (strlen(input_num) > 5)
     {
-        return STATUS_OVERFLOW; // 输入超过范围
+        return STATUS_TRUE; // 输入超过范围
     }
     // 将输入字符串转换为数字
     int number = strtol(input_num, NULL, 10);
@@ -274,7 +274,7 @@ Status control_tree_menu_handler4(void *context)
     if (get_avl_tree_origin == NULL)
     {
         printf("该树现在为空树.\n");
-        return STATUS_OVERFLOW;
+        return STATUS_TRUE;
     }
     Status status = Avl_PrintTree(avl_tree);
     return STATUS_TRUE;
@@ -295,7 +295,7 @@ Status control_tree_menu_handler5(void *context)
     if (get_avl_tree_origin == NULL)
     {
         printf("该树现在为空树.\n");
-        return STATUS_OVERFLOW;
+        return STATUS_TRUE;
     }
     Status status = Avl_InOrderTraverse(avl_tree);
     printf("\n");
