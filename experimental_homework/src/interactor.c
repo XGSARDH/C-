@@ -545,7 +545,7 @@ Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
     MenuOption_create(&top_menu_option[2], 2, "选择二叉树进行调整", top_menu_handler2);
     MenuOption_create(&top_menu_option[3], 3, "更多功能", top_menu_handler3);
     MenuOption_create(&top_menu_option[4], 4, "自动生成一棵包含所有从起始值到结束值（包括边界值）的平衡二叉树", top_menu_handler4);
-    char *top_menu_title = "顶级菜单展示";
+    char *top_menu_title = "顶级菜单";
     Menu_Create(top_menu, &top_menu_title, top_menu_option, TOP_MENU_COUNT, TOP_MENU_COUNT);
     return STATUS_TRUE;
 }
@@ -572,7 +572,7 @@ Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option)
     MenuOption_create(&tree_menu_option[0], 0, "返回顶级目录", tree_menu_handler0);
     MenuOption_create(&tree_menu_option[1], 1, "跳转到指定序号平衡二叉树调整菜单", tree_menu_handler1);
     MenuOption_create(&tree_menu_option[2], 2, "查看当前二叉树数量", tree_menu_handler2);
-    char *tree_menu_title = "选择二叉树进行调整菜单";
+    char *tree_menu_title = "选择二叉树菜单";
     Menu_Create(tree_menu, &tree_menu_title, tree_menu_option, TREE_MENU_COUNT, TREE_MENU_COUNT);
     return STATUS_TRUE;
 };
