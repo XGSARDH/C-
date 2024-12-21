@@ -5,7 +5,7 @@
 
 typedef int AvlElementType;
 
-// AVL æ ‘èŠ‚ç‚¹å®šä¹‰
+// AVL Ê÷½Úµã¶¨Òå
 typedef struct AvlNode
 {
     AvlElementType data;
@@ -15,82 +15,82 @@ typedef struct AvlNode
 
 typedef enum AvlElementCompareResult
 {
-    // è¡¨ç¤ºå·¦ä¾§å…ƒç´ å°äºå³ä¾§å…ƒç´ 
+    // ±íÊ¾×ó²àÔªËØĞ¡ÓÚÓÒ²àÔªËØ
     AVLELEMENT_LESS = -1,
-    // è¡¨ç¤ºä¸¤ä¸ªå…ƒç´ ç›¸ç­‰
+    // ±íÊ¾Á½¸öÔªËØÏàµÈ
     AVLELEMENT_EQUAL = 0,
-    // è¡¨ç¤ºå·¦ä¾§å…ƒç´ å¤§äºå³ä¾§å…ƒç´ 
+    // ±íÊ¾×ó²àÔªËØ´óÓÚÓÒ²àÔªËØ
     AVLELEMENT_GREATER = 1
 } AvlElementCompareResult;
 
-/* ======================== AVL æ ‘ç›¸å…³å‡½æ•° ======================== */
+/* ======================== AVL Ê÷Ïà¹Øº¯Êı ======================== */
 
-/* åˆå§‹åŒ– AVL æ ‘ */
+/* ³õÊ¼»¯ AVL Ê÷ */
 Status Avl_Init(AvlTree *root);
 
-/* é»˜è®¤åˆå§‹åŒ– AVL æ ‘èŠ‚ç‚¹ */
+/* Ä¬ÈÏ³õÊ¼»¯ AVL Ê÷½Úµã */
 Status AvlNode_InitDefault(AvlTree *node);
 
-/* åˆå§‹åŒ– AVL æ ‘èŠ‚ç‚¹ */
+/* ³õÊ¼»¯ AVL Ê÷½Úµã */
 Status AvlNode_Init(AvlTree *node, AvlElementType element);
 
-/* é”€æ¯ AVL æ ‘ */
+/* Ïú»Ù AVL Ê÷ */
 Status Avl_Destroy(AvlTree *root);
 
-/* å³æ—‹æ“ä½œ */
+/* ÓÒĞı²Ù×÷ */
 Status Avl_RotateRight(AvlTree *root);
 
-/* å·¦æ—‹æ“ä½œ */
+/* ×óĞı²Ù×÷ */
 Status Avl_RotateLeft(AvlTree *root);
 
-/* æ’å…¥èŠ‚ç‚¹ */
+/* ²åÈë½Úµã */
 Status Avl_Insert(AvlTree *root, AvlElementType element);
 
-/* åˆ é™¤èŠ‚ç‚¹ */
+/* É¾³ı½Úµã */
 Status Avl_Delete(AvlTree *root, AvlElementType element);
 
-/* æŸ¥æ‰¾èŠ‚ç‚¹ */
+/* ²éÕÒ½Úµã */
 Status Avl_Search(AvlTree *root, AvlElementType element);
 
-/* æ›´æ–°å¹³è¡¡å› å­ */
+/* ¸üĞÂÆ½ºâÒò×Ó */
 Status Avl_UpdateBalanceFactor(AvlTree root);
 
-/* è®¿é—®èŠ‚ç‚¹å€¼ */
+/* ·ÃÎÊ½ÚµãÖµ */
 Status Avl_VisitNode(AvlTree node);
 
-/* ä¸­åºéå† */
+/* ÖĞĞò±éÀú */
 Status Avl_InOrderTraverse(AvlTree root);
 
-/* å›¾å½¢åŒ–æ‰“å° AVL æ ‘ */
+/* Í¼ĞÎ»¯´òÓ¡ AVL Ê÷ */
 Status Avl_PrintTree(AvlTree root);
 
-/* åˆ†å‰²AVLæ ‘ */
+/* ·Ö¸îAVLÊ÷ */
 Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, AvlTree *bigger_tree);
 
-/* å¤åˆ¶AVLæ ‘ */
+/* ¸´ÖÆAVLÊ÷ */
 Status Avl_Copy(AvlTree *origin_tree, AvlTree *purpose_tree);
 
-/* åˆå¹¶AVLæ ‘ */
+/* ºÏ²¢AVLÊ÷ */
 Status Avl_Merge(AvlTree *origin_tree1, AvlTree *origin_tree2, AvlTree *purpose_tree);
 
-/* ======================== AvlElementType ç›¸å…³å‡½æ•° ======================== */
+/* ======================== AvlElementType Ïà¹Øº¯Êı ======================== */
 
-/* å…ƒç´ èµ‹å€¼ */
+/* ÔªËØ¸³Öµ */
 Status AvlElement_Assign(AvlElementType *destination, const AvlElementType *source);
 
-/* æ¯”è¾ƒä¸¤ä¸ªå…ƒç´ æ˜¯å¦ç›¸ç­‰ */
+/* ±È½ÏÁ½¸öÔªËØÊÇ·ñÏàµÈ */
 AvlElementCompareResult AvlElement_IsEqual(AvlElementType a, AvlElementType b);
 
-/* åˆå§‹åŒ–å…ƒç´  */
+/* ³õÊ¼»¯ÔªËØ */
 Status AvlElement_Init(AvlElementType *element, AvlElementType value);
 
-/* æ‰“å°å…ƒç´  */
+/* ´òÓ¡ÔªËØ */
 Status AvlElement_Print(AvlElementType element);
 
-/* é‡Šæ”¾å…ƒç´ å†…å­˜ */
+/* ÊÍ·ÅÔªËØÄÚ´æ */
 Status AvlElement_Destroy(AvlElementType *element);
 
-/* åˆ¤æ–­å…ƒç´ æ˜¯å¦ä¸ºç©º */
+/* ÅĞ¶ÏÔªËØÊÇ·ñÎª¿Õ */
 Status AvlElement_IsNull(AvlElementType *element);
 
 #endif // AVL_TREE_H

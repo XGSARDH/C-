@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* åˆå§‹åŒ–é“¾è¡¨ */
+/* ³õÊ¼»¯Á´±í */
 Status List_Init(LinkedList *list)
 {
     if (list == NULL)
@@ -12,7 +12,7 @@ Status List_Init(LinkedList *list)
     return STATUS_TRUE;
 }
 
-/* é”€æ¯é“¾è¡¨ */
+/* Ïú»ÙÁ´±í */
 Status List_Destroy(LinkedList *list)
 {
     if (list == NULL)
@@ -31,7 +31,7 @@ Status List_Destroy(LinkedList *list)
     return STATUS_TRUE;
 }
 
-/* åœ¨é“¾è¡¨å°¾éƒ¨æ·»åŠ å…ƒç´  */
+/* ÔÚÁ´±íÎ²²¿Ìí¼ÓÔªËØ */
 Status List_Append(LinkedList *list, ListElementType element)
 {
     if (list == NULL)
@@ -46,12 +46,12 @@ Status List_Append(LinkedList *list, ListElementType element)
 
     if (list->head == NULL)
     {
-        // é“¾è¡¨ä¸ºç©ºæ—¶ï¼Œç›´æ¥è®¾ç½®æ–°èŠ‚ç‚¹ä¸ºå¤´èŠ‚ç‚¹
+        // Á´±íÎª¿ÕÊ±£¬Ö±½ÓÉèÖÃĞÂ½ÚµãÎªÍ·½Úµã
         list->head = newNode;
     }
     else
     {
-        // éå†åˆ°é“¾è¡¨å°¾éƒ¨å¹¶æ·»åŠ èŠ‚ç‚¹
+        // ±éÀúµ½Á´±íÎ²²¿²¢Ìí¼Ó½Úµã
         ListNode *current = list->head;
         while (current->next != NULL)
         {
@@ -64,7 +64,7 @@ Status List_Append(LinkedList *list, ListElementType element)
     return STATUS_TRUE;
 }
 
-/* åœ¨é“¾è¡¨æŒ‡å®šä½ç½®æ’å…¥å…ƒç´  */
+/* ÔÚÁ´±íÖ¸¶¨Î»ÖÃ²åÈëÔªËØ */
 Status List_Insert(LinkedList *list, int index, ListElementType element)
 {
     if (list == NULL || index < 0 || index > list->size)
@@ -78,13 +78,13 @@ Status List_Insert(LinkedList *list, int index, ListElementType element)
 
     if (index == 0)
     {
-        // åœ¨å¤´éƒ¨æ’å…¥
+        // ÔÚÍ·²¿²åÈë
         newNode->next = list->head;
         list->head = newNode;
     }
     else
     {
-        // éå†åˆ°æŒ‡å®šä½ç½®å‰ä¸€ä¸ªèŠ‚ç‚¹
+        // ±éÀúµ½Ö¸¶¨Î»ÖÃÇ°Ò»¸ö½Úµã
         ListNode *current = list->head;
         for (int i = 0; i < index - 1; i++)
         {
@@ -98,7 +98,7 @@ Status List_Insert(LinkedList *list, int index, ListElementType element)
     return STATUS_TRUE;
 }
 
-/* åˆ é™¤é“¾è¡¨æŒ‡å®šä½ç½®çš„å…ƒç´  */
+/* É¾³ıÁ´±íÖ¸¶¨Î»ÖÃµÄÔªËØ */
 Status List_RemoveAt(LinkedList *list, int index, ListElementType *element)
 {
     if (list == NULL || index < 0 || index >= list->size)
@@ -107,13 +107,13 @@ Status List_RemoveAt(LinkedList *list, int index, ListElementType *element)
     ListNode *toDelete;
     if (index == 0)
     {
-        // åˆ é™¤å¤´èŠ‚ç‚¹
+        // É¾³ıÍ·½Úµã
         toDelete = list->head;
         list->head = toDelete->next;
     }
     else
     {
-        // éå†åˆ°æŒ‡å®šä½ç½®å‰ä¸€ä¸ªèŠ‚ç‚¹
+        // ±éÀúµ½Ö¸¶¨Î»ÖÃÇ°Ò»¸ö½Úµã
         ListNode *current = list->head;
         for (int i = 0; i < index - 1; i++)
         {
@@ -133,7 +133,7 @@ Status List_RemoveAt(LinkedList *list, int index, ListElementType *element)
     return STATUS_TRUE;
 }
 
-/* è·å–é“¾è¡¨æŒ‡å®šä½ç½®çš„å…ƒç´  */
+/* »ñÈ¡Á´±íÖ¸¶¨Î»ÖÃµÄÔªËØ */
 Status List_Get(LinkedList *list, int index, ListElementType *element)
 {
     if (list == NULL || index < 0 || index >= list->size)
@@ -165,7 +165,7 @@ Status List_Change(LinkedList *list, int index, ListElementType *element)
     return STATUS_TRUE;
 }
 
-/* è·å–é“¾è¡¨å¤§å° */
+/* »ñÈ¡Á´±í´óĞ¡ */
 int List_Size(LinkedList *list)
 {
     if (list == NULL)
@@ -173,7 +173,7 @@ int List_Size(LinkedList *list)
     return list->size;
 }
 
-/* åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©º */
+/* ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ */
 Status List_IsEmpty(LinkedList *list)
 {
     if (list == NULL)
@@ -181,7 +181,7 @@ Status List_IsEmpty(LinkedList *list)
     return (list->size == 0) ? STATUS_TRUE : STATUS_FALSE;
 }
 
-/* æ‰“å°é“¾è¡¨ */
+/* ´òÓ¡Á´±í */
 Status List_Print(LinkedList *list, void (*printFunc)(ListElementType))
 {
     if (list == NULL || printFunc == NULL)

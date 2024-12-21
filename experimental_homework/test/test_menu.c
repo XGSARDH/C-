@@ -2,90 +2,90 @@
 #include "status.h"
 #include <stdio.h>
 
-// æµ‹è¯•ç”¨çš„èœå•å¤„ç†å‡½æ•°
+// ²âÊÔÓÃµÄ²Ëµ¥´¦Àíº¯Êı
 Status test_handler()
 {
-    printf("æµ‹è¯•é€‰é¡¹è¢«æˆåŠŸè°ƒç”¨ï¼\n");
+    printf("²âÊÔÑ¡Ïî±»³É¹¦µ÷ÓÃ£¡\n");
     return STATUS_TRUE;
 }
 
 void test_menu1()
 {
-    // åˆå§‹åŒ–èœå•é€‰é¡¹
+    // ³õÊ¼»¯²Ëµ¥Ñ¡Ïî
     MenuOption options[3];
-    char *description1 = "é€‰é¡¹1: æµ‹è¯•åŠŸèƒ½1";
-    char *description2 = "é€‰é¡¹2: æµ‹è¯•åŠŸèƒ½2";
-    char *description3 = "é€‰é¡¹3: æµ‹è¯•åŠŸèƒ½3";
+    char *description1 = "Ñ¡Ïî1: ²âÊÔ¹¦ÄÜ1";
+    char *description2 = "Ñ¡Ïî2: ²âÊÔ¹¦ÄÜ2";
+    char *description3 = "Ñ¡Ïî3: ²âÊÔ¹¦ÄÜ3";
 
-    // åˆ›å»ºèœå•é€‰é¡¹
+    // ´´½¨²Ëµ¥Ñ¡Ïî
     MenuOption_create(&options[0], 1, description1, test_handler);
     MenuOption_create(&options[1], 2, description2, test_handler);
     MenuOption_create(&options[2], 3, description3, test_handler);
 
-    // åˆ›å»ºèœå•
+    // ´´½¨²Ëµ¥
     Menu menu;
-    char *title = "æµ‹è¯•èœå•";
+    char *title = "²âÊÔ²Ëµ¥";
     Menu_Create(&menu, &title, options, 3, 3);
 
-    // æ˜¾ç¤ºèœå•
-    printf("----- æµ‹è¯•èœå•æ˜¾ç¤º -----\n");
+    // ÏÔÊ¾²Ëµ¥
+    printf("----- ²âÊÔ²Ëµ¥ÏÔÊ¾ -----\n");
     Menu_Display(&menu);
 
-    // æ›´æ–°èœå•é€‰é¡¹
-    printf("----- æµ‹è¯•æ›´æ–°èœå•é€‰é¡¹ -----\n");
-    char *new_description1 = "æ–°é€‰é¡¹1: åŠŸèƒ½A";
-    char *new_description2 = "æ–°é€‰é¡¹2: åŠŸèƒ½B";
+    // ¸üĞÂ²Ëµ¥Ñ¡Ïî
+    printf("----- ²âÊÔ¸üĞÂ²Ëµ¥Ñ¡Ïî -----\n");
+    char *new_description1 = "ĞÂÑ¡Ïî1: ¹¦ÄÜA";
+    char *new_description2 = "ĞÂÑ¡Ïî2: ¹¦ÄÜB";
     MenuOption new_options[2];
     MenuOption_create(&new_options[0], 1, new_description1, test_handler);
     MenuOption_create(&new_options[1], 2, new_description2, test_handler);
     Menu_UpdateOption(&menu, new_options, 2);
     Menu_Display(&menu);
 
-    // æµ‹è¯•å¤„ç†è¾“å…¥
-    printf("----- æµ‹è¯•èœå•è¾“å…¥å¤„ç† -----\n");
+    // ²âÊÔ´¦ÀíÊäÈë
+    printf("----- ²âÊÔ²Ëµ¥ÊäÈë´¦Àí -----\n");
     char input1[] = "1";
-    char input2[] = "3";   // è¶…å‡ºèŒƒå›´çš„é€‰é¡¹
-    char input3[] = "abc"; // éæ³•è¾“å…¥
-    char input4[] = "";    // ç©ºè¾“å…¥
+    char input2[] = "3";   // ³¬³ö·¶Î§µÄÑ¡Ïî
+    char input3[] = "abc"; // ·Ç·¨ÊäÈë
+    char input4[] = "";    // ¿ÕÊäÈë
 
-    printf("è¾“å…¥: %s\n", input1);
+    printf("ÊäÈë: %s\n", input1);
     if (Menu_HandlerInput(menu, input1, NULL) == STATUS_TRUE)
     {
-        printf("é€‰é¡¹1å¤„ç†æˆåŠŸï¼\n");
+        printf("Ñ¡Ïî1´¦Àí³É¹¦£¡\n");
     }
     else
     {
-        printf("é€‰é¡¹1å¤„ç†å¤±è´¥ï¼\n");
+        printf("Ñ¡Ïî1´¦ÀíÊ§°Ü£¡\n");
     }
 
-    printf("è¾“å…¥: %s\n", input2);
+    printf("ÊäÈë: %s\n", input2);
     if (Menu_HandlerInput(menu, input2, NULL) == STATUS_TRUE)
     {
-        printf("é€‰é¡¹3å¤„ç†æˆåŠŸï¼\n");
+        printf("Ñ¡Ïî3´¦Àí³É¹¦£¡\n");
     }
     else
     {
-        printf("é€‰é¡¹3å¤„ç†å¤±è´¥ï¼\n");
+        printf("Ñ¡Ïî3´¦ÀíÊ§°Ü£¡\n");
     }
 
-    printf("è¾“å…¥: %s\n", input3);
+    printf("ÊäÈë: %s\n", input3);
     if (Menu_HandlerInput(menu, input3, NULL) == STATUS_TRUE)
     {
-        printf("éæ³•è¾“å…¥å¤„ç†æˆåŠŸï¼\n");
+        printf("·Ç·¨ÊäÈë´¦Àí³É¹¦£¡\n");
     }
     else
     {
-        printf("éæ³•è¾“å…¥å¤„ç†å¤±è´¥ï¼\n");
+        printf("·Ç·¨ÊäÈë´¦ÀíÊ§°Ü£¡\n");
     }
 
-    printf("è¾“å…¥: %s\n", input4);
+    printf("ÊäÈë: %s\n", input4);
     if (Menu_HandlerInput(menu, input4, NULL) == STATUS_TRUE)
     {
-        printf("ç©ºè¾“å…¥å¤„ç†æˆåŠŸï¼\n");
+        printf("¿ÕÊäÈë´¦Àí³É¹¦£¡\n");
     }
     else
     {
-        printf("ç©ºè¾“å…¥å¤„ç†å¤±è´¥ï¼\n");
+        printf("¿ÕÊäÈë´¦ÀíÊ§°Ü£¡\n");
     }
 }
 

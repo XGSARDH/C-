@@ -18,25 +18,25 @@ typedef struct Menu
     int display_count;
 } Menu;
 
-// æ›´æ–°menuèœå•ä¸­çš„é€‰é¡¹å’Œé¡¹æ•°
+// ¸üĞÂmenu²Ëµ¥ÖĞµÄÑ¡ÏîºÍÏîÊı
 Status Menu_UpdateOption(Menu *menu, MenuOption *option, int option_count);
 
-// åˆ›å»ºmenuèœå•
+// ´´½¨menu²Ëµ¥
 Status Menu_Create(Menu *menu, char **title, MenuOption *option, int option_count, int display_count);
 
-// èœå•èµ‹å€¼
+// ²Ëµ¥¸³Öµ
 Status Menu_UpdateByMenu(Menu *menu_changed, Menu *menu_purpose);
 
-// æ‰“å°èœå•
+// ´òÓ¡²Ëµ¥
 Status Menu_Display(Menu *menu);
 
-// æ›´æ–°èœå•è¦æ˜¾ç¤ºçš„é€‰é¡¹æ•°
+// ¸üĞÂ²Ëµ¥ÒªÏÔÊ¾µÄÑ¡ÏîÊı
 Status Menu_UpdateDisplayCount(Menu *menu, int display_count);
 
-// å¤„ç†èœå•è¾“å…¥
+// ´¦Àí²Ëµ¥ÊäÈë
 Status Menu_HandlerInput(Menu menu, char *input_option, void *context);
 
-// åˆ›å»ºèœå•é€‰é¡¹
+// ´´½¨²Ëµ¥Ñ¡Ïî
 Status MenuOption_create(MenuOption *menuOption, int key, char *description, Status (*handler)(void *context));
 
 #endif // MENU_H

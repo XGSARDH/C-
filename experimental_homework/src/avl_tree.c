@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* ======================== AVL æ ‘ç›¸å…³å‡½æ•° ======================== */
+/* ======================== AVL Ê÷Ïà¹Øº¯Êı ======================== */
 
-/* åˆå§‹åŒ– AVL æ ‘ */
+/* ³õÊ¼»¯ AVL Ê÷ */
 Status Avl_Init(AvlTree *root)
 {
     if (!root)
@@ -13,7 +13,7 @@ Status Avl_Init(AvlTree *root)
     return STATUS_TRUE;
 }
 
-/* é»˜è®¤åˆå§‹åŒ– AVL æ ‘èŠ‚ç‚¹ */
+/* Ä¬ÈÏ³õÊ¼»¯ AVL Ê÷½Úµã */
 Status AvlNode_InitDefault(AvlTree *node)
 {
     if (!node)
@@ -28,7 +28,7 @@ Status AvlNode_InitDefault(AvlTree *node)
     return STATUS_TRUE;
 }
 
-/* åˆå§‹åŒ– AVL æ ‘èŠ‚ç‚¹ */
+/* ³õÊ¼»¯ AVL Ê÷½Úµã */
 Status AvlNode_Init(AvlTree *node, AvlElementType element)
 {
     if (!node)
@@ -43,7 +43,7 @@ Status AvlNode_Init(AvlTree *node, AvlElementType element)
     return STATUS_TRUE;
 }
 
-/* é”€æ¯ AVL æ ‘ */
+/* Ïú»Ù AVL Ê÷ */
 Status Avl_Destroy(AvlTree *root)
 {
     if (!root || !(*root))
@@ -55,7 +55,7 @@ Status Avl_Destroy(AvlTree *root)
     return STATUS_TRUE;
 }
 
-/* å³æ—‹æ“ä½œ */
+/* ÓÒĞı²Ù×÷ */
 Status Avl_RotateRight(AvlTree *root)
 {
     if (!root || !(*root))
@@ -69,7 +69,7 @@ Status Avl_RotateRight(AvlTree *root)
     return STATUS_TRUE;
 }
 
-/* å·¦æ—‹æ“ä½œ */
+/* ×óĞı²Ù×÷ */
 Status Avl_RotateLeft(AvlTree *root)
 {
     if (!root || !(*root))
@@ -83,37 +83,37 @@ Status Avl_RotateLeft(AvlTree *root)
     return STATUS_TRUE;
 }
 
-// è®¡ç®—æ ‘çš„é«˜åº¦
+// ¼ÆËãÊ÷µÄ¸ß¶È
 int Avl_GetHeight(AvlTree tree)
 {
     if (tree == NULL)
     {
-        return 0; // ç©ºæ ‘é«˜åº¦ä¸º0
+        return 0; // ¿ÕÊ÷¸ß¶ÈÎª0
     }
     int leftHeight = Avl_GetHeight(tree->leftChild);
     int rightHeight = Avl_GetHeight(tree->rightChild);
     return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
 }
 
-// æ›´æ–°å¹³è¡¡å› å­ï¼ˆé€’å½’æ›´æ–°æ•´æ£µæ ‘ï¼‰
+// ¸üĞÂÆ½ºâÒò×Ó£¨µİ¹é¸üĞÂÕû¿ÃÊ÷£©
 Status Avl_UpdateBalanceFactor(AvlTree root)
 {
     if (root == NULL)
     {
         return STATUS_TRUE;
     }
-    // æ›´æ–°å·¦å³å­æ ‘çš„å¹³è¡¡å› å­
+    // ¸üĞÂ×óÓÒ×ÓÊ÷µÄÆ½ºâÒò×Ó
     Avl_UpdateBalanceFactor(root->leftChild);
     Avl_UpdateBalanceFactor(root->rightChild);
 
-    // è®¡ç®—å½“å‰èŠ‚ç‚¹çš„å¹³è¡¡å› å­
+    // ¼ÆËãµ±Ç°½ÚµãµÄÆ½ºâÒò×Ó
     int leftHeight = Avl_GetHeight(root->leftChild);
     int rightHeight = Avl_GetHeight(root->rightChild);
     root->balanceFactor = leftHeight - rightHeight;
     return STATUS_TRUE;
 }
 
-/* æ’å…¥èŠ‚ç‚¹ */
+/* ²åÈë½Úµã */
 Status Avl_Insert(AvlTree *root, AvlElementType element)
 {
     if (!root)
@@ -136,12 +136,12 @@ Status Avl_Insert(AvlTree *root, AvlElementType element)
     }
     else
     {
-        return STATUS_FALSE; // ä¸å…è®¸æ’å…¥é‡å¤å€¼
+        return STATUS_FALSE; // ²»ÔÊĞí²åÈëÖØ¸´Öµ
     }
 
     Avl_UpdateBalanceFactor(*root);
     ;
-    // æ—‹è½¬ä¿æŒå¹³è¡¡
+    // Ğı×ª±£³ÖÆ½ºâ
     if ((*root)->balanceFactor > 1)
     {
         if (AvlElement_IsEqual(element, (*root)->leftChild->data) == AVLELEMENT_GREATER)
@@ -170,13 +170,13 @@ Status Avl_Insert(AvlTree *root, AvlElementType element)
     return STATUS_TRUE;
 }
 
-/* åˆ é™¤èŠ‚ç‚¹ */
+/* É¾³ı½Úµã */
 Status Avl_Delete(AvlTree *root, AvlElementType element)
 {
     if (!root || !(*root))
         return STATUS_FALSE;
 
-    // é€’å½’æ‰¾åˆ°ç›®æ ‡èŠ‚ç‚¹å¹¶åˆ é™¤
+    // µİ¹éÕÒµ½Ä¿±ê½Úµã²¢É¾³ı
     if (AvlElement_IsEqual(element, (*root)->data) == AVLELEMENT_LESS)
     {
         if (!Avl_Delete(&((*root)->leftChild), element))
@@ -189,10 +189,10 @@ Status Avl_Delete(AvlTree *root, AvlElementType element)
     }
     else
     {
-        // æ‰¾åˆ°è¦åˆ é™¤çš„èŠ‚ç‚¹
+        // ÕÒµ½ÒªÉ¾³ıµÄ½Úµã
         AvlTree temp = *root;
 
-        // èŠ‚ç‚¹æœ‰ 0 ä¸ªæˆ– 1 ä¸ªå­èŠ‚ç‚¹
+        // ½ÚµãÓĞ 0 ¸ö»ò 1 ¸ö×Ó½Úµã
         if (!(*root)->leftChild)
         {
             *root = (*root)->rightChild;
@@ -203,52 +203,52 @@ Status Avl_Delete(AvlTree *root, AvlElementType element)
         }
         else
         {
-            // èŠ‚ç‚¹æœ‰ä¸¤ä¸ªå­èŠ‚ç‚¹ï¼Œæ‰¾åˆ°å³å­æ ‘çš„æœ€å°å€¼ï¼ˆåç»§ï¼‰
+            // ½ÚµãÓĞÁ½¸ö×Ó½Úµã£¬ÕÒµ½ÓÒ×ÓÊ÷µÄ×îĞ¡Öµ£¨ºó¼Ì£©
             AvlTree successor = (*root)->rightChild;
             while (successor->leftChild)
             {
                 successor = successor->leftChild;
             }
-            // ç”¨åç»§èŠ‚ç‚¹çš„å€¼æ›¿æ¢å½“å‰èŠ‚ç‚¹çš„å€¼
+            // ÓÃºó¼Ì½ÚµãµÄÖµÌæ»»µ±Ç°½ÚµãµÄÖµ
             (*root)->data = successor->data;
-            // åˆ é™¤åç»§èŠ‚ç‚¹
+            // É¾³ıºó¼Ì½Úµã
             Avl_Delete(&((*root)->rightChild), successor->data);
-            temp = NULL; // é¿å…è¯¯é‡Šæ”¾
+            temp = NULL; // ±ÜÃâÎóÊÍ·Å
         }
 
         if (temp)
-            free(temp); // é‡Šæ”¾åˆ é™¤çš„èŠ‚ç‚¹
+            free(temp); // ÊÍ·ÅÉ¾³ıµÄ½Úµã
     }
 
-    // å¦‚æœæ ‘ä¸ºç©ºï¼Œåˆ™è¿”å›
+    // Èç¹ûÊ÷Îª¿Õ£¬Ôò·µ»Ø
     if (!(*root))
         return STATUS_TRUE;
 
-    // æ›´æ–°å½“å‰èŠ‚ç‚¹çš„å¹³è¡¡å› å­
+    // ¸üĞÂµ±Ç°½ÚµãµÄÆ½ºâÒò×Ó
     Avl_UpdateBalanceFactor(*root);
 
-    // å¹³è¡¡è°ƒæ•´
+    // Æ½ºâµ÷Õû
     if ((*root)->balanceFactor > 1)
-    { // å·¦å­æ ‘è¿‡é«˜
+    { // ×ó×ÓÊ÷¹ı¸ß
         if ((*root)->leftChild->balanceFactor >= 0)
         {
-            Avl_RotateRight(root); // LL å‹
+            Avl_RotateRight(root); // LL ĞÍ
         }
         else
         {
-            Avl_RotateLeft(&((*root)->leftChild)); // LR å‹
+            Avl_RotateLeft(&((*root)->leftChild)); // LR ĞÍ
             Avl_RotateRight(root);
         }
     }
     else if ((*root)->balanceFactor < -1)
-    { // å³å­æ ‘è¿‡é«˜
+    { // ÓÒ×ÓÊ÷¹ı¸ß
         if ((*root)->rightChild->balanceFactor <= 0)
         {
-            Avl_RotateLeft(root); // RR å‹
+            Avl_RotateLeft(root); // RR ĞÍ
         }
         else
         {
-            Avl_RotateRight(&((*root)->rightChild)); // RL å‹
+            Avl_RotateRight(&((*root)->rightChild)); // RL ĞÍ
             Avl_RotateLeft(root);
         }
     }
@@ -256,7 +256,7 @@ Status Avl_Delete(AvlTree *root, AvlElementType element)
     return STATUS_TRUE;
 }
 
-/* æŸ¥æ‰¾èŠ‚ç‚¹ */
+/* ²éÕÒ½Úµã */
 Status Avl_Search(AvlTree *root, AvlElementType element)
 {
     if (!root || !(*root))
@@ -277,7 +277,7 @@ Status Avl_Search(AvlTree *root, AvlElementType element)
     return STATUS_OVERFLOW;
 }
 
-/* è®¿é—®èŠ‚ç‚¹å€¼ */
+/* ·ÃÎÊ½ÚµãÖµ */
 Status Avl_VisitNode(AvlTree node)
 {
     if (!node)
@@ -289,7 +289,7 @@ Status Avl_VisitNode(AvlTree node)
     return STATUS_TRUE;
 }
 
-/* ä¸­åºéå† */
+/* ÖĞĞò±éÀú */
 Status Avl_InOrderTraverse(AvlTree root)
 {
     if (!root)
@@ -302,49 +302,49 @@ Status Avl_InOrderTraverse(AvlTree root)
 }
 
 /**
- * æ‰“å° AVL æ ‘çš„é€’å½’è¾…åŠ©å‡½æ•°
- * @param root å½“å‰èŠ‚ç‚¹æŒ‡é’ˆ
- * @param depth å½“å‰èŠ‚ç‚¹çš„æ·±åº¦ï¼ˆç”¨äºè®¡ç®—ç¼©è¿›ï¼‰
+ * ´òÓ¡ AVL Ê÷µÄµİ¹é¸¨Öúº¯Êı
+ * @param root µ±Ç°½ÚµãÖ¸Õë
+ * @param depth µ±Ç°½ÚµãµÄÉî¶È£¨ÓÃÓÚ¼ÆËãËõ½ø£©
  */
 void printAvlRecursive(AvlTree root, int depth)
 {
     if (!root)
         return;
 
-    // æ‰“å°å³å­æ ‘
+    // ´òÓ¡ÓÒ×ÓÊ÷
     printAvlRecursive(root->rightChild, depth + 1);
 
-    // æ‰“å°å½“å‰èŠ‚ç‚¹
+    // ´òÓ¡µ±Ç°½Úµã
     for (int i = 0; i < depth; i++)
     {
-        printf("       "); // æ¯å±‚ç¼©è¿›
+        printf("       "); // Ã¿²ãËõ½ø
     }
     Avl_VisitNode(root);
     printf("\n");
 
-    // æ‰“å°å·¦å­æ ‘
+    // ´òÓ¡×ó×ÓÊ÷
     printAvlRecursive(root->leftChild, depth + 1);
 }
 
 /**
- * æ‰“å° AVL æ ‘
- * @param root æ ‘çš„æ ¹èŠ‚ç‚¹
- * @return Status æˆåŠŸè¿”å› STATUS_TRUE
+ * ´òÓ¡ AVL Ê÷
+ * @param root Ê÷µÄ¸ù½Úµã
+ * @return Status ³É¹¦·µ»Ø STATUS_TRUE
  */
 Status Avl_PrintTree(AvlTree root)
 {
     if (!root)
-        return STATUS_TRUE;     // ç©ºæ ‘ç›´æ¥è¿”å›
-    printAvlRecursive(root, 0); // ä»æ ¹èŠ‚ç‚¹å¼€å§‹é€’å½’æ‰“å°
+        return STATUS_TRUE;     // ¿ÕÊ÷Ö±½Ó·µ»Ø
+    printAvlRecursive(root, 0); // ´Ó¸ù½Úµã¿ªÊ¼µİ¹é´òÓ¡
     return STATUS_TRUE;
 }
 
-/* åˆ†å‰²AVLæ ‘ */
+/* ·Ö¸îAVLÊ÷ */
 Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, AvlTree *bigger_tree)
 {
     if (!root || !*root)
     {
-        // åŸç›®æ ‡æ˜¯ç©ºæ ‘
+        // Ô­Ä¿±êÊÇ¿ÕÊ÷
         return STATUS_OVERFLOW;
     }
     if (AvlElement_IsEqual((*root)->data, element) == AVLELEMENT_LESS)
@@ -361,7 +361,7 @@ Status Avl_Split(AvlTree *root, AvlElementType element, AvlTree *smaller_tree, A
     return output_status;
 }
 
-/* å¤åˆ¶AVLæ ‘ */
+/* ¸´ÖÆAVLÊ÷ */
 Status Avl_Copy(AvlTree *origin_tree, AvlTree *purpose_tree)
 {
     if (!origin_tree || !*origin_tree)
@@ -372,7 +372,7 @@ Status Avl_Copy(AvlTree *origin_tree, AvlTree *purpose_tree)
     return STATUS_TRUE;
 }
 
-/* åˆå¹¶AVLæ ‘è¾…åŠ©å‡½æ•° */
+/* ºÏ²¢AVLÊ÷¸¨Öúº¯Êı */
 Status Avl_MergeHelper(AvlTree *origin_tree, AvlTree *purpose_tree)
 {
     if (!origin_tree || !*origin_tree)
@@ -383,16 +383,16 @@ Status Avl_MergeHelper(AvlTree *origin_tree, AvlTree *purpose_tree)
     return STATUS_TRUE;
 }
 
-/* åˆå¹¶AVLæ ‘ */
+/* ºÏ²¢AVLÊ÷ */
 Status Avl_Merge(AvlTree *origin_tree1, AvlTree *origin_tree2, AvlTree *purpose_tree)
 {
     Avl_Copy(origin_tree1, purpose_tree);
     return Avl_MergeHelper(origin_tree2, purpose_tree);
 }
 
-/* ======================== AvlElementType ç›¸å…³å‡½æ•° ======================== */
+/* ======================== AvlElementType Ïà¹Øº¯Êı ======================== */
 
-/* å…ƒç´ èµ‹å€¼ */
+/* ÔªËØ¸³Öµ */
 Status AvlElement_Assign(AvlElementType *destination, const AvlElementType *source)
 {
     if (!destination || !source)
@@ -403,7 +403,7 @@ Status AvlElement_Assign(AvlElementType *destination, const AvlElementType *sour
     return STATUS_TRUE;
 }
 
-/* æ¯”è¾ƒä¸¤ä¸ªå…ƒç´ æ˜¯å¦ç›¸ç­‰ */
+/* ±È½ÏÁ½¸öÔªËØÊÇ·ñÏàµÈ */
 AvlElementCompareResult AvlElement_IsEqual(AvlElementType a, AvlElementType b)
 {
     if (a > b)
@@ -420,7 +420,7 @@ AvlElementCompareResult AvlElement_IsEqual(AvlElementType a, AvlElementType b)
     }
 }
 
-/* åˆå§‹åŒ–å…ƒç´  */
+/* ³õÊ¼»¯ÔªËØ */
 Status AvlElement_Init(AvlElementType *element, AvlElementType value)
 {
     if (!element)
@@ -431,20 +431,20 @@ Status AvlElement_Init(AvlElementType *element, AvlElementType value)
     return STATUS_TRUE;
 }
 
-/* æ‰“å°å…ƒç´  */
+/* ´òÓ¡ÔªËØ */
 Status AvlElement_Print(AvlElementType element)
 {
     printf("%d", element);
     return STATUS_TRUE;
 }
 
-/* é‡Šæ”¾å…ƒç´ å†…å­˜ï¼ˆå¦‚æœé€‚ç”¨ï¼‰ */
+/* ÊÍ·ÅÔªËØÄÚ´æ£¨Èç¹ûÊÊÓÃ£© */
 Status AvlElement_Destroy(AvlElementType *element)
 {
     return STATUS_TRUE;
 }
 
-/* åˆ¤æ–­å…ƒç´ æ˜¯å¦ä¸ºç©ºæŒ‡é’ˆ */
+/* ÅĞ¶ÏÔªËØÊÇ·ñÎª¿ÕÖ¸Õë */
 Status AvlElement_IsNull(AvlElementType *element)
 {
     return STATUS_TRUE;

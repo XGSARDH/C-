@@ -27,7 +27,7 @@ typedef struct Menu Menu;
 typedef struct LinkedList LinkedList;
 typedef struct MenuOption MenuOption;
 
-// å®šä¹‰æºå¸¦ä¿¡æ¯ç»“æ„ä½“
+// ¶¨ÒåĞ¯´øĞÅÏ¢½á¹¹Ìå
 typedef struct HandlerContext
 {
     Menu *now_menu;
@@ -39,19 +39,19 @@ typedef struct HandlerContext
     int *now_avl;
 } HandlerContext;
 
-// æ¸…å±
+// ÇåÆÁ
 void ClearScreen();
-// åˆå§‹åŒ–é¡¶çº§èœå•
+// ³õÊ¼»¯¶¥¼¶²Ëµ¥
 Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option);
-// åˆå§‹åŒ–æ§åˆ¶å•æ£µæ ‘èœå•
+// ³õÊ¼»¯¿ØÖÆµ¥¿ÃÊ÷²Ëµ¥
 Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option);
-// åˆå§‹åŒ–é€‰æ‹©äºŒå‰æ ‘èœå•
+// ³õÊ¼»¯Ñ¡Ôñ¶ş²æÊ÷²Ëµ¥
 Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option);
-// æ›´å¤šåŠŸèƒ½èœå•å±•ç¤º
+// ¸ü¶à¹¦ÄÜ²Ëµ¥Õ¹Ê¾
 Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option);
-// æµ‹è¯•èœå•æ˜¾ç¤º
+// ²âÊÔ²Ëµ¥ÏÔÊ¾
 void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu);
-// åˆå§‹åŒ–ç»‘å®šcontext
+// ³õÊ¼»¯°ó¶¨context
 Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu *top_menu, Menu *tree_menu,
                            Menu *control_tree_menu, Menu *more_menu, LinkedList *avl_list, int *now_avl);
 

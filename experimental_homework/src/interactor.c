@@ -11,24 +11,24 @@
 void ClearScreen()
 {
 #ifdef _WIN32
-    system("cls"); // Windows å¹³å°
+    system("cls"); // Windows Æ½Ì¨
 #else
-    system("clear"); // Linux/Unix å¹³å°
+    system("clear"); // Linux/Unix Æ½Ì¨
 #endif
 }
 
-// åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ä¸ºæ•°å­—
+// ÅĞ¶Ï×Ö·û´®ÊÇ·ñÎªÊı×Ö
 Status Interactor_IsNumber(const char *str)
 {
     if (str == NULL || *str == '\0')
     {
-        return STATUS_FALSE; // ç©ºå­—ç¬¦ä¸²æˆ– NULL éæ³•
+        return STATUS_FALSE; // ¿Õ×Ö·û´®»ò NULL ·Ç·¨
     }
     while (*str)
     {
         if (!isdigit(*str))
         {
-            return STATUS_FALSE; // éæ•°å­—å­—ç¬¦
+            return STATUS_FALSE; // ·ÇÊı×Ö×Ö·û
         }
         str++;
     }
@@ -40,19 +40,19 @@ Status Helper_CharInputAndOutputInt(int *output)
     char input_num[MAX_INPUT];
     if (fgets(input_num, sizeof(input_num), stdin) != NULL)
     {
-        // å»æ‰æ¢è¡Œç¬¦
+        // È¥µô»»ĞĞ·û
         input_num[strcspn(input_num, "\n")] = '\0';
     }
-    // æ£€æŸ¥è¾“å…¥æ˜¯å¦ä¸ºçº¯æ•°å­—
+    // ¼ì²éÊäÈëÊÇ·ñÎª´¿Êı×Ö
     if (Interactor_IsNumber(input_num) == STATUS_FALSE)
     {
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸­æœ‰éæ•°å­—å­—ç¬¦
+        return STATUS_OVERFLOW; // ÊäÈëÖĞÓĞ·ÇÊı×Ö×Ö·û
     }
     if (strlen(input_num) > 5)
     {
-        return STATUS_TRUE; // è¾“å…¥è¶…è¿‡èŒƒå›´
+        return STATUS_TRUE; // ÊäÈë³¬¹ı·¶Î§
     }
-    // å°†è¾“å…¥å­—ç¬¦ä¸²è½¬æ¢ä¸ºæ•°å­—
+    // ½«ÊäÈë×Ö·û´®×ª»»ÎªÊı×Ö
     int number = strtol(input_num, NULL, 10);
     *output = number;
     return STATUS_TRUE;
@@ -75,7 +75,7 @@ Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu
     return STATUS_TRUE;
 }
 
-/* é¡¶çº§èœå• - é€€å‡ºç¨‹åº */
+/* ¶¥¼¶²Ëµ¥ - ÍË³ö³ÌĞò */
 Status top_menu_handler0(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -98,24 +98,24 @@ Status top_menu_handler0(void *context)
     exit(0);
 }
 
-/* é¡¶çº§èœå• - åˆ›å»ºä¸€æ£µæ–°å¹³è¡¡äºŒå‰æ ‘ */
+/* ¶¥¼¶²Ëµ¥ - ´´½¨Ò»¿ÃĞÂÆ½ºâ¶ş²æÊ÷ */
 Status top_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
     Status output_status = List_Append(handler_context->avl_list, NULL);
     if (output_status == STATUS_TRUE)
     {
-        printf("åˆ›å»ºæˆåŠŸ\n");
+        printf("´´½¨³É¹¦\n");
         return output_status;
     }
     else
     {
-        printf("åˆ›å»ºå¤±è´¥\n");
+        printf("´´½¨Ê§°Ü\n");
         return output_status;
     }
 }
 
-/* é¡¶çº§èœå• - å¯¹äºŒå‰æ ‘è¿›è¡Œè°ƒæ•´ */
+/* ¶¥¼¶²Ëµ¥ - ¶Ô¶ş²æÊ÷½øĞĞµ÷Õû */
 Status top_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -123,7 +123,7 @@ Status top_menu_handler2(void *context)
     return STATUS_TRUE;
 }
 
-/* é¡¶çº§èœå• - æ›´å¤šåŠŸèƒ½ */
+/* ¶¥¼¶²Ëµ¥ - ¸ü¶à¹¦ÄÜ */
 Status top_menu_handler3(void *context)
 {
     if (!context)
@@ -135,28 +135,28 @@ Status top_menu_handler3(void *context)
     return STATUS_TRUE;
 }
 
-/* é¡¶çº§èœå• - è‡ªåŠ¨ç”Ÿæˆä¸€æ£µåŒ…å«æ‰€æœ‰ä»èµ·å§‹å€¼åˆ°ç»“æŸå€¼ï¼ˆåŒ…æ‹¬è¾¹ç•Œå€¼ï¼‰çš„å¹³è¡¡äºŒå‰æ ‘ */
+/* ¶¥¼¶²Ëµ¥ - ×Ô¶¯Éú³ÉÒ»¿Ã°üº¬ËùÓĞ´ÓÆğÊ¼Öµµ½½áÊøÖµ£¨°üÀ¨±ß½çÖµ£©µÄÆ½ºâ¶ş²æÊ÷ */
 Status top_menu_handler4(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    printf("è¾“å…¥èµ·å§‹å€¼: ");
+    printf("ÊäÈëÆğÊ¼Öµ: ");
     int number1 = -1;
     if (Helper_CharInputAndOutputInt(&number1) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
-    printf("è¾“å…¥ç»“æŸå€¼: ");
+    printf("ÊäÈë½áÊøÖµ: ");
     int number2 = -1;
     if (Helper_CharInputAndOutputInt(&number2) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (number1 > number2)
     {
-        printf("èµ·å§‹å€¼åº”å¤§äºç­‰äºç»“æŸå€¼");
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸åˆæ³•
+        printf("ÆğÊ¼ÖµÓ¦´óÓÚµÈÓÚ½áÊøÖµ");
+        return STATUS_OVERFLOW; // ÊäÈë²»ºÏ·¨
     }
     AvlTree avl_tree = NULL;
     Avl_Init(&avl_tree);
@@ -167,13 +167,13 @@ Status top_menu_handler4(void *context)
     }
     if (output_status == STATUS_TRUE)
     {
-        printf("ç”ŸæˆæˆåŠŸ\n");
+        printf("Éú³É³É¹¦\n");
     }
     else
     {
-        printf("ç”Ÿæˆå¤±è´¥\n");
+        printf("Éú³ÉÊ§°Ü\n");
     }
-    printf("\nç”Ÿæˆç»“æœ: \n");
+    printf("\nÉú³É½á¹û: \n");
     Avl_PrintTree(avl_tree);
 
     ListElementType curr = NULL;
@@ -182,7 +182,7 @@ Status top_menu_handler4(void *context)
     return output_status;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - è¿”å›é€‰æ‹©äºŒå‰æ ‘èœå• */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - ·µ»ØÑ¡Ôñ¶ş²æÊ÷²Ëµ¥ */
 Status control_tree_menu_handler0(void *context)
 {
     if (!context)
@@ -194,7 +194,7 @@ Status control_tree_menu_handler0(void *context)
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - æ’å…¥æ•°å€¼ */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - ²åÈëÊıÖµ */
 Status control_tree_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -206,15 +206,15 @@ Status control_tree_menu_handler1(void *context)
         return STATUS_FALSE;
     }
     int insert_value = 0;
-    printf("è¾“å…¥è¦æ·»åŠ çš„æ•°å­—: ");
+    printf("ÊäÈëÒªÌí¼ÓµÄÊı×Ö: ");
     if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (abs(insert_value) > 65533)
     {
-        printf("è¾“å…¥æ•°å­—ç»å¯¹å€¼è¿‡å¤§\n");
+        printf("ÊäÈëÊı×Ö¾ø¶ÔÖµ¹ı´ó\n");
         return STATUS_OVERFLOW;
     }
     AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
@@ -230,7 +230,7 @@ Status control_tree_menu_handler1(void *context)
     return STATUS_TRUE;
 }
 
-/*æ§åˆ¶äºŒå‰æ ‘èœå• - åˆ é™¤æ•°å€¼  */
+/*¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - É¾³ıÊıÖµ  */
 Status control_tree_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -242,27 +242,27 @@ Status control_tree_menu_handler2(void *context)
         return STATUS_FALSE;
     }
     int insert_value = 0;
-    printf("è¾“å…¥è¦åˆ é™¤çš„æ•°å­—: ");
+    printf("ÊäÈëÒªÉ¾³ıµÄÊı×Ö: ");
     if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (abs(insert_value) > 65533)
     {
-        printf("è¾“å…¥æ•°å­—ç»å¯¹å€¼è¿‡å¤§\n");
+        printf("ÊäÈëÊı×Ö¾ø¶ÔÖµ¹ı´ó\n");
         return STATUS_OVERFLOW;
     }
     AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
     if (get_avl_tree_origin == NULL)
     {
-        printf("è¯¥æ ‘ç°åœ¨ä¸ºç©ºæ ‘, æ— æ³•æ‰§è¡Œè¯¥æ“ä½œ.\n");
+        printf("¸ÃÊ÷ÏÖÔÚÎª¿ÕÊ÷, ÎŞ·¨Ö´ĞĞ¸Ã²Ù×÷.\n");
         return STATUS_OVERFLOW;
     }
     Status delete_status = Avl_Delete(&avl_tree, insert_value);
     if (delete_status == STATUS_FALSE)
     {
-        printf("è¯¥æ ‘ä¸å­˜åœ¨è¯¥å€¼, æ— æ³•æ‰§è¡Œè¯¥æ“ä½œ.\n");
+        printf("¸ÃÊ÷²»´æÔÚ¸ÃÖµ, ÎŞ·¨Ö´ĞĞ¸Ã²Ù×÷.\n");
         return STATUS_OVERFLOW;
     }
     ListElementType curr = (ListElementType *)avl_tree;
@@ -270,7 +270,7 @@ Status control_tree_menu_handler2(void *context)
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - æŸ¥æ‰¾æ•°å€¼ */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - ²éÕÒÊıÖµ */
 Status control_tree_menu_handler3(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -282,37 +282,37 @@ Status control_tree_menu_handler3(void *context)
         return STATUS_FALSE;
     }
     int insert_value = 0;
-    printf("è¾“å…¥è¦åˆ é™¤çš„æ•°å­—: ");
+    printf("ÊäÈëÒªÉ¾³ıµÄÊı×Ö: ");
     if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (abs(insert_value) > 65533)
     {
-        printf("è¾“å…¥æ•°å­—ç»å¯¹å€¼è¿‡å¤§\n");
+        printf("ÊäÈëÊı×Ö¾ø¶ÔÖµ¹ı´ó\n");
         return STATUS_OVERFLOW;
     }
     AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
     if (get_avl_tree_origin == NULL)
     {
-        printf("è¯¥æ ‘ç°åœ¨ä¸ºç©ºæ ‘, æ— æ³•æ‰§è¡Œè¯¥æ“ä½œ.\n");
+        printf("¸ÃÊ÷ÏÖÔÚÎª¿ÕÊ÷, ÎŞ·¨Ö´ĞĞ¸Ã²Ù×÷.\n");
         return STATUS_OVERFLOW;
     }
     Status delete_status = Avl_Search(&avl_tree, insert_value);
     if (delete_status == STATUS_OVERFLOW)
     {
-        printf("è¯¥æ ‘ä¸å­˜åœ¨è¯¥å€¼\n");
+        printf("¸ÃÊ÷²»´æÔÚ¸ÃÖµ\n");
         return STATUS_OVERFLOW;
     }
     else
     {
-        printf("è¯¥æ ‘å­˜åœ¨è¯¥å€¼ %d \n", insert_value);
+        printf("¸ÃÊ÷´æÔÚ¸ÃÖµ %d \n", insert_value);
     }
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - æ‰“å°äºŒå‰æ ‘ */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - ´òÓ¡¶ş²æÊ÷ */
 Status control_tree_menu_handler4(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -326,14 +326,14 @@ Status control_tree_menu_handler4(void *context)
     AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
     if (get_avl_tree_origin == NULL)
     {
-        printf("è¯¥æ ‘ç°åœ¨ä¸ºç©ºæ ‘.\n");
+        printf("¸ÃÊ÷ÏÖÔÚÎª¿ÕÊ÷.\n");
         return STATUS_TRUE;
     }
     Status status = Avl_PrintTree(avl_tree);
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - ä¸­åºéå† */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - ÖĞĞò±éÀú */
 Status control_tree_menu_handler5(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -347,7 +347,7 @@ Status control_tree_menu_handler5(void *context)
     AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
     if (get_avl_tree_origin == NULL)
     {
-        printf("è¯¥æ ‘ç°åœ¨ä¸ºç©ºæ ‘.\n");
+        printf("¸ÃÊ÷ÏÖÔÚÎª¿ÕÊ÷.\n");
         return STATUS_TRUE;
     }
     Status status = Avl_InOrderTraverse(avl_tree);
@@ -355,7 +355,7 @@ Status control_tree_menu_handler5(void *context)
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - ä»¥æŸå€¼ä¸ºç•Œé™æ‹†åˆ†äºŒå‰æ ‘ */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - ÒÔÄ³ÖµÎª½çÏŞ²ğ·Ö¶ş²æÊ÷ */
 Status control_tree_menu_handler6(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -367,15 +367,15 @@ Status control_tree_menu_handler6(void *context)
         return STATUS_FALSE;
     }
     int insert_value = 0;
-    printf("è¾“å…¥è¦ä½œä¸ºåˆ†å‰²ä¸¤ä¸ªå¹³è¡¡äºŒå‰æ ‘çš„æ•°å­—: ");
+    printf("ÊäÈëÒª×÷Îª·Ö¸îÁ½¸öÆ½ºâ¶ş²æÊ÷µÄÊı×Ö: ");
     if (Helper_CharInputAndOutputInt(&insert_value) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (abs(insert_value) > 65533)
     {
-        printf("è¾“å…¥æ•°å­—ç»å¯¹å€¼è¿‡å¤§\n");
+        printf("ÊäÈëÊı×Ö¾ø¶ÔÖµ¹ı´ó\n");
         return STATUS_OVERFLOW;
     }
     AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
@@ -389,10 +389,10 @@ Status control_tree_menu_handler6(void *context)
     AvlTree spilt_tree2 = NULL;
     Avl_Split(&avl_tree, insert_value, &spilt_tree1, &spilt_tree2);
     // ListElementType curr = (ListElementType*)avl_tree;
-    printf("åˆ†å‰²æˆåŠŸ\n");
-    printf("åˆ†å‰²çš„ç¬¬1æ£µæ ‘:\n");
+    printf("·Ö¸î³É¹¦\n");
+    printf("·Ö¸îµÄµÚ1¿ÃÊ÷:\n");
     Avl_PrintTree(spilt_tree1);
-    printf("åˆ†å‰²çš„ç¬¬2æ£µæ ‘:\n");
+    printf("·Ö¸îµÄµÚ2¿ÃÊ÷:\n");
     Avl_PrintTree(spilt_tree2);
 
     ListElementType curr = NULL;
@@ -404,7 +404,7 @@ Status control_tree_menu_handler6(void *context)
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå• - åˆ é™¤è¯¥æ ‘ */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥ - É¾³ı¸ÃÊ÷ */
 Status control_tree_menu_handler7(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -425,7 +425,7 @@ Status control_tree_menu_handler7(void *context)
     return STATUS_TRUE;
 }
 
-/* é€‰æ‹©äºŒå‰æ ‘èœå• - è¿”å›é¡¶çº§ç›®å½• */
+/* Ñ¡Ôñ¶ş²æÊ÷²Ëµ¥ - ·µ»Ø¶¥¼¶Ä¿Â¼ */
 Status tree_menu_handler0(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -433,36 +433,36 @@ Status tree_menu_handler0(void *context)
     return STATUS_TRUE;
 }
 
-/* é€‰æ‹©äºŒå‰æ ‘èœå• - è·³è½¬åˆ°æŒ‡å®šåºå·å¹³è¡¡äºŒå‰æ ‘è°ƒæ•´èœå• */
+/* Ñ¡Ôñ¶ş²æÊ÷²Ëµ¥ - Ìø×ªµ½Ö¸¶¨ĞòºÅÆ½ºâ¶ş²æÊ÷µ÷Õû²Ëµ¥ */
 Status tree_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    printf("è¾“å…¥æ‚¨è¦æŸ¥çœ‹çš„äºŒå‰æ ‘å¯¹åº”çš„åºå·: ");
+    printf("ÊäÈëÄúÒª²é¿´µÄ¶ş²æÊ÷¶ÔÓ¦µÄĞòºÅ: ");
     int number = -1;
     if (Helper_CharInputAndOutputInt(&number) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (number < 1 || number > List_Size(handler_context->avl_list))
     {
-        printf("è¾“å‡ºè¶…å‡ºèŒƒå›´");
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸åˆæ³•
+        printf("Êä³ö³¬³ö·¶Î§");
+        return STATUS_OVERFLOW; // ÊäÈë²»ºÏ·¨
     }
     *handler_context->now_avl = number - 1;
     handler_context->now_menu = handler_context->control_tree_menu;
     return STATUS_TRUE;
 }
 
-/* é€‰æ‹©äºŒå‰æ ‘èœå• - æŸ¥çœ‹å½“å‰äºŒå‰æ ‘æ•°é‡ */
+/* Ñ¡Ôñ¶ş²æÊ÷²Ëµ¥ - ²é¿´µ±Ç°¶ş²æÊ÷ÊıÁ¿ */
 Status tree_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    printf("å½“å‰å…±æœ‰äºŒå‰æ ‘æ•°é‡ä¸º %d \n", List_Size(handler_context->avl_list));
+    printf("µ±Ç°¹²ÓĞ¶ş²æÊ÷ÊıÁ¿Îª %d \n", List_Size(handler_context->avl_list));
     return STATUS_TRUE;
 }
 
-/* æ›´å¤šåŠŸèƒ½èœå• - è¿”å›é¡¶çº§ç›®å½• */
+/* ¸ü¶à¹¦ÄÜ²Ëµ¥ - ·µ»Ø¶¥¼¶Ä¿Â¼ */
 Status more_menu_handler0(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
@@ -470,53 +470,53 @@ Status more_menu_handler0(void *context)
     return STATUS_TRUE;
 }
 
-/* æ›´å¤šåŠŸèƒ½èœå• - æ‰“å°æŒ‡å®šç¼–å·çš„äºŒå‰æ ‘ */
+/* ¸ü¶à¹¦ÄÜ²Ëµ¥ - ´òÓ¡Ö¸¶¨±àºÅµÄ¶ş²æÊ÷ */
 Status more_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    printf("è¾“å…¥æ‚¨è¦æŸ¥çœ‹çš„äºŒå‰æ ‘å¯¹åº”çš„åºå·: ");
+    printf("ÊäÈëÄúÒª²é¿´µÄ¶ş²æÊ÷¶ÔÓ¦µÄĞòºÅ: ");
     int number = -1;
     if (Helper_CharInputAndOutputInt(&number) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (number < 1 || number > List_Size(handler_context->avl_list))
     {
-        printf("è¾“å‡ºè¶…å‡ºèŒƒå›´");
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸åˆæ³•
+        printf("Êä³ö³¬³ö·¶Î§");
+        return STATUS_OVERFLOW; // ÊäÈë²»ºÏ·¨
     }
     *handler_context->now_avl = number - 1;
     return control_tree_menu_handler4(context);
 }
 
-/* æ›´å¤šåŠŸèƒ½èœå• - åˆå¹¶æŒ‡å®šä¸¤ä¸ªç¼–å·çš„äºŒå‰æ ‘ */
+/* ¸ü¶à¹¦ÄÜ²Ëµ¥ - ºÏ²¢Ö¸¶¨Á½¸ö±àºÅµÄ¶ş²æÊ÷ */
 Status more_menu_handler2(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    printf("è¾“å…¥æ‚¨è¦åˆå¹¶çš„ç¬¬1æ£µäºŒå‰æ ‘å¯¹åº”çš„åºå·: ");
+    printf("ÊäÈëÄúÒªºÏ²¢µÄµÚ1¿Ã¶ş²æÊ÷¶ÔÓ¦µÄĞòºÅ: ");
     int number1 = -1;
     if (Helper_CharInputAndOutputInt(&number1) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (number1 < 1 || number1 > List_Size(handler_context->avl_list))
     {
-        printf("è¾“å‡ºè¶…å‡ºèŒƒå›´");
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸åˆæ³•
+        printf("Êä³ö³¬³ö·¶Î§");
+        return STATUS_OVERFLOW; // ÊäÈë²»ºÏ·¨
     }
-    printf("è¾“å…¥æ‚¨è¦åˆå¹¶çš„ç¬¬2æ£µäºŒå‰æ ‘å¯¹åº”çš„åºå·: ");
+    printf("ÊäÈëÄúÒªºÏ²¢µÄµÚ2¿Ã¶ş²æÊ÷¶ÔÓ¦µÄĞòºÅ: ");
     int number2 = -1;
     if (Helper_CharInputAndOutputInt(&number2) != STATUS_TRUE)
     {
-        printf("è¾“å…¥ä¸æ˜¯çº¯æ•°å­—\n");
+        printf("ÊäÈë²»ÊÇ´¿Êı×Ö\n");
         return STATUS_OVERFLOW;
     }
     if (number2 < 1 || number2 > List_Size(handler_context->avl_list))
     {
-        printf("è¾“å‡ºè¶…å‡ºèŒƒå›´");
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸åˆæ³•
+        printf("Êä³ö³¬³ö·¶Î§");
+        return STATUS_OVERFLOW; // ÊäÈë²»ºÏ·¨
     }
     ListElementType get_avl_tree_origin_1;
     if (STATUS_FALSE == List_Get(handler_context->avl_list, number1 - 1, &get_avl_tree_origin_1))
@@ -537,18 +537,18 @@ Status more_menu_handler2(void *context)
     Status output_status = Avl_Merge(&avl_tree_1, &avl_tree_2, &purpose_tree);
     if (output_status == STATUS_TRUE)
     {
-        printf("åˆå¹¶æˆåŠŸ\n");
+        printf("ºÏ²¢³É¹¦\n");
     }
     else
     {
-        printf("åˆå¹¶å¤±è´¥\n");
+        printf("ºÏ²¢Ê§°Ü\n");
     }
 
-    printf("\nå‚ä¸åˆå¹¶çš„ç¬¬1æ£µæ ‘: \n");
+    printf("\n²ÎÓëºÏ²¢µÄµÚ1¿ÃÊ÷: \n");
     Avl_PrintTree(avl_tree_1);
-    printf("\nå‚ä¸åˆå¹¶çš„ç¬¬2æ£µæ ‘: \n");
+    printf("\n²ÎÓëºÏ²¢µÄµÚ2¿ÃÊ÷: \n");
     Avl_PrintTree(avl_tree_2);
-    printf("\nåˆå¹¶ç»“æœ: \n");
+    printf("\nºÏ²¢½á¹û: \n");
     Avl_PrintTree(purpose_tree);
 
     ListElementType curr = NULL;
@@ -558,64 +558,64 @@ Status more_menu_handler2(void *context)
     return output_status;
 }
 
-/* æ›´å¤šåŠŸèƒ½èœå• - æŸ¥çœ‹å½“å‰äºŒå‰æ ‘çš„æ•°é‡ */
+/* ¸ü¶à¹¦ÄÜ²Ëµ¥ - ²é¿´µ±Ç°¶ş²æÊ÷µÄÊıÁ¿ */
 Status more_menu_handler3(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    printf("å½“å‰å…±æœ‰äºŒå‰æ ‘æ•°é‡ä¸º %d \n", List_Size(handler_context->avl_list));
+    printf("µ±Ç°¹²ÓĞ¶ş²æÊ÷ÊıÁ¿Îª %d \n", List_Size(handler_context->avl_list));
     return STATUS_TRUE;
 }
 
-/* é¡¶éƒ¨èœå•åŠé€‰é¡¹åˆå§‹åŒ– */
+/* ¶¥²¿²Ëµ¥¼°Ñ¡Ïî³õÊ¼»¯ */
 Status Top_Menu_Init(Menu *top_menu, MenuOption *top_menu_option)
 {
-    MenuOption_create(&top_menu_option[0], 0, "é€€å‡ºç¨‹åº", top_menu_handler0);
-    MenuOption_create(&top_menu_option[1], 1, "åˆ›å»ºä¸€æ£µæ–°å¹³è¡¡äºŒå‰æ ‘", top_menu_handler1);
-    MenuOption_create(&top_menu_option[2], 2, "é€‰æ‹©äºŒå‰æ ‘è¿›è¡Œè°ƒæ•´", top_menu_handler2);
-    MenuOption_create(&top_menu_option[3], 3, "æ›´å¤šåŠŸèƒ½", top_menu_handler3);
-    MenuOption_create(&top_menu_option[4], 4, "è‡ªåŠ¨ç”Ÿæˆä¸€æ£µåŒ…å«æ‰€æœ‰ä»èµ·å§‹å€¼åˆ°ç»“æŸå€¼ï¼ˆåŒ…æ‹¬è¾¹ç•Œå€¼ï¼‰çš„å¹³è¡¡äºŒå‰æ ‘",
+    MenuOption_create(&top_menu_option[0], 0, "ÍË³ö³ÌĞò", top_menu_handler0);
+    MenuOption_create(&top_menu_option[1], 1, "´´½¨Ò»¿ÃĞÂÆ½ºâ¶ş²æÊ÷", top_menu_handler1);
+    MenuOption_create(&top_menu_option[2], 2, "Ñ¡Ôñ¶ş²æÊ÷½øĞĞµ÷Õû", top_menu_handler2);
+    MenuOption_create(&top_menu_option[3], 3, "¸ü¶à¹¦ÄÜ", top_menu_handler3);
+    MenuOption_create(&top_menu_option[4], 4, "×Ô¶¯Éú³ÉÒ»¿Ã°üº¬ËùÓĞ´ÓÆğÊ¼Öµµ½½áÊøÖµ£¨°üÀ¨±ß½çÖµ£©µÄÆ½ºâ¶ş²æÊ÷",
                       top_menu_handler4);
-    char *top_menu_title = "é¡¶çº§èœå•";
+    char *top_menu_title = "¶¥¼¶²Ëµ¥";
     Menu_Create(top_menu, &top_menu_title, top_menu_option, TOP_MENU_COUNT, TOP_MENU_COUNT);
     return STATUS_TRUE;
 }
 
-/* æ§åˆ¶äºŒå‰æ ‘èœå•åŠé€‰é¡¹åˆå§‹åŒ– */
+/* ¿ØÖÆ¶ş²æÊ÷²Ëµ¥¼°Ñ¡Ïî³õÊ¼»¯ */
 Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_menu_option)
 {
-    MenuOption_create(&control_tree_menu_option[0], 0, "è¿”å›é€‰æ‹©äºŒå‰æ ‘èœå•", control_tree_menu_handler0);
-    MenuOption_create(&control_tree_menu_option[1], 1, "æ’å…¥æ•°å€¼", control_tree_menu_handler1);
-    MenuOption_create(&control_tree_menu_option[2], 2, "åˆ é™¤æ•°å€¼", control_tree_menu_handler2);
-    MenuOption_create(&control_tree_menu_option[3], 3, "æŸ¥æ‰¾æ•°å€¼", control_tree_menu_handler3);
-    MenuOption_create(&control_tree_menu_option[4], 4, "æ‰“å°äºŒå‰æ ‘", control_tree_menu_handler4);
-    MenuOption_create(&control_tree_menu_option[5], 5, "ä¸­åºéå†", control_tree_menu_handler5);
-    MenuOption_create(&control_tree_menu_option[6], 6, "ä»¥æŸå€¼ä¸ºç•Œé™æ‹†åˆ†äºŒå‰æ ‘", control_tree_menu_handler6);
-    MenuOption_create(&control_tree_menu_option[7], 7, "åˆ é™¤è¯¥æ ‘", control_tree_menu_handler7);
-    char *control_tree_menu_title = "å•æ£µå¹³è¡¡äºŒå‰æ ‘è°ƒæ•´èœå•";
+    MenuOption_create(&control_tree_menu_option[0], 0, "·µ»ØÑ¡Ôñ¶ş²æÊ÷²Ëµ¥", control_tree_menu_handler0);
+    MenuOption_create(&control_tree_menu_option[1], 1, "²åÈëÊıÖµ", control_tree_menu_handler1);
+    MenuOption_create(&control_tree_menu_option[2], 2, "É¾³ıÊıÖµ", control_tree_menu_handler2);
+    MenuOption_create(&control_tree_menu_option[3], 3, "²éÕÒÊıÖµ", control_tree_menu_handler3);
+    MenuOption_create(&control_tree_menu_option[4], 4, "´òÓ¡¶ş²æÊ÷", control_tree_menu_handler4);
+    MenuOption_create(&control_tree_menu_option[5], 5, "ÖĞĞò±éÀú", control_tree_menu_handler5);
+    MenuOption_create(&control_tree_menu_option[6], 6, "ÒÔÄ³ÖµÎª½çÏŞ²ğ·Ö¶ş²æÊ÷", control_tree_menu_handler6);
+    MenuOption_create(&control_tree_menu_option[7], 7, "É¾³ı¸ÃÊ÷", control_tree_menu_handler7);
+    char *control_tree_menu_title = "µ¥¿ÃÆ½ºâ¶ş²æÊ÷µ÷Õû²Ëµ¥";
     Menu_Create(control_tree_menu, &control_tree_menu_title, control_tree_menu_option, CONTROL_TREE_MENU_COUNT,
                 CONTROL_TREE_MENU_COUNT);
     return STATUS_TRUE;
 }
 
-/* é€‰æ‹©äºŒå‰æ ‘èœå•åŠé€‰é¡¹åˆå§‹åŒ– */
+/* Ñ¡Ôñ¶ş²æÊ÷²Ëµ¥¼°Ñ¡Ïî³õÊ¼»¯ */
 Status Tree_Menu_Init(Menu *tree_menu, MenuOption *tree_menu_option)
 {
-    MenuOption_create(&tree_menu_option[0], 0, "è¿”å›é¡¶çº§ç›®å½•", tree_menu_handler0);
-    MenuOption_create(&tree_menu_option[1], 1, "è·³è½¬åˆ°æŒ‡å®šåºå·å¹³è¡¡äºŒå‰æ ‘è°ƒæ•´èœå•", tree_menu_handler1);
-    MenuOption_create(&tree_menu_option[2], 2, "æŸ¥çœ‹å½“å‰äºŒå‰æ ‘æ•°é‡", tree_menu_handler2);
-    char *tree_menu_title = "é€‰æ‹©äºŒå‰æ ‘èœå•";
+    MenuOption_create(&tree_menu_option[0], 0, "·µ»Ø¶¥¼¶Ä¿Â¼", tree_menu_handler0);
+    MenuOption_create(&tree_menu_option[1], 1, "Ìø×ªµ½Ö¸¶¨ĞòºÅÆ½ºâ¶ş²æÊ÷µ÷Õû²Ëµ¥", tree_menu_handler1);
+    MenuOption_create(&tree_menu_option[2], 2, "²é¿´µ±Ç°¶ş²æÊ÷ÊıÁ¿", tree_menu_handler2);
+    char *tree_menu_title = "Ñ¡Ôñ¶ş²æÊ÷²Ëµ¥";
     Menu_Create(tree_menu, &tree_menu_title, tree_menu_option, TREE_MENU_COUNT, TREE_MENU_COUNT);
     return STATUS_TRUE;
 };
 
-/* æ›´å¤šåŠŸèƒ½èœå•åŠé€‰é¡¹åˆå§‹åŒ– */
+/* ¸ü¶à¹¦ÄÜ²Ëµ¥¼°Ñ¡Ïî³õÊ¼»¯ */
 Status More_Menu_Init(Menu *more_menu, MenuOption *more_menu_option)
 {
-    MenuOption_create(&more_menu_option[0], 0, "è¿”å›é¡¶çº§ç›®å½•", more_menu_handler0);
-    MenuOption_create(&more_menu_option[1], 1, "æ‰“å°æŒ‡å®šç¼–å·çš„äºŒå‰æ ‘", more_menu_handler1);
-    MenuOption_create(&more_menu_option[2], 2, "åˆå¹¶æŒ‡å®šä¸¤ä¸ªç¼–å·çš„äºŒå‰æ ‘", more_menu_handler2);
-    MenuOption_create(&more_menu_option[3], 3, "æŸ¥çœ‹å½“å‰äºŒå‰æ ‘çš„æ•°é‡", more_menu_handler3);
-    char *more_menu_title = "æ›´å¤šåŠŸèƒ½èœå•";
+    MenuOption_create(&more_menu_option[0], 0, "·µ»Ø¶¥¼¶Ä¿Â¼", more_menu_handler0);
+    MenuOption_create(&more_menu_option[1], 1, "´òÓ¡Ö¸¶¨±àºÅµÄ¶ş²æÊ÷", more_menu_handler1);
+    MenuOption_create(&more_menu_option[2], 2, "ºÏ²¢Ö¸¶¨Á½¸ö±àºÅµÄ¶ş²æÊ÷", more_menu_handler2);
+    MenuOption_create(&more_menu_option[3], 3, "²é¿´µ±Ç°¶ş²æÊ÷µÄÊıÁ¿", more_menu_handler3);
+    char *more_menu_title = "¸ü¶à¹¦ÄÜ²Ëµ¥";
     Menu_Create(more_menu, &more_menu_title, more_menu_option, MORE_MENU_COUNT, MORE_MENU_COUNT);
     return STATUS_TRUE;
 };

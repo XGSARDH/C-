@@ -3,57 +3,57 @@
 
 #include "status.h"
 
-// é€šç”¨é“¾è¡¨å…ƒç´ ç±»å‹
+// Í¨ÓÃÁ´±íÔªËØÀàĞÍ
 typedef void *ListElementType;
 
-// é“¾è¡¨èŠ‚ç‚¹å®šä¹‰
+// Á´±í½Úµã¶¨Òå
 typedef struct ListNode
 {
-    // æ•°æ®
+    // Êı¾İ
     ListElementType data;
-    // æŒ‡å‘ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+    // Ö¸ÏòÏÂÒ»¸ö½Úµã
     struct ListNode *next;
 } ListNode;
 
-// é“¾è¡¨å®šä¹‰
+// Á´±í¶¨Òå
 typedef struct LinkedList
 {
-    // æŒ‡å‘é“¾è¡¨å¤´èŠ‚ç‚¹
+    // Ö¸ÏòÁ´±íÍ·½Úµã
     ListNode *head;
-    // é“¾è¡¨ä¸­å…ƒç´ ä¸ªæ•°
+    // Á´±íÖĞÔªËØ¸öÊı
     int size;
 } LinkedList;
 
-/* ======================== é€šç”¨é“¾è¡¨ç›¸å…³å‡½æ•° ======================== */
+/* ======================== Í¨ÓÃÁ´±íÏà¹Øº¯Êı ======================== */
 
-/* åˆå§‹åŒ–é“¾è¡¨ */
+/* ³õÊ¼»¯Á´±í */
 Status List_Init(LinkedList *list);
 
-/* é”€æ¯é“¾è¡¨ */
+/* Ïú»ÙÁ´±í */
 Status List_Destroy(LinkedList *list);
 
-/* åœ¨é“¾è¡¨å°¾éƒ¨æ·»åŠ å…ƒç´  */
+/* ÔÚÁ´±íÎ²²¿Ìí¼ÓÔªËØ */
 Status List_Append(LinkedList *list, ListElementType element);
 
-/* åœ¨é“¾è¡¨æŒ‡å®šä½ç½®æ’å…¥å…ƒç´  */
+/* ÔÚÁ´±íÖ¸¶¨Î»ÖÃ²åÈëÔªËØ */
 Status List_Insert(LinkedList *list, int index, ListElementType element);
 
-/* åˆ é™¤é“¾è¡¨æŒ‡å®šä½ç½®çš„å…ƒç´  */
+/* É¾³ıÁ´±íÖ¸¶¨Î»ÖÃµÄÔªËØ */
 Status List_RemoveAt(LinkedList *list, int index, ListElementType *element);
 
-/* è·å–é“¾è¡¨æŒ‡å®šä½ç½®çš„å…ƒç´  */
+/* »ñÈ¡Á´±íÖ¸¶¨Î»ÖÃµÄÔªËØ */
 Status List_Get(LinkedList *list, int index, ListElementType *element);
 
-/* æ›¿ä»£é“¾è¡¨æŒ‡å®šä½ç½®çš„å…ƒç´  */
+/* Ìæ´úÁ´±íÖ¸¶¨Î»ÖÃµÄÔªËØ */
 Status List_Change(LinkedList *list, int index, ListElementType *element);
 
-/* è·å–é“¾è¡¨å¤§å° */
+/* »ñÈ¡Á´±í´óĞ¡ */
 int List_Size(LinkedList *list);
 
-/* åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©º */
+/* ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ */
 Status List_IsEmpty(LinkedList *list);
 
-/* æ‰“å°é“¾è¡¨ */
+/* ´òÓ¡Á´±í */
 Status List_Print(LinkedList *list, void (*printFunc)(ListElementType));
 
 #endif // LINKED_LIST_H

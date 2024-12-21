@@ -15,7 +15,7 @@
 
 int main()
 {
-    // å®šä¹‰å˜é‡
+    // ¶¨Òå±äÁ¿
     Menu top_menu, tree_menu, control_tree_menu, more_menu;
     MenuOption top_menu_option[TOP_MENU_COUNT];
     MenuOption tree_menu_option[TREE_MENU_COUNT];
@@ -26,7 +26,7 @@ int main()
     Menu now_menu;
     HandlerContext context;
 
-    // åˆå§‹åŒ–å˜é‡
+    // ³õÊ¼»¯±äÁ¿
     List_Init(&avl_list);
     Top_Menu_Init(&top_menu, top_menu_option);
     Tree_Menu_Init(&tree_menu, tree_menu_option);
@@ -36,28 +36,28 @@ int main()
                         &now_avl_position);
     now_menu = top_menu;
 
-    // å¼€å§‹ç¨‹åº
+    // ¿ªÊ¼³ÌĞò
     Status main_status = STATUS_TRUE;
     char input_choose[MAX_INPUT] = {};
     while (main_status != STATUS_FALSE)
     {
         Menu_Display(context.now_menu);
-        printf("\nè¯·è¾“å…¥é€‰æ‹©: ");
+        printf("\nÇëÊäÈëÑ¡Ôñ: ");
         if (fgets(input_choose, sizeof(input_choose), stdin) != NULL)
         {
-            // å»æ‰æ¢è¡Œç¬¦
+            // È¥µô»»ĞĞ·û
             input_choose[strcspn(input_choose, "\n")] = '\0';
         }
         main_status = Menu_HandlerInput(*context.now_menu, input_choose, &context);
         if (main_status == STATUS_OVERFLOW)
         {
-            printf("\næ‚¨çš„è¾“å…¥ä¸åˆæ³•, è¯·è¾“å…¥æŒ‡å®šé€‰é¡¹çš„æ•°å­—\n");
+            printf("\nÄúµÄÊäÈë²»ºÏ·¨, ÇëÊäÈëÖ¸¶¨Ñ¡ÏîµÄÊı×Ö\n");
         }
-        printf("æŒ‰å›è½¦ä»¥ç»§ç»­\n");
+        printf("°´»Ø³µÒÔ¼ÌĞø\n");
         getchar();
         ClearScreen();
     }
-    printf("ç¨‹åºå‘ç”Ÿé”™è¯¯, å³å°†ç»ˆæ­¢");
+    printf("³ÌĞò·¢Éú´íÎó, ¼´½«ÖÕÖ¹");
     getchar();
     return 0;
 }

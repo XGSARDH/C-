@@ -1,7 +1,7 @@
 #include "linked_list.h"
 #include <stdio.h>
 
-// æ‰“å°æ•´å‹æ•°æ®çš„å›è°ƒå‡½æ•°
+// ´òÓ¡ÕûĞÍÊı¾İµÄ»Øµ÷º¯Êı
 void PrintInt(ListElementType element)
 {
     printf("%d -> ", *(int *)element);
@@ -15,19 +15,19 @@ int main()
     int a = 10, b = 20, c = 30, d = 40;
     List_Append(&list, &a);
     List_Append(&list, &b);
-    List_Insert(&list, 1, &c); // åœ¨ç´¢å¼• 1 æ’å…¥ c
+    List_Insert(&list, 1, &c); // ÔÚË÷Òı 1 ²åÈë c
     List_Append(&list, &d);
 
-    printf("é“¾è¡¨å†…å®¹: ");
+    printf("Á´±íÄÚÈİ: ");
     List_Print(&list, PrintInt);
 
-    printf("é“¾è¡¨å¤§å°: %d\n", List_Size(&list));
+    printf("Á´±í´óĞ¡: %d\n", List_Size(&list));
 
     int *removedElement;
     List_RemoveAt(&list, 1, (ListElementType *)&removedElement);
-    printf("åˆ é™¤å…ƒç´ : %d\n", *removedElement);
+    printf("É¾³ıÔªËØ: %d\n", *removedElement);
 
-    printf("åˆ é™¤åé“¾è¡¨å†…å®¹: ");
+    printf("É¾³ıºóÁ´±íÄÚÈİ: ");
     List_Print(&list, PrintInt);
 
     ListElementType get_purpose;
@@ -36,7 +36,7 @@ int main()
     PrintInt(get_purpose);
 
     List_Destroy(&list);
-    printf("é“¾è¡¨é”€æ¯å®Œæˆã€‚\n");
+    printf("Á´±íÏú»ÙÍê³É¡£\n");
 
     return 0;
 }

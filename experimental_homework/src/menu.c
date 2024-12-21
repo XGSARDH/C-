@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// åˆ›å»ºmenuèœå•
+// ´´½¨menu²Ëµ¥
 Status Menu_Create(Menu *menu, char **title, MenuOption *option, int option_count, int display_count)
 {
     if (!menu)
@@ -21,7 +21,7 @@ Status Menu_Create(Menu *menu, char **title, MenuOption *option, int option_coun
     return STATUS_TRUE;
 }
 
-// èœå•èµ‹å€¼
+// ²Ëµ¥¸³Öµ
 Status Menu_UpdateByMenu(Menu *menu_changed, Menu *menu_purpose)
 {
     if (!menu_purpose || !menu_changed)
@@ -32,10 +32,10 @@ Status Menu_UpdateByMenu(Menu *menu_changed, Menu *menu_purpose)
     return STATUS_TRUE;
 }
 
-// æ‰“å°èœå•
+// ´òÓ¡²Ëµ¥
 Status Menu_Display(Menu *menu)
 {
-    printf("%s\n", menu->title); // æ‰“å°æ ‡é¢˜
+    printf("%s\n", menu->title); // ´òÓ¡±êÌâ
     for (int i = 0; i < menu->display_count && i < menu->option_count; i++)
     {
         printf("%d. %s\n", menu->option[i].key, menu->option[i].description);
@@ -44,7 +44,7 @@ Status Menu_Display(Menu *menu)
     return STATUS_TRUE;
 }
 
-// æ›´æ–°menuèœå•ä¸­çš„é€‰é¡¹å’Œé¡¹æ•°
+// ¸üĞÂmenu²Ëµ¥ÖĞµÄÑ¡ÏîºÍÏîÊı
 Status Menu_UpdateOption(Menu *menu, MenuOption *option, int option_count)
 {
     if (!menu)
@@ -56,7 +56,7 @@ Status Menu_UpdateOption(Menu *menu, MenuOption *option, int option_count)
     return STATUS_TRUE;
 }
 
-// æ›´æ–°èœå•è¦æ˜¾ç¤ºçš„é€‰é¡¹æ•°
+// ¸üĞÂ²Ëµ¥ÒªÏÔÊ¾µÄÑ¡ÏîÊı
 Status Menu_UpdateDisplayCount(Menu *menu, int display_count)
 {
     if (!menu)
@@ -67,7 +67,7 @@ Status Menu_UpdateDisplayCount(Menu *menu, int display_count)
     return STATUS_TRUE;
 }
 
-// åˆ›å»ºèœå•é€‰é¡¹
+// ´´½¨²Ëµ¥Ñ¡Ïî
 Status MenuOption_create(MenuOption *menuOption, int key, char *description, Status (*handler)(void *context))
 {
     if (!menuOption)
@@ -80,46 +80,46 @@ Status MenuOption_create(MenuOption *menuOption, int key, char *description, Sta
     return STATUS_TRUE;
 }
 
-// åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ä¸ºæ•°å­—
+// ÅĞ¶Ï×Ö·û´®ÊÇ·ñÎªÊı×Ö
 Status is_number(const char *str)
 {
     if (str == NULL || *str == '\0')
     {
-        return STATUS_FALSE; // ç©ºå­—ç¬¦ä¸²æˆ– NULL éæ³•
+        return STATUS_FALSE; // ¿Õ×Ö·û´®»ò NULL ·Ç·¨
     }
     while (*str)
     {
         if (!isdigit(*str))
         {
-            return STATUS_FALSE; // éæ•°å­—å­—ç¬¦
+            return STATUS_FALSE; // ·ÇÊı×Ö×Ö·û
         }
         str++;
     }
     return STATUS_TRUE;
 }
 
-// å¤„ç†èœå•è¾“å…¥
+// ´¦Àí²Ëµ¥ÊäÈë
 Status Menu_HandlerInput(Menu menu, char *input_option, void *context)
 {
-    // æ£€æŸ¥è¾“å…¥æ˜¯å¦ä¸ºç©º
+    // ¼ì²éÊäÈëÊÇ·ñÎª¿Õ
     if (input_option == NULL || strlen(input_option) == 0)
     {
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸ºç©ºï¼Œè¿”å›å¤±è´¥
+        return STATUS_OVERFLOW; // ÊäÈëÎª¿Õ£¬·µ»ØÊ§°Ü
     }
-    // æ£€æŸ¥è¾“å…¥æ˜¯å¦ä¸ºçº¯æ•°å­—
+    // ¼ì²éÊäÈëÊÇ·ñÎª´¿Êı×Ö
     if (is_number(input_option) == STATUS_FALSE)
     {
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸­æœ‰éæ•°å­—å­—ç¬¦
+        return STATUS_OVERFLOW; // ÊäÈëÖĞÓĞ·ÇÊı×Ö×Ö·û
     }
     if (strlen(input_option) > 5)
     {
-        return STATUS_OVERFLOW; // è¾“å…¥è¶…è¿‡èŒƒå›´
+        return STATUS_OVERFLOW; // ÊäÈë³¬¹ı·¶Î§
     }
-    // å°†è¾“å…¥å­—ç¬¦ä¸²è½¬æ¢ä¸ºæ•°å­—
+    // ½«ÊäÈë×Ö·û´®×ª»»ÎªÊı×Ö
     int option = strtol(input_option, NULL, 10);
     if (option < 0 || option >= menu.option_count)
     {
-        return STATUS_OVERFLOW; // è¾“å…¥ä¸åˆæ³•
+        return STATUS_OVERFLOW; // ÊäÈë²»ºÏ·¨
     }
     return menu.option[option].handler(context);
 }
