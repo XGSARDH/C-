@@ -85,6 +85,22 @@ void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, 
 /* 顶级菜单 - 退出程序 */
 Status top_menu_handler0(void *context)
 {
+    HandlerContext *handler_context = (HandlerContext *)context;
+
+    while (List_Size(handler_context->avl_list) > 0) {
+        ListElementType get_avl_tree_origin;
+        if (STATUS_FALSE == List_RemoveAt(handler_context->avl_list, 0, &get_avl_tree_origin))
+        {
+            *handler_context->now_avl = -1;
+            continue;
+        }
+        AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
+        if (get_avl_tree_origin == NULL)
+        {
+            continue;
+        }
+        Status status = Avl_Destroy(&avl_tree);
+    }
     exit(0);
 }
 
@@ -92,10 +108,6 @@ Status top_menu_handler0(void *context)
 Status top_menu_handler1(void *context)
 {
     HandlerContext *handler_context = (HandlerContext *)context;
-    // AvlTree new_avl = NULL;
-    // Status init_status = Avl_Init(&new_avl);
-    // AvlTree *new_avl_posi = &new_avl;
-    // Status output_status = List_Append(handler_context->avl_list, &new_avl);
     Status output_status = List_Append(handler_context->avl_list, NULL);
     if (output_status == STATUS_TRUE)
     {
@@ -396,6 +408,25 @@ Status control_tree_menu_handler6(void *context)
     return STATUS_TRUE;
 }
 
+Status control_tree_menu_handler7(void *context) {
+    HandlerContext *handler_context = (HandlerContext *)context;
+    ListElementType get_avl_tree_origin;
+    handler_context->now_menu = handler_context->tree_menu;
+    if (STATUS_FALSE == List_RemoveAt(handler_context->avl_list, *handler_context->now_avl, &get_avl_tree_origin))
+    {
+        control_tree_menu_handler0(context);
+        *handler_context->now_avl = -1;
+        return STATUS_FALSE;
+    }
+    AvlTree avl_tree = (AvlTree)get_avl_tree_origin;
+    if (get_avl_tree_origin == NULL)
+    {
+        return STATUS_TRUE;
+    }
+    Status status = Avl_Destroy(&avl_tree);
+    return STATUS_TRUE;
+}
+
 /* 选择二叉树菜单 - 返回顶级目录 */
 Status tree_menu_handler0(void *context)
 {
@@ -560,6 +591,7 @@ Status Control_Tree_Menu_Init(Menu *control_tree_menu, MenuOption *control_tree_
     MenuOption_create(&control_tree_menu_option[4], 4, "打印二叉树", control_tree_menu_handler4);
     MenuOption_create(&control_tree_menu_option[5], 5, "中序遍历", control_tree_menu_handler5);
     MenuOption_create(&control_tree_menu_option[6], 6, "以某值为界限拆分二叉树", control_tree_menu_handler6);
+    MenuOption_create(&control_tree_menu_option[7], 7, "删除该树", control_tree_menu_handler7);
     char *control_tree_menu_title = "单棵平衡二叉树调整菜单";
     Menu_Create(control_tree_menu, &control_tree_menu_title, control_tree_menu_option, CONTROL_TREE_MENU_COUNT,
                 CONTROL_TREE_MENU_COUNT);
