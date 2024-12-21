@@ -12,7 +12,7 @@ add_library(interactor ${PROJECT_SOURCE_DIR}/src/interactor.c ${PROJECT_SOURCE_D
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_executable(main ${PROJECT_SOURCE_DIR}/src/main.c)
-target_link_libraries(main avl menu linked_list interactor)
+target_link_libraries(main interactor)
 
 add_executable(test_avl_tree ${PROJECT_SOURCE_DIR}/test/test_avl_tree.c)
 target_link_libraries(test_avl_tree avl)

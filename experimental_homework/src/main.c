@@ -49,9 +49,9 @@ int main()
             input_choose[strcspn(input_choose, "\n")] = '\0';
         }
         main_status = Menu_HandlerInput(*context.now_menu, input_choose, &context);
-        // if(main_status == STATUS_OVERFLOW) {
-        //     printf("您的输入不合法, 请输入指定选项的数字\n");
-        // }
+        if(main_status == STATUS_OVERFLOW) {
+            printf("\n您的输入不合法, 请输入指定选项的数字\n");
+        }
         printf("按回车以继续\n");
         getchar();
         ClearScreen();
