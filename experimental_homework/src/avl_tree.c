@@ -317,7 +317,7 @@ void printAvlRecursive(AvlTree root, int depth)
     // 打印当前节点
     for (int i = 0; i < depth; i++)
     {
-        printf("       |"); // 每层缩进
+        printf("       "); // 每层缩进
     }
     Avl_VisitNode(root);
     printf("\n");

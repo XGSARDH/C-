@@ -75,13 +75,6 @@ Status HandlerContext_Init(HandlerContext *handler_context, Menu *now_menu, Menu
     return STATUS_TRUE;
 }
 
-void Test_MenuDisplay(Menu *top_menu, Menu *tree_menu, Menu *control_tree_menu, Menu *more_menu)
-{
-    Menu_Display(top_menu);
-    Menu_Display(tree_menu);
-    Menu_Display(control_tree_menu);
-}
-
 /* 顶级菜单 - 退出程序 */
 Status top_menu_handler0(void *context)
 {
@@ -408,6 +401,7 @@ Status control_tree_menu_handler6(void *context)
     return STATUS_TRUE;
 }
 
+/* 控制二叉树菜单 - 删除该树 */
 Status control_tree_menu_handler7(void *context) {
     HandlerContext *handler_context = (HandlerContext *)context;
     ListElementType get_avl_tree_origin;
